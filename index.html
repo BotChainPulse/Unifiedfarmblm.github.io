@@ -691,5 +691,19 @@ function sendQuickReply(message) {
 }
 </script>
 
+ <script>
+function toggleChatbot() {
+  var panel = document.getElementById('chatbotPanel');
+  if (panel.style.display === 'flex') {
+    panel.style.display = 'none';
+  } else {
+    panel.style.display = 'flex';
+  }
+}
+
+function sendQuickReply(message) {
+  // ... existing code ...
+}
+</script> 
 </body>
 </html>
