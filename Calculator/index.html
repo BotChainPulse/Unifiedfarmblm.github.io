@@ -3,1272 +3,722 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Unified Farm BLM - Professional Poultry Feed Calculator</title>
+<title>Unified Farm BLM - Poultry Feed Calculator</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f5f0;
-    color: #333;
-    padding-bottom: 40px;
-  }
-  .header {
-    background: #2d4a3e;
-    color: white;
-    padding: 25px 15px;
-    text-align: center;
-    border-radius: 0 0 30px 30px;
-    margin-bottom: 20px;
-  }
-  .header h1 { font-size: 1.8rem; margin-bottom: 8px; }
-  .header p { font-size: 1.1rem; opacity: 0.9; }
-  .logo {
-    width: 60px; height: 60px;
-    background: #c0392b;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-  .subtitle-btn {
-    background: #d4a843;
-    color: #2d4a3e;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    display: inline-block;
-    margin-top: 15px;
-  }
-  .container { padding: 0 15px; max-width: 600px; margin: 0 auto; }
-
-  /* Type selector buttons */
-  .type-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 20px 0;
-  }
-  .type-btn {
-    padding: 20px;
-    border-radius: 16px;
-    border: 2px solid #2d4a3e;
-    background: white;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.3s;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  .type-btn .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
-  .type-btn:hover { background: #e8f5e9; }
-  .type-btn.active {
-    background: #2d4a3e;
-    color: white;
-    border-color: #2d4a3e;
-  }
-
-  /* Controls row */
-  .controls-row {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-  }
-  .controls-row select {
-    flex: 1;
-    padding: 12px;
-    border-radius: 20px;
-    border: 2px solid #2d4a3e;
-    font-size: 1rem;
-    background: white;
-  }
-
-  /* Calculator sections */
-  .calc-section {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 15px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: none;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #f5f5f0; color: #333; line-height: 1.6; padding-bottom: 30px; }
+  .header { background: #2d4a3e; color: #fff; text-align: center; padding: 20px 15px; border-radius: 0 0 25px 25px; }
+  .header h1 { font-size: 1.4rem; margin-bottom: 5px; }
+  .header h2 { font-size: 1rem; opacity: 0.9; }
+  .controls { display: flex; gap: 10px; padding: 15px; }
+  .controls select { flex: 1; padding: 12px; border-radius: 12px; border: 2px solid #2d4a3e; font-size: 1rem; font-family: inherit; background: #fff; }
+  .type-selector { display: flex; gap: 10px; padding: 0 15px 15px; }
+  .type-btn { flex: 1; padding: 15px 5px; border-radius: 14px; border: 2px solid #2d4a3e; background: #fff; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: all 0.3s; font-family: inherit; text-align: center; }
+  .type-btn.active { background: #2d4a3e; color: #fff; border-color: #2d4a3e; }
+  .type-btn .icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+  .calc-section { display: none; padding: 0 15px; }
   .calc-section.active { display: block; }
-  .calc-section h2 {
-    color: #2d4a3e;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .input-group {
-    margin-bottom: 15px;
-  }
-  .input-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #555;
-    font-size: 0.95rem;
-  }
-  .input-group input, .input-group select {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-  }
-  .input-group input:focus, .input-group select:focus {
-    outline: none;
-    border-color: #2d4a3e;
-  }
-  .input-group small {
-    color: #888;
-    font-size: 0.8rem;
-  }
-
-  .calculate-btn {
-    background: #2d4a3e;
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 14px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    width: 100%;
-    cursor: pointer;
-    margin: 15px 0;
-    transition: background 0.3s;
-  }
-  .calculate-btn:hover { background: #1a3329; }
-
-  /* Results */
-  .results-box {
-    background: #f0f7f4;
-    border-radius: 14px;
-    padding: 15px;
-    margin: 15px 0;
-    border-left: 4px solid #2d4a3e;
-  }
-  .results-box h3 {
-    color: #2d4a3e;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-  }
-  .result-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.95rem;
-  }
-  .result-item:last-child { border-bottom: none; }
-  .result-item .value { font-weight: bold; color: #2d4a3e; }
-
-  /* Quick Tips */
-  .tips-box {
-    background: #fff8e1;
-    border-radius: 14px;
-    padding: 18px;
-    margin: 15px 0;
-    border: 2px solid #d4a843;
-  }
-  .tips-box h3 {
-    color: #8b6914;
-    margin-bottom: 12px;
-    font-size: 1.1rem;
-  }
-  .tips-box ul { list-style: none; padding-left: 0; }
-  .tips-box li {
-    padding: 6px 0;
-    padding-left: 20px;
-    position: relative;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  .tips-box li::before {
-    content: "•";
-    color: #d4a843;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-    font-size: 1.2rem;
-  }
-
-  /* Premium Section */
-  .premium-box {
-    background: #fff8e1;
-    border-radius: 20px;
-    padding: 25px;
-    margin: 20px 0;
-    border: 2px solid #d4a843;
-    text-align: center;
-  }
-  .premium-box h2 {
-    color: #5d4a1e;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-  }
-  .premium-box p {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-    line-height: 1.5;
-  }
-  .feature-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin: 15px 0;
-  }
-  .feature-tag {
-    background: white;
-    border: 2px solid #d4a843;
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
-    color: #5d4a1e;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  /* Payment Buttons */
-  .payment-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  .pay-btn {
-    padding: 16px 20px;
-    border-radius: 14px;
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
-    transition: transform 0.2s, opacity 0.2s;
-  }
-  .pay-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-  .pay-btn:active { transform: translateY(0); }
-
-  .pay-paypal {
-    background: #0070ba;
-    color: white;
-  }
-  .pay-airtel {
-    background: #c0392b;
-    color: white;
-  }
-  .pay-crypto {
-    background: #c0392b;
-    color: white;
-  }
-
-  /* I Have Paid - starts UNCHECKED */
-  .paid-section {
-    background: #fff3e0;
-    border-radius: 14px;
-    padding: 20px;
-    margin: 15px 0;
-    text-align: center;
-    border: 2px solid #ff9800;
-  }
-  .paid-section p {
-    color: #5d4037;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-    line-height: 1.5;
-  }
-  .paid-btn {
-    background: #2d4a3e;
-    color: white;
-    border: none;
-    padding: 16px 30px;
-    border-radius: 14px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
-  }
-  .paid-btn:hover { background: #1a3329; }
-  .paid-btn.paid {
-    background: #4caf50;
-  }
-  .paid-btn .check-icon {
-    width: 24px; height: 24px;
-    border: 2px solid white;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-  }
-  .paid-btn.paid .check-icon::after {
-    content: "✓";
-  }
-
-  /* Preview Button */
-  .preview-btn {
-    background: #d4a843;
-    color: #2d4a3e;
-    border: none;
-    padding: 16px;
-    border-radius: 14px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: background 0.3s;
-  }
-  .preview-btn:hover { background: #c49a3a; }
-
-  /* Feature Comparison */
-  .comparison-table {
-    width: 100%;
-    margin: 20px 0;
-    border-collapse: collapse;
-  }
-  .comparison-table th {
-    text-align: left;
-    padding: 12px;
-    color: #888;
-    font-size: 0.9rem;
-    border-bottom: 2px solid #ddd;
-  }
-  .comparison-table th:last-child {
-    color: #d4a843;
-    text-align: center;
-  }
-  .comparison-table td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    font-size: 0.95rem;
-  }
-  .comparison-table td:last-child {
-    text-align: center;
-  }
-  .check { color: #4caf50; font-size: 1.2rem; }
-  .cross { color: #ccc; font-size: 1.2rem; }
-  .premium-check { color: #d4a843; font-size: 1.2rem; }
-
-  /* Hidden premium content */
-  .premium-content {
-    display: none;
-  }
-  .premium-content.unlocked {
-    display: block;
-  }
-
-  /* PDF Report styling */
-  .pdf-report {
-    background: white;
-    padding: 30px;
-    max-width: 800px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-  .pdf-header {
-    text-align: center;
-    border-bottom: 3px solid #2d4a3e;
-    padding-bottom: 20px;
-    margin-bottom: 25px;
-  }
-  .pdf-header h1 { color: #2d4a3e; font-size: 1.8rem; }
-  .pdf-header p { color: #666; margin-top: 5px; }
-  .pdf-section { margin: 20px 0; }
-  .pdf-section h2 {
-    color: #2d4a3e;
-    font-size: 1.2rem;
-    border-bottom: 2px solid #d4a843;
-    padding-bottom: 8px;
-    margin-bottom: 15px;
-  }
-  .pdf-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 15px 0;
-  }
-  .pdf-table th, .pdf-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-    font-size: 0.9rem;
-  }
-  .pdf-table th { background: #f0f7f4; color: #2d4a3e; }
-  .pdf-footer {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
-    text-align: center;
-    color: #888;
-    font-size: 0.8rem;
-  }
-
-  .hidden { display: none !important; }
-
-  /* Responsive */
-  @media (max-width: 480px) {
-    .header h1 { font-size: 1.4rem; }
-    .type-btn { font-size: 1rem; padding: 15px; }
-    .pay-btn { font-size: 0.9rem; }
-  }
+  .card { background: #fff; border-radius: 18px; padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .card h3 { color: #2d4a3e; font-size: 1.2rem; margin-bottom: 12px; }
+  .input-group { margin-bottom: 12px; }
+  .input-group label { display: block; font-weight: bold; color: #555; margin-bottom: 5px; font-size: 0.9rem; }
+  .input-group input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; font-size: 1rem; font-family: inherit; }
+  .btn { width: 100%; padding: 15px; background: #2d4a3e; color: #fff; border: none; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: pointer; font-family: inherit; margin-bottom: 10px; }
+  .results { background: #e8f0ec; border-radius: 18px; padding: 18px; margin-bottom: 12px; border-left: 5px solid #2d4a3e; }
+  .results h3 { color: #2d4a3e; margin-bottom: 10px; }
+  .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #c8d8d0; }
+  .row:last-child { border: none; }
+  .label { font-weight: bold; color: #444; }
+  .val { font-weight: bold; color: #2d4a3e; }
+  .prof { color: #c0392b; }
+  .pos { color: #2d8a4e; }
+  .tips { background: #fff8e1; border-radius: 18px; padding: 18px; margin-bottom: 12px; border: 2px solid #c9a84c; }
+  .tips h3 { color: #8a6d1f; margin-bottom: 8px; }
+  .premium { padding: 0 15px; margin-top: 15px; }
+  .prem-card { background: #fff; border-radius: 18px; padding: 20px; text-align: center; border: 2px solid #c9a84c; }
+  .prem-card h3 { color: #2d4a3e; margin-bottom: 8px; }
+  .prem-card p { color: #666; font-size: 0.9rem; margin-bottom: 10px; }
+  .pay-btn { width: 100%; padding: 12px; border-radius: 12px; border: none; font-size: 0.95rem; font-weight: bold; cursor: pointer; margin-bottom: 8px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+  .pp { background: #0070ba; }
+  .am { background: #c0392b; }
+  .tr { background: #5a2d8a; }
+  .lock { background: #fff8e1; border: 2px solid #c9a84c; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: center; color: #8a6d1f; font-size: 0.9rem; }
+  .unlock-btn { width: 100%; padding: 14px; background: #2d4a3e; color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+  .dl-btn { width: 100%; padding: 15px; background: #2d8a4e; color: #fff; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+  .ok { background: #e8f5e9; border: 2px solid #2d8a4e; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: center; color: #2d8a4e; font-weight: bold; }
+  .footer { text-align: center; padding: 20px; color: #888; font-size: 0.8rem; }
+  #pdf { position: absolute; left: -9999px; width: 800px; background: #fff; padding: 40px; }
+  .pdf-h { text-align: center; border-bottom: 3px solid #2d4a3e; padding-bottom: 20px; margin-bottom: 25px; }
+  .pdf-h h1 { color: #2d4a3e; font-size: 1.8rem; }
+  .pdf-h h2 { color: #c9a84c; font-size: 1.2rem; }
+  .pdf-s { margin-bottom: 20px; }
+  .pdf-s h3 { color: #2d4a3e; border-bottom: 2px solid #c9a84c; padding-bottom: 6px; margin-bottom: 12px; }
+  .p-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; }
+  .p-tbl { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  .p-tbl th, .p-tbl td { border: 1px solid #ddd; padding: 8px; }
+  .p-tbl th { background: #2d4a3e; color: #fff; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #2d4a3e; color: #fff; padding: 12px 20px; border-radius: 12px; font-size: 0.9rem; z-index: 1000; display: none; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">🐔</div>
   <h1>Unified Farm BLM</h1>
-  <p>Professional Poultry Feed Calculator</p>
-  <div class="subtitle-btn">Broiler Feed Cost Estimator</div>
+  <h2>Professional Poultry Feed Calculator</h2>
 </div>
 
-<div class="container">
+<div class="controls">
+  <select id="lang" onchange="setLang()">
+    <option value="en">🇬🇧 English</option>
+    <option value="fr">🇫🇷 Français</option>
+    <option value="es">🇪🇸 Español</option>
+    <option value="pt">🇵🇹 Português</option>
+    <option value="sw">🇹🇿 Swahili</option>
+    <option value="lg">🇺🇬 Luganda</option>
+  </select>
+  <select id="curr" onchange="setCurr()">
+    <option value="USD">USD ($)</option>
+    <option value="EUR">EUR (€)</option>
+    <option value="GBP">GBP (£)</option>
+    <option value="UGX">UGX (USh)</option>
+    <option value="KES">KES (KSh)</option>
+    <option value="NGN">NGN (₦)</option>
+    <option value="ZAR">ZAR (R)</option>
+    <option value="BRL">BRL (R$)</option>
+    <option value="INR">INR (₹)</option>
+  </select>
+</div>
 
-  <!-- Type Selector -->
-  <div class="type-selector">
-    <button class="type-btn active" onclick="switchType('broiler')" id="btn-broiler">
-      <span class="icon">🍗</span>Broiler
-    </button>
-    <button class="type-btn" onclick="switchType('layer')" id="btn-layer">
-      <span class="icon">🥚</span>Layer
-    </button>
-    <button class="type-btn" onclick="switchType('local')" id="btn-local">
-      <span class="icon">🐓</span>Local Chicken
-    </button>
+<div class="type-selector">
+  <button class="type-btn" data-t="broiler" onclick="switchType('broiler')">
+    <span class="icon">🍗</span>
+    <span id="btn-broiler">Broiler</span>
+  </button>
+  <button class="type-btn active" data-t="layer" onclick="switchType('layer')">
+    <span class="icon">🥚</span>
+    <span id="btn-layer">Layer</span>
+  </button>
+  <button class="type-btn" data-t="local" onclick="switchType('local')">
+    <span class="icon">🐓</span>
+    <span id="btn-local">Local Chicken</span>
+  </button>
+</div>
+
+<!-- BROILER -->
+<div class="calc-section" id="broiler-calc">
+  <div class="card">
+    <h3>🍗 <span id="title-b">Broiler Farm Input</span></h3>
+    <div class="input-group">
+      <label><span id="lbl-b-num">Number of Broiler Chicks</span></label>
+      <input type="number" id="b-c" value="500">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-b-cost">Cost per Chick</span> <span class="cy">($)</span></label>
+      <input type="number" id="b-cc" value="2" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-b-feed">Feed Cost per 50kg Bag</span> <span class="cy">($)</span></label>
+      <input type="number" id="b-fc" value="25" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-b-days">Days to Market (42-56)</span></label>
+      <input type="number" id="b-d" value="42">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-b-price">Market Price per Bird</span> <span class="cy">($)</span></label>
+      <input type="number" id="b-mp" value="8" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-b-mort">Mortality Rate (%)</span></label>
+      <input type="number" id="b-m" value="5">
+    </div>
+    <button class="btn" onclick="calcB()" id="btn-b-calc">Calculate Broiler Budget</button>
   </div>
+  <div id="b-res"></div>
+  <div id="b-tip"></div>
+</div>
 
-  <!-- Controls -->
-  <div class="controls-row">
-    <select id="language">
-      <option value="en">🇬🇧 English</option>
-      <option value="sw">🇹🇿 Swahili</option>
-      <option value="lg">🇺🇬 Luganda</option>
-    </select>
-    <select id="currency">
-      <option value="UGX">UGX (USh)</option>
-      <option value="USD">USD ($)</option>
-      <option value="KES">KES (KSh)</option>
-    </select>
+<!-- LAYER -->
+<div class="calc-section active" id="layer-calc">
+  <div class="card">
+    <h3>🥚 <span id="title-l">Layer Farm Input</span></h3>
+    <div class="input-group">
+      <label><span id="lbl-l-num">Number of Layer Chicks</span></label>
+      <input type="number" id="l-c" value="1000">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-l-cost">Cost per Chick</span> <span class="cy">($)</span></label>
+      <input type="number" id="l-cc" value="3" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-l-feed">Feed Cost per 50kg Bag</span> <span class="cy">($)</span></label>
+      <input type="number" id="l-fc" value="50" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-l-eggs">Expected Eggs per Bird/Year</span></label>
+      <input type="number" id="l-e" value="280">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-l-eprice">Price per Egg</span> <span class="cy">($)</span></label>
+      <input type="number" id="l-ep" value="0.15" step="0.01">
+    </div>
+    <div class="input-group">
+      <label><span id="lbl-l-mort">Mortality Rate (%)</span></label>
+      <input type="number" id="l-m" value="5">
+    </div>
+    <button class="btn" onclick="calcL()" id="btn-l-calc">Calculate Layer Budget</button>
   </div>
+  <div id="l-res"></div>
+  <div id="l-tip"></div>
+</div>
 
-  <!-- ==================== BROILER CALCULATOR ==================== -->
-  <div class="calc-section active" id="calc-broiler">
-    <h2>🧮 Broiler Farm Input Details</h2>
-
+<!-- LOCAL -->
+<div class="calc-section" id="local-calc">
+  <div class="card">
+    <h3>🐓 <span id="title-lc">Local Chicken Farm Input</span></h3>
     <div class="input-group">
-      <label>Number of Day-Old Chicks</label>
-      <input type="number" id="broiler-chicks" placeholder="e.g. 500" min="1">
+      <label><span id="lbl-lc-num">Number of Local Chicks</span></label>
+      <input type="number" id="lc-c" value="200">
     </div>
-
     <div class="input-group">
-      <label>Cost per Chick (UGX)</label>
-      <input type="number" id="broiler-chick-cost" placeholder="e.g. 2500" min="0">
+      <label><span id="lbl-lc-cost">Cost per Chick</span> <span class="cy">($)</span></label>
+      <input type="number" id="lc-cc" value="2.5" step="0.01">
     </div>
-
     <div class="input-group">
-      <label>Feed Type</label>
-      <select id="broiler-feed-type">
-        <option value="commercial">Commercial Feed</option>
-        <option value="homemade">Homemade Mix</option>
-      </select>
+      <label><span id="lbl-lc-feed">Feed Cost per 50kg Bag</span> <span class="cy">($)</span></label>
+      <input type="number" id="lc-fc" value="20" step="0.01">
     </div>
-
     <div class="input-group">
-      <label>Feed Cost per 50kg Bag (UGX)</label>
-      <input type="number" id="broiler-feed-cost" placeholder="e.g. 85000" min="0">
+      <label><span id="lbl-lc-months">Months to Market</span></label>
+      <input type="number" id="lc-mo" value="6">
     </div>
-
     <div class="input-group">
-      <label>Target Weight per Bird (kg)</label>
-      <input type="number" id="broiler-target-weight" placeholder="e.g. 2.5" min="0" step="0.1">
+      <label><span id="lbl-lc-price">Market Price per Bird</span> <span class="cy">($)</span></label>
+      <input type="number" id="lc-mp" value="12" step="0.01">
     </div>
-
     <div class="input-group">
-      <label>Selling Price per kg (UGX)</label>
-      <input type="number" id="broiler-price-kg" placeholder="e.g. 12000" min="0">
+      <label><span id="lbl-lc-mort">Mortality Rate (%)</span></label>
+      <input type="number" id="lc-m" value="10">
     </div>
-
-    <div class="input-group">
-      <label>Mortality Rate (%)</label>
-      <input type="number" id="broiler-mortality" placeholder="e.g. 5" min="0" max="100" value="5">
-    </div>
-
-    <div class="input-group">
-      <label>Farm Name (optional)</label>
-      <input type="text" id="broiler-farm-name" placeholder="Your farm name">
-    </div>
-
-    <div class="input-group">
-      <label>Farmer Name (optional)</label>
-      <input type="text" id="broiler-farmer-name" placeholder="Your name">
-    </div>
-
-    <div class="input-group">
-      <label>Select Location (optional)</label>
-      <select id="broiler-location">
-        <option value="">-- Select --</option>
-        <option value="Kampala">Kampala</option>
-        <option value="Wakiso">Wakiso</option>
-        <option value="Mukono">Mukono</option>
-        <option value="Mpigi">Mpigi</option>
-        <option value="Masaka">Masaka</option>
-        <option value="Jinja">Jinja</option>
-        <option value="Mbarara">Mbarara</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-
-    <div class="input-group">
-      <label>Additional Notes</label>
-      <input type="text" id="broiler-notes" placeholder="Additional notes for the report...">
-    </div>
-
-    <button class="calculate-btn" onclick="calculateBroiler()">
-      🧮 Calculate Broiler Feed Budget
-    </button>
-
-    <div id="broiler-results"></div>
-
-    <div class="tips-box">
-      <h3>💡 Broiler Quick Tips</h3>
-      <ul>
-        <li>Start with 50-100 chicks if you're new to broiler farming</li>
-        <li>Feed represents 65-70% of your total production cost</li>
-        <li>Target mortality under 5% for healthy profits</li>
-        <li>Pre-sell to hotels/restaurants before Week 5</li>
-      </ul>
-    </div>
+    <button class="btn" onclick="calcLC()" id="btn-lc-calc">Calculate Local Budget</button>
   </div>
+  <div id="lc-res"></div>
+  <div id="lc-tip"></div>
+</div>
 
-  <!-- ==================== LAYER CALCULATOR ==================== -->
-  <div class="calc-section" id="calc-layer">
-    <h2>🥚 Layer Farm Input Details</h2>
+<!-- PREMIUM -->
+<div class="premium">
+  <div class="prem-card">
+    <h3>📄 <span id="prem-title">Professional PDF Report</span></h3>
+    <p id="prem-desc">Complete feed blueprint with ingredient ratios, weekly schedules, profit scenarios & recommendations.</p>
 
-    <div class="input-group">
-      <label>Number of Layer Chicks</label>
-      <input type="number" id="layer-chicks" placeholder="e.g. 300" min="1">
-    </div>
-
-    <div class="input-group">
-      <label>Cost per Chick (UGX)</label>
-      <input type="number" id="layer-chick-cost" placeholder="e.g. 3500" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Feed Cost per 50kg Bag (UGX)</label>
-      <input type="number" id="layer-feed-cost" placeholder="e.g. 75000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Expected Eggs per Bird/Year</label>
-      <input type="number" id="layer-eggs" placeholder="e.g. 280" min="0" value="280">
-    </div>
-
-    <div class="input-group">
-      <label>Price per Egg (UGX)</label>
-      <input type="number" id="layer-egg-price" placeholder="e.g. 500" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Mortality Rate (%)</label>
-      <input type="number" id="layer-mortality" placeholder="e.g. 8" min="0" max="100" value="8">
-    </div>
-
-    <button class="calculate-btn" onclick="calculateLayer()">
-      🧮 Calculate Layer Feed Budget
-    </button>
-
-    <div id="layer-results"></div>
-
-    <div class="tips-box">
-      <h3>💡 Layer Quick Tips</h3>
-      <ul>
-        <li>Layers start laying at 18-20 weeks</li>
-        <li>Peak production is 85-90% in prime months</li>
-        <li>Calcium supplements improve shell quality</li>
-        <li>Clean water is essential for egg production</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ==================== LOCAL CHICKEN CALCULATOR ==================== -->
-  <div class="calc-section" id="calc-local">
-    <h2>🐓 Local Chicken Farm Input Details</h2>
-
-    <div class="input-group">
-      <label>Number of Local Chicks</label>
-      <input type="number" id="local-chicks" placeholder="e.g. 100" min="1">
-    </div>
-
-    <div class="input-group">
-      <label>Cost per Chick (UGX)</label>
-      <input type="number" id="local-chick-cost" placeholder="e.g. 2000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Feed Cost per 50kg Bag (UGX)</label>
-      <input type="number" id="local-feed-cost" placeholder="e.g. 60000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Target Weight per Bird (kg)</label>
-      <input type="number" id="local-target-weight" placeholder="e.g. 1.8" min="0" step="0.1">
-    </div>
-
-    <div class="input-group">
-      <label>Selling Price per kg (UGX)</label>
-      <input type="number" id="local-price-kg" placeholder="e.g. 15000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label>Mortality Rate (%)</label>
-      <input type="number" id="local-mortality" placeholder="e.g. 10" min="0" max="100" value="10">
-    </div>
-
-    <button class="calculate-btn" onclick="calculateLocal()">
-      🧮 Calculate Local Chicken Feed Budget
-    </button>
-
-    <div id="local-results"></div>
-
-    <div class="tips-box">
-      <h3>💡 Local Chicken Quick Tips</h3>
-      <ul>
-        <li>Local chickens are hardy but grow slower</li>
-        <li>Free-range reduces feed costs significantly</li>
-        <li>Market price is higher than broilers per kg</li>
-        <li>Good for organic/health-conscious buyers</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ==================== PREMIUM PDF SECTION ==================== -->
-  <div class="premium-box" id="premium-section">
-    <h2>📄 Get the Professional PDF Report</h2>
-    <p>Export a complete printable feed mixing blueprint with ingredient ratios, weekly schedules, profit scenarios, and farm recommendations.</p>
-
-    <div class="feature-list">
-      <span class="feature-tag">✓ Mixing Blueprints</span>
-      <span class="feature-tag">✓ Weekly Schedule</span>
-      <span class="feature-tag">✓ Profit Scenarios</span>
-      <span class="feature-tag">✓ Farm Recommendations</span>
-    </div>
-
-    <!-- Payment Buttons -->
-    <div class="payment-options">
-      <a href="https://www.paypal.com/paypalme/LutwamaReagan/2" target="_blank" class="pay-btn pay-paypal">
-        💳 Pay with PayPal<br>
-        <small>Card, PayPal balance, or bank · $2.00 USD</small>
+    <div id="pay-area">
+      <a class="pay-btn pp" href="https://paypal.me/LutwamaReagan/2USD" target="_blank">
+        💳 <span id="pay-p">PayPal</span> · <span id="pay-price">$2</span>
       </a>
-
-      <a href="tel:*185*8*708813410%23" class="pay-btn pay-airtel">
-        📱 Pay with Airtel Money<br>
-        <small>Uganda Mobile Money · +256 708 813410</small>
-      </a>
-
-      <button class="pay-btn pay-crypto" onclick="copyCryptoAddress()">
-        ₿ Pay with TRC20 (USDT/TRX)<br>
-        <small>Tron Network · Crypto payment</small>
+      <button class="pay-btn am" onclick="payAirtel()">
+        📱 <span id="pay-a">Airtel Money</span> · <span id="pay-phone">+256 708 813410</span>
       </button>
+      <button class="pay-btn tr" onclick="payT()">
+        ₿ <span id="pay-t">TRC20 USDT</span>
+      </button>
+      <div class="lock" id="msg-lock">🔒 After paying, click "I Have Paid" to unlock.</div>
+      <button class="unlock-btn" onclick="unlock()" id="btn-unlock">☐ I Have Paid - Unlock Report</button>
     </div>
 
-    <!-- I Have Paid - STARTS UNCHECKED -->
-    <div class="paid-section">
-      <p>🔒 After paying, click "I Have Paid" to unlock your report.<br>A notification will be sent to the farm owner.</p>
-      <button class="paid-btn" id="paid-btn" onclick="markPaid()">
-        <span class="check-icon"></span>
-        <span id="paid-text">I Have Paid - Unlock Report</span>
-      </button>
+    <div id="dl-area" style="display:none">
+      <div class="ok" id="msg-ok">✅ Unlocked! Download your PDF report now.</div>
+      <button class="dl-btn" onclick="genPDF()" id="btn-dl">📥 Download PDF Report</button>
     </div>
-
-    <button class="preview-btn" onclick="previewReport()">
-      👁 Preview Report Content
-    </button>
   </div>
+</div>
 
-  <!-- Feature Comparison -->
-  <div style="background:white; border-radius:20px; padding:20px; margin:15px 0;">
-    <h2 style="color:#2d4a3e; font-size:1.2rem; margin-bottom:15px;">⚖️ Feature Comparison</h2>
-    <table class="comparison-table">
-      <tr>
-        <th>Feature</th>
-        <th>Free</th>
-        <th>Premium ($2)</th>
-      </tr>
-      <tr>
-        <td>Basic feed cost calculation</td>
-        <td class="check">✓</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Phase breakdown summary</td>
-        <td class="check">✓</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Profit/loss estimate</td>
-        <td class="check">✓</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Ingredient mixing blueprints</td>
-        <td class="cross">✗</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Weekly feeding schedule</td>
-        <td class="cross">✗</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Multiple profit scenarios</td>
-        <td class="cross">✗</td>
-        <td class="premium-check">✓</td>
-      </tr>
-      <tr>
-        <td>Professional PDF export</td>
-        <td class="cross">✗</td>
-        <td class="premium-check">✓</td>
-      </tr>
+<div class="footer">© 2026 Unified Farm BLM · All Rights Reserved</div>
+<div class="toast" id="toast"></div>
+
+<!-- PDF TEMPLATE -->
+<div id="pdf">
+  <div class="pdf-h">
+    <h1>Unified Farm BLM</h1>
+    <h2>Professional Poultry Feed Report</h2>
+    <p id="pdate"></p>
+  </div>
+  <div class="pdf-s">
+    <h3>🐔 Farm Info</h3>
+    <div class="p-row"><span>Farm:</span><span>Unified Farm BLM</span></div>
+    <div class="p-row"><span>Location:</span><span>Mpigi, Uganda</span></div>
+    <div class="p-row"><span>Contact:</span><span>+256 708 813419</span></div>
+    <div class="p-row"><span>Type:</span><span id="ptype">Layer</span></div>
+  </div>
+  <div class="pdf-s">
+    <h3>📊 Inputs</h3>
+    <div id="p-in"></div>
+  </div>
+  <div class="pdf-s">
+    <h3>📈 Results</h3>
+    <div id="p-out"></div>
+  </div>
+  <div class="pdf-s">
+    <h3>🌾 Feed Mix</h3>
+    <table class="p-tbl">
+      <tr><th>Ingredient</th><th>%</th><th>Per 100kg</th></tr>
+      <tr><td>Maize</td><td>55%</td><td>55kg</td></tr>
+      <tr><td>Soybean</td><td>25%</td><td>25kg</td></tr>
+      <tr><td>Wheat Bran</td><td>10%</td><td>10kg</td></tr>
+      <tr><td>Fish Meal</td><td>5%</td><td>5kg</td></tr>
+      <tr><td>Limestone</td><td>3%</td><td>3kg</td></tr>
+      <tr><td>Vitamin Mix</td><td>2%</td><td>2kg</td></tr>
     </table>
   </div>
-
-  <!-- Premium Content (Hidden until paid) -->
-  <div class="premium-content" id="premium-content">
-    <div style="background:#e8f5e9; border-radius:20px; padding:25px; margin:20px 0; border:2px solid #4caf50;">
-      <h2 style="color:#2d4a3e; margin-bottom:15px;">✅ Premium Report Unlocked!</h2>
-      <p style="color:#555; margin-bottom:15px;">Your payment has been verified. You can now download the professional PDF report.</p>
-      <button class="calculate-btn" onclick="generatePDF()" style="background:#4caf50;">
-        📥 Download Professional PDF Report
-      </button>
-    </div>
-  </div>
-
-</div>
-
-<!-- Hidden PDF Template -->
-<div id="pdf-template" class="hidden">
-  <div class="pdf-report" id="pdf-content">
-    <div class="pdf-header">
-      <h1>Unified Farm BLM</h1>
-      <p>Professional Poultry Feed Report</p>
-      <p id="pdf-date"></p>
-    </div>
-    <div class="pdf-section">
-      <h2>Farm Information</h2>
-      <table class="pdf-table">
-        <tr><th>Farm Name</th><td id="pdf-farm-name">-</td></tr>
-        <tr><th>Farmer Name</th><td id="pdf-farmer-name">-</td></tr>
-        <tr><th>Location</th><td id="pdf-location">-</td></tr>
-        <tr><th>Poultry Type</th><td id="pdf-type">-</td></tr>
-        <tr><th>Report Date</th><td id="pdf-report-date">-</td></tr>
-      </table>
-    </div>
-    <div class="pdf-section">
-      <h2>Feed Mixing Blueprint</h2>
-      <table class="pdf-table" id="pdf-blueprint">
-        <tr><th>Ingredient</th><th>Percentage</th><th>Amount (kg)</th><th>Cost (UGX)</th></tr>
-      </table>
-    </div>
-    <div class="pdf-section">
-      <h2>Weekly Feeding Schedule</h2>
-      <table class="pdf-table" id="pdf-schedule">
-        <tr><th>Week</th><th>Feed Type</th><th>Daily per Bird (g)</th><th>Total (kg)</th><th>Cost (UGX)</th></tr>
-      </table>
-    </div>
-    <div class="pdf-section">
-      <h2>Profit Scenarios</h2>
-      <table class="pdf-table" id="pdf-profit">
-        <tr><th>Scenario</th><th>Revenue (UGX)</th><th>Cost (UGX)</th><th>Profit (UGX)</th><th>Margin</th></tr>
-      </table>
-    </div>
-    <div class="pdf-section">
-      <h2>Farm Recommendations</h2>
-      <ul id="pdf-recommendations" style="line-height:1.8; color:#555;">
-      </ul>
-    </div>
-    <div class="pdf-footer">
-      <p>Generated by Unified Farm BLM Professional Poultry Feed Calculator</p>
-      <p>Contact: +256 708 813410 | ryglutwa0@gmail.com</p>
-      <p>TRC20: TAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2</p>
-    </div>
+  <div style="margin-top:30px;text-align:center;color:#888;font-size:0.8rem;border-top:1px solid #ddd;padding-top:15px">
+    <p>© 2026 Unified Farm BLM · TRC20: TAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2</p>
   </div>
 </div>
 
 <script>
-// ==================== STATE ====================
-let currentType = 'broiler';
-let isPaid = false;
-let lastCalculationData = null;
+// ===== CURRENCY SYMBOLS & PRICES =====
+const CURR = { 
+  USD: { sym: '$', price: '$2', phone: '+256 708 813410', code: '+256708813410' },
+  EUR: { sym: '€', price: '€2', phone: '+256 708 813410', code: '+256708813410' },
+  GBP: { sym: '£', price: '£2', phone: '+256 708 813410', code: '+256708813410' },
+  UGX: { sym: 'USh', price: 'USh 7,500', phone: '+256 708 813410', code: '+256708813410' },
+  KES: { sym: 'KSh', price: 'KSh 300', phone: '+254 708 813410', code: '+254708813410' },
+  NGN: { sym: '₦', price: '₦3,000', phone: '+234 708 813410', code: '+234708813410' },
+  ZAR: { sym: 'R', price: 'R 36', phone: '+27 708 813410', code: '+27708813410' },
+  BRL: { sym: 'R$', price: 'R$ 10', phone: '+55 708 813410', code: '+55708813410' },
+  INR: { sym: '₹', price: '₹ 166', phone: '+91 708 813410', code: '+91708813410' }
+};
+let curSym = '$';
+let curCode = 'USD';
+let currentPhone = '+256 708 813410';
+let currentPhoneCode = '+256708813410';
 
-// ==================== TYPE SWITCHER ====================
-function switchType(type) {
-  currentType = type;
+function setCurr() {
+  curCode = document.getElementById('curr').value;
+  const c = CURR[curCode];
+  curSym = c.sym;
+  currentPhone = c.phone;
+  currentPhoneCode = c.code;
 
-  // Update buttons
-  document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
-  document.getElementById('btn-' + type).classList.add('active');
+  // Update all currency symbols in labels
+  document.querySelectorAll('.cy').forEach(el => el.textContent = '(' + c.sym + ')');
 
-  // Update sections
-  document.querySelectorAll('.calc-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById('calc-' + type).classList.add('active');
+  // Update payment price
+  document.getElementById('pay-price').textContent = c.price;
 
-  // Update subtitle
-  const subtitles = {
-    broiler: 'Broiler Feed Cost Estimator',
-    layer: 'Layer Feed Cost Estimator',
-    local: 'Local Chicken Feed Cost Estimator'
-  };
-  document.querySelector('.subtitle-btn').textContent = subtitles[type];
+  // Update Airtel phone number
+  document.getElementById('pay-phone').textContent = c.phone;
 }
 
-// ==================== BROILER CALCULATION ====================
-function calculateBroiler() {
-  const chicks = parseInt(document.getElementById('broiler-chicks').value) || 0;
-  const chickCost = parseInt(document.getElementById('broiler-chick-cost').value) || 0;
-  const feedCost = parseInt(document.getElementById('broiler-feed-cost').value) || 0;
-  const targetWeight = parseFloat(document.getElementById('broiler-target-weight').value) || 2.5;
-  const priceKg = parseInt(document.getElementById('broiler-price-kg').value) || 0;
-  const mortality = parseFloat(document.getElementById('broiler-mortality').value) || 5;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
 
-  if (chicks === 0 || feedCost === 0) {
-    alert('Please enter number of chicks and feed cost');
-    return;
+function payAirtel() {
+  // Try to copy number to clipboard
+  try {
+    navigator.clipboard.writeText(currentPhone).then(() => {
+      showToast('Number copied: ' + currentPhone);
+    }).catch(() => {
+      showToast('Airtel Money: ' + currentPhone);
+    });
+  } catch(e) {
+    showToast('Airtel Money: ' + currentPhone);
   }
 
-  const fcr = 2.0; // Feed Conversion Ratio
-  const totalFeedKg = chicks * targetWeight * fcr;
-  const bagsNeeded = Math.ceil(totalFeedKg / 50);
-  const totalFeedCost = bagsNeeded * feedCost;
-  const totalChickCost = chicks * chickCost;
-  const totalCost = totalFeedCost + totalChickCost;
-
-  const survivingBirds = Math.floor(chicks * (1 - mortality/100));
-  const totalRevenue = survivingBirds * targetWeight * priceKg;
-  const profit = totalRevenue - totalCost;
-  const profitMargin = ((profit / totalRevenue) * 100).toFixed(1);
-
-  // Phase breakdown
-  const starterBags = Math.ceil(bagsNeeded * 0.25);
-  const growerBags = Math.ceil(bagsNeeded * 0.35);
-  const finisherBags = Math.ceil(bagsNeeded * 0.40);
-
-  lastCalculationData = {
-    type: 'Broiler',
-    chicks, chickCost, feedCost, targetWeight, priceKg, mortality,
-    totalFeedKg, bagsNeeded, totalFeedCost, totalChickCost, totalCost,
-    survivingBirds, totalRevenue, profit, profitMargin,
-    starterBags, growerBags, finisherBags,
-    farmName: document.getElementById('broiler-farm-name').value,
-    farmerName: document.getElementById('broiler-farmer-name').value,
-    location: document.getElementById('broiler-location').value,
-    notes: document.getElementById('broiler-notes').value
-  };
-
-  const html = `
-    <div class="results-box">
-      <h3>📊 Broiler Calculation Results</h3>
-      <div class="result-item"><span>Total Chicks</span><span class="value">${chicks.toLocaleString()}</span></div>
-      <div class="result-item"><span>Surviving Birds (${100-mortality}%)</span><span class="value">${survivingBirds.toLocaleString()}</span></div>
-      <div class="result-item"><span>Total Feed Needed</span><span class="value">${totalFeedKg.toFixed(1)} kg</span></div>
-      <div class="result-item"><span>50kg Bags Required</span><span class="value">${bagsNeeded}</span></div>
-      <div class="result-item"><span>Chick Cost</span><span class="value">UGX ${totalChickCost.toLocaleString()}</span></div>
-      <div class="result-item"><span>Feed Cost</span><span class="value">UGX ${totalFeedCost.toLocaleString()}</span></div>
-      <div class="result-item"><span><strong>Total Cost</strong></span><span class="value"><strong>UGX ${totalCost.toLocaleString()}</strong></span></div>
-      <div class="result-item"><span>Expected Revenue</span><span class="value">UGX ${totalRevenue.toLocaleString()}</span></div>
-      <div class="result-item"><span><strong>Estimated Profit</strong></span><span class="value" style="color:${profit>=0?'#4caf50':'#f44336'}"><strong>UGX ${profit.toLocaleString()} (${profitMargin}%)</strong></span></div>
-    </div>
-    <div class="results-box">
-      <h3>📋 Phase Breakdown</h3>
-      <div class="result-item"><span>Starter (Week 1-2)</span><span class="value">${starterBags} bags</span></div>
-      <div class="result-item"><span>Grower (Week 3-5)</span><span class="value">${growerBags} bags</span></div>
-      <div class="result-item"><span>Finisher (Week 6-8)</span><span class="value">${finisherBags} bags</span></div>
-    </div>
-  `;
-
-  document.getElementById('broiler-results').innerHTML = html;
+  // Also try to open dialer after short delay
+  setTimeout(() => {
+    window.location.href = 'tel:' + currentPhoneCode;
+  }, 500);
 }
 
-// ==================== LAYER CALCULATION ====================
-function calculateLayer() {
-  const chicks = parseInt(document.getElementById('layer-chicks').value) || 0;
-  const chickCost = parseInt(document.getElementById('layer-chick-cost').value) || 0;
-  const feedCost = parseInt(document.getElementById('layer-feed-cost').value) || 0;
-  const eggsPerBird = parseInt(document.getElementById('layer-eggs').value) || 280;
-  const eggPrice = parseInt(document.getElementById('layer-egg-price').value) || 0;
-  const mortality = parseFloat(document.getElementById('layer-mortality').value) || 8;
-
-  if (chicks === 0 || feedCost === 0) {
-    alert('Please enter number of chicks and feed cost');
-    return;
+// ===== TRANSLATIONS - ALL TEXT =====
+const T = {
+  en: {
+    btn_broiler: "Broiler", btn_layer: "Layer", btn_local: "Local Chicken",
+    title_b: "Broiler Farm Input", title_l: "Layer Farm Input", title_lc: "Local Chicken Farm Input",
+    lbl_b_num: "Number of Broiler Chicks", lbl_l_num: "Number of Layer Chicks", lbl_lc_num: "Number of Local Chicks",
+    lbl_cost: "Cost per Chick", lbl_feed: "Feed Cost per 50kg Bag", lbl_days: "Days to Market (42-56)",
+    lbl_months: "Months to Market", lbl_price: "Market Price per Bird", lbl_eggs: "Expected Eggs per Bird/Year",
+    lbl_eprice: "Price per Egg", lbl_mort: "Mortality Rate (%)",
+    btn_b_calc: "Calculate Broiler Budget", btn_l_calc: "Calculate Layer Budget", btn_lc_calc: "Calculate Local Budget",
+    prem_title: "Professional PDF Report", prem_desc: "Complete feed blueprint with ingredient ratios, weekly schedules, profit scenarios & recommendations.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 After paying, click 'I Have Paid' to unlock.",
+    btn_unlock: "☐ I Have Paid - Unlock Report",
+    msg_ok: "✅ Unlocked! Download your PDF report now.",
+    btn_dl: "📥 Download PDF Report",
+    res_tot: "Total Birds", res_surv: "Surviving", res_feed: "Feed Needed", res_bags: "Bags Required",
+    res_tc: "Total Cost", res_rev: "Revenue", res_prof: "Profit",
+    tip_b1: "Broilers reach market weight in 6-8 weeks",
+    tip_b2: "High protein starter (22-24%) for first 2 weeks",
+    tip_b3: "Switch to finisher (18-20%) from week 4",
+    tip_b4: "24-hour lighting for first 3 days",
+    tip_l1: "Layers start laying at 18-20 weeks",
+    tip_l2: "Peak production 85-90% in prime months",
+    tip_l3: "Calcium improves shell quality",
+    tip_l4: "Clean water essential for eggs",
+    tip_lc1: "Local chickens are hardy, low feed needs",
+    tip_lc2: "Free-ranging reduces feed costs",
+    tip_lc3: "Higher price due to organic demand",
+    tip_lc4: "Vaccinate against Newcastle regularly"
+  },
+  fr: {
+    btn_broiler: "Poulet de Chair", btn_layer: "Pondeuse", btn_local: "Poulet Local",
+    title_b: "Données Élevage Chair", title_l: "Données Élevage Pondeuse", title_lc: "Données Poulet Local",
+    lbl_b_num: "Nombre de Poussins Chair", lbl_l_num: "Nombre de Poussins Pondeur", lbl_lc_num: "Nombre de Poussins Local",
+    lbl_cost: "Coût par Poussin", lbl_feed: "Coût Aliment Sac 50kg", lbl_days: "Jours jusqu'au Marché (42-56)",
+    lbl_months: "Mois jusqu'au Marché", lbl_price: "Prix de Marché par Oiseau", lbl_eggs: "Œufs Attendus/Oiseau/An",
+    lbl_eprice: "Prix par Œuf", lbl_mort: "Taux Mortalité (%)",
+    btn_b_calc: "Calculer Budget Chair", btn_l_calc: "Calculer Budget Pondeuse", btn_lc_calc: "Calculer Budget Local",
+    prem_title: "Rapport PDF Professionnel", prem_desc: "Plan complet de mélange d'aliments avec ratios, calendriers, scénarios de profit.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 Après paiement, cliquez 'J'ai Payé' pour déverrouiller.",
+    btn_unlock: "☐ J'ai Payé - Déverrouiller",
+    msg_ok: "✅ Déverrouillé! Téléchargez le PDF.",
+    btn_dl: "📥 Télécharger PDF",
+    res_tot: "Total Oiseaux", res_surv: "Survivants", res_feed: "Aliment Nécessaire", res_bags: "Sacs Requis",
+    res_tc: "Coût Total", res_rev: "Revenu", res_prof: "Profit",
+    tip_b1: "Chair atteint poids marché en 6-8 semaines",
+    tip_b2: "Démarrage protéiné élevé (22-24%)",
+    tip_b3: "Passer finisseur (18-20%) semaine 4",
+    tip_b4: "Éclairage 24h 3 premiers jours",
+    tip_l1: "Pondeuses commencent à 18-20 semaines",
+    tip_l2: "Production pic 85-90% mois optimaux",
+    tip_l3: "Calcium améliore coquille",
+    tip_l4: "Eau propre essentielle",
+    tip_lc1: "Poulets locaux robustes",
+    tip_lc2: "Élevage libre réduit coûts",
+    tip_lc3: "Prix plus élevé demande bio",
+    tip_lc4: "Vacciner Newcastle régulièrement"
+  },
+  es: {
+    btn_broiler: "Pollo Engorde", btn_layer: "Ponedora", btn_local: "Pollo Local",
+    title_b: "Datos Granja Engorde", title_l: "Datos Granja Ponedora", title_lc: "Datos Pollo Local",
+    lbl_b_num: "Número Pollitos Engorde", lbl_l_num: "Número Pollitos Ponedor", lbl_lc_num: "Número Pollitos Local",
+    lbl_cost: "Costo por Pollito", lbl_feed: "Costo Alimento Saco 50kg", lbl_days: "Días al Mercado (42-56)",
+    lbl_months: "Meses al Mercado", lbl_price: "Precio Mercado por Ave", lbl_eggs: "Huevos Esperados/Ave/Año",
+    lbl_eprice: "Precio por Huevo", lbl_mort: "Tasa Mortalidad (%)",
+    btn_b_calc: "Calcular Presupuesto Engorde", btn_l_calc: "Calcular Presupuesto Ponedora", btn_lc_calc: "Calcular Presupuesto Local",
+    prem_title: "Informe PDF Profesional", prem_desc: "Plan completo de mezcla de alimentos con ratios, calendarios, escenarios de ganancia.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 Después de pagar, haga clic 'He Pagado' para desbloquear.",
+    btn_unlock: "☐ He Pagado - Desbloquear",
+    msg_ok: "✅ ¡Desbloqueado! Descargue el PDF.",
+    btn_dl: "📥 Descargar PDF",
+    res_tot: "Total Aves", res_surv: "Sobrevivientes", res_feed: "Alimento Necesario", res_bags: "Sacos Requeridos",
+    res_tc: "Costo Total", res_rev: "Ingreso", res_prof: "Ganancia",
+    tip_b1: "Engorde alcanza peso en 6-8 semanas",
+    tip_b2: "Inicio alto proteína (22-24%)",
+    tip_b3: "Cambiar finalizador (18-20%) semana 4",
+    tip_b4: "Iluminación 24h primeros 3 días",
+    tip_l1: "Ponedoras empiezan a las 18-20 semanas",
+    tip_l2: "Producción pico 85-90% meses óptimos",
+    tip_l3: "Calcio mejora cáscara",
+    tip_l4: "Agua limpia esencial",
+    tip_lc1: "Pollos locales resistentes",
+    tip_lc2: "Pastoreo libre reduce costos",
+    tip_lc3: "Precio más alto demanda orgánica",
+    tip_lc4: "Vacunar Newcastle regularmente"
+  },
+  pt: {
+    btn_broiler: "Frango Corte", btn_layer: "Poedeira", btn_local: "Frango Local",
+    title_b: "Dados Granja Corte", title_l: "Dados Granja Poedeira", title_lc: "Dados Frango Local",
+    lbl_b_num: "Número Pintos Corte", lbl_l_num: "Número Pintos Poedeiro", lbl_lc_num: "Número Pintos Local",
+    lbl_cost: "Custo por Pinto", lbl_feed: "Custo Ração Saco 50kg", lbl_days: "Dias até Mercado (42-56)",
+    lbl_months: "Meses até Mercado", lbl_price: "Preço Mercado por Ave", lbl_eggs: "Ovos Esperados/Ave/Ano",
+    lbl_eprice: "Preço por Ovo", lbl_mort: "Taxa Mortalidade (%)",
+    btn_b_calc: "Calcular Orçamento Corte", btn_l_calc: "Calcular Orçamento Poedeira", btn_lc_calc: "Calcular Orçamento Local",
+    prem_title: "Relatório PDF Profissional", prem_desc: "Plano completo de mistura de ração com proporções, calendários, cenários de lucro.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 Após pagar, clique 'Paguei' para desbloquear.",
+    btn_unlock: "☐ Paguei - Desbloquear",
+    msg_ok: "✅ Desbloqueado! Baixe o PDF.",
+    btn_dl: "📥 Baixar PDF",
+    res_tot: "Total Aves", res_surv: "Sobreviventes", res_feed: "Ração Necessária", res_bags: "Sacos Requeridos",
+    res_tc: "Custo Total", res_rev: "Receita", res_prof: "Lucro",
+    tip_b1: "Corte atinge peso em 6-8 semanas",
+    tip_b2: "Início alto proteína (22-24%)",
+    tip_b3: "Mudar finalizador (18-20%) semana 4",
+    tip_b4: "Iluminação 24h primeiros 3 dias",
+    tip_l1: "Poedeiras começam às 18-20 semanas",
+    tip_l2: "Produção pico 85-90% meses ótimos",
+    tip_l3: "Cálcio melhora casca",
+    tip_l4: "Água limpa essencial",
+    tip_lc1: "Frangos locais resistentes",
+    tip_lc2: "Pastoreio livre reduz custos",
+    tip_lc3: "Preço mais alto demanda orgânica",
+    tip_lc4: "Vacinar Newcastle regularmente"
+  },
+  sw: {
+    btn_broiler: "Kuku wa Nyama", btn_layer: "Kuku wa Mayai", btn_local: "Kuku wa Kienyeji",
+    title_b: "Data ya Shamba la Nyama", title_l: "Data ya Shamba la Mayai", title_lc: "Data ya Shamba la Kienyeji",
+    lbl_b_num: "Idadi ya Vifaranga vya Nyama", lbl_l_num: "Idadi ya Vifaranga vya Mayai", lbl_lc_num: "Idadi ya Vifaranga vya Kienyeji",
+    lbl_cost: "Gharama kwa Kifaranga", lbl_feed: "Gharama ya Chakula Mfuko 50kg", lbl_days: "Siku hadi Soko (42-56)",
+    lbl_months: "Miezi hadi Soko", lbl_price: "Bei ya Soko kwa Kuku", lbl_eggs: "Mayai Yanayotarajiwa/Kuku/Mwaka",
+    lbl_eprice: "Bei kwa Yai", lbl_mort: "Kiwango cha Vifo (%)",
+    btn_b_calc: "Hesabu Bajeti ya Nyama", btn_l_calc: "Hesabu Bajeti ya Mayai", btn_lc_calc: "Hesabu Bajeti ya Kienyeji",
+    prem_title: "Ripoti ya PDF ya Kitaaluma", prem_desc: "Mpango kamili wa chakula na viwango, ratiba ya wiki, hali ya faida na mapendekezo.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 Baada ya kulipa, bonyeza 'Nimelipa' kufungua.",
+    btn_unlock: "☐ Nimelipa - Fungua Ripoti",
+    msg_ok: "✅ Imefunguliwa! Pakua ripoti ya PDF sasa.",
+    btn_dl: "📥 Pakua Ripoti ya PDF",
+    res_tot: "Idadi ya Kuku", res_surv: "Waliobaki Hai", res_feed: "Chakula Kinachohitajika", res_bags: "Mifuko Inayohitajika",
+    res_tc: "Gharama Jumla", res_rev: "Mapato", res_prof: "Faida",
+    tip_b1: "Kuku wa nyama hufikia uzito wa soko katika wiki 6-8",
+    tip_b2: "Chakula cha mwanzo chenye protini (22-24%) kwa wiki 2 za kwanza",
+    tip_b3: "Badilisha kwa finisher (18-20%) kutoka wiki 4",
+    tip_b4: "Mwangaza wa masaa 24 kwa siku 3 za kwanza",
+    tip_l1: "Kuku wa mayai huanza kutaga katika wiki 18-20",
+    tip_l2: "Uzalishaji wa juu 85-90% katika miezi bora",
+    tip_l3: "Kalisi inaboresha ubora wa ganda",
+    tip_l4: "Maji safi ni muhimu kwa mayai",
+    tip_lc1: "Kuku wa kienyeji ni imara, mahitaji ya chakula madogo",
+    tip_lc2: "Kulisha huru kupunguza gharama za chakula",
+    tip_lc3: "Bei ya juu kutokana na mahitaji ya kiorganiki",
+    tip_lc4: "Chanja dhidi ya Newcastle mara kwa mara"
+  },
+  lg: {
+    btn_broiler: "Kkoko wa Broiler", btn_layer: "Kkoko wa Egg", btn_local: "Kkoko wa Kikajjo",
+    title_b: "Ebikozesebwa mu Kusiga Broiler", title_l: "Ebikozesebwa mu Kusiga Egg", title_lc: "Ebikozesebwa mu Kusiga Kikajjo",
+    lbl_b_num: "Omuwendo gw'Enkoko za Broiler", lbl_l_num: "Omuwendo gw'Enkoko za Egg", lbl_lc_num: "Omuwendo gw'Enkoko za Kikajjo",
+    lbl_cost: "Omuwendo gw'Enkoko", lbl_feed: "Omuwendo gw'Ebyokulya 50kg", lbl_days: "Ennaku okutuuka ku Katale (42-56)",
+    lbl_months: "Emyezi okutuuka ku Katale", lbl_price: "Omuwendo ku Katale kwa Enkoko", lbl_eggs: "Obusobozi bw'Amagi/Enkoko/Omwaka",
+    lbl_eprice: "Omuwendo gw'Aagi", lbl_mort: "Omuwendo gw'Enkoko ezifa (%)",
+    btn_b_calc: "Okubala Broiler Budget", btn_l_calc: "Okubala Egg Budget", btn_lc_calc: "Okubala Kikajjo Budget",
+    prem_title: "Ripoti ya PDF ya Kikugu", prem_desc: "Enteekateeka y'okulya enkoko n'ebikozesebwa, enteekateeka ya wiiki, ebyokusobola okufuna ssente n'okuteesa.",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 Oluvannyuma lw'okusasula, nyiga 'Nsasudde' okuggulawo.",
+    btn_unlock: "☐ Nsasudde - Ggulawo Ripoti",
+    msg_ok: "✅ Egguddwa! Wanula ripoti ya PDF kati.",
+    btn_dl: "📥 Wanula Ripoti ya PDF",
+    res_tot: "Enkoko Zonna", res_surv: "Eziramu", res_feed: "Ebyokulya Byetagisa", res_bags: "Ebifuko Byetagisa",
+    res_tc: "Omuwendo Gwonna", res_rev: "Empeera", res_prof: "Obugagga",
+    tip_b1: "Enkoko za Broiler zituuka ku buzito bw'okutunda mu wiiki 6-8",
+    tip_b2: "Ebyokulya by'okutandika ebirina protein (22-24%) mu wiiki 2 ez'okutandika",
+    tip_b3: "Kyuka ku finisher (18-20%) okuva mu wiiki 4",
+    tip_b4: "Ottawa okumulisa ennaku 3 ez'okutandika",
+    tip_l1: "Enkoko za Egg zitandika okutaga mu wiiki 18-20",
+    tip_l2: "Okuzaala okw'omugaso 85-90% mu myezi egy'omugaso",
+    tip_l3: "Calcium eyongera obulungi bw'amagi",
+    tip_l4: "Amazzi amalongoofu ge magala ku mayai",
+    tip_lc1: "Enkoko za kikajjo zimazima, tezetaaga byokulya bingi",
+    tip_lc2: "Okulira mu buso kikendeeza omuwendo gw'okulya",
+    tip_lc3: "Omuwendo ogw'omugaso olw'okwetaaga eby'obulimbugumu",
+    tip_lc4: "Sibula ekirwadde kya Newcastle buli kiseera"
   }
+};
 
-  const feedPerBirdYear = 45; // kg per year
-  const totalFeedKg = chicks * feedPerBirdYear;
-  const bagsNeeded = Math.ceil(totalFeedKg / 50);
-  const totalFeedCost = bagsNeeded * feedCost;
-  const totalChickCost = chicks * chickCost;
-  const totalCost = totalFeedCost + totalChickCost;
+let lang = 'en';
 
-  const survivingBirds = Math.floor(chicks * (1 - mortality/100));
-  const totalEggs = survivingBirds * eggsPerBird;
-  const totalRevenue = totalEggs * eggPrice;
-  const profit = totalRevenue - totalCost;
-  const profitMargin = ((profit / totalRevenue) * 100).toFixed(1);
+function setLang() {
+  lang = document.getElementById('lang').value;
+  const t = T[lang];
 
-  lastCalculationData = {
-    type: 'Layer',
-    chicks, chickCost, feedCost, eggsPerBird, eggPrice, mortality,
-    totalFeedKg, bagsNeeded, totalFeedCost, totalChickCost, totalCost,
-    survivingBirds, totalEggs, totalRevenue, profit, profitMargin
-  };
+  // Type buttons
+  document.getElementById('btn-broiler').textContent = t.btn_broiler;
+  document.getElementById('btn-layer').textContent = t.btn_layer;
+  document.getElementById('btn-local').textContent = t.btn_local;
 
-  const html = `
-    <div class="results-box">
-      <h3>📊 Layer Calculation Results</h3>
-      <div class="result-item"><span>Total Chicks</span><span class="value">${chicks.toLocaleString()}</span></div>
-      <div class="result-item"><span>Surviving Birds (${100-mortality}%)</span><span class="value">${survivingBirds.toLocaleString()}</span></div>
-      <div class="result-item"><span>Expected Eggs/Year</span><span class="value">${totalEggs.toLocaleString()}</span></div>
-      <div class="result-item"><span>Total Feed Needed</span><span class="value">${totalFeedKg.toFixed(1)} kg</span></div>
-      <div class="result-item"><span>50kg Bags Required</span><span class="value">${bagsNeeded}</span></div>
-      <div class="result-item"><span>Total Cost</span><span class="value">UGX ${totalCost.toLocaleString()}</span></div>
-      <div class="result-item"><span>Expected Revenue</span><span class="value">UGX ${totalRevenue.toLocaleString()}</span></div>
-      <div class="result-item"><span><strong>Estimated Profit</strong></span><span class="value" style="color:${profit>=0?'#4caf50':'#f44336'}"><strong>UGX ${profit.toLocaleString()} (${profitMargin}%)</strong></span></div>
-    </div>
-  `;
+  // Titles
+  document.getElementById('title-b').textContent = t.title_b;
+  document.getElementById('title-l').textContent = t.title_l;
+  document.getElementById('title-lc').textContent = t.title_lc;
 
-  document.getElementById('layer-results').innerHTML = html;
-}
+  // Labels
+  document.getElementById('lbl-b-num').textContent = t.lbl_b_num;
+  document.getElementById('lbl-l-num').textContent = t.lbl_l_num;
+  document.getElementById('lbl-lc-num').textContent = t.lbl_lc_num;
 
-// ==================== LOCAL CHICKEN CALCULATION ====================
-function calculateLocal() {
-  const chicks = parseInt(document.getElementById('local-chicks').value) || 0;
-  const chickCost = parseInt(document.getElementById('local-chick-cost').value) || 0;
-  const feedCost = parseInt(document.getElementById('local-feed-cost').value) || 0;
-  const targetWeight = parseFloat(document.getElementById('local-target-weight').value) || 1.8;
-  const priceKg = parseInt(document.getElementById('local-price-kg').value) || 0;
-  const mortality = parseFloat(document.getElementById('local-mortality').value) || 10;
-
-  if (chicks === 0 || feedCost === 0) {
-    alert('Please enter number of chicks and feed cost');
-    return;
-  }
-
-  const fcr = 3.5; // Local chickens need more feed
-  const totalFeedKg = chicks * targetWeight * fcr;
-  const bagsNeeded = Math.ceil(totalFeedKg / 50);
-  const totalFeedCost = bagsNeeded * feedCost;
-  const totalChickCost = chicks * chickCost;
-  const totalCost = totalFeedCost + totalChickCost;
-
-  const survivingBirds = Math.floor(chicks * (1 - mortality/100));
-  const totalRevenue = survivingBirds * targetWeight * priceKg;
-  const profit = totalRevenue - totalCost;
-  const profitMargin = ((profit / totalRevenue) * 100).toFixed(1);
-
-  lastCalculationData = {
-    type: 'Local Chicken',
-    chicks, chickCost, feedCost, targetWeight, priceKg, mortality,
-    totalFeedKg, bagsNeeded, totalFeedCost, totalChickCost, totalCost,
-    survivingBirds, totalRevenue, profit, profitMargin
-  };
-
-  const html = `
-    <div class="results-box">
-      <h3>📊 Local Chicken Calculation Results</h3>
-      <div class="result-item"><span>Total Chicks</span><span class="value">${chicks.toLocaleString()}</span></div>
-      <div class="result-item"><span>Surviving Birds (${100-mortality}%)</span><span class="value">${survivingBirds.toLocaleString()}</span></div>
-      <div class="result-item"><span>Total Feed Needed</span><span class="value">${totalFeedKg.toFixed(1)} kg</span></div>
-      <div class="result-item"><span>50kg Bags Required</span><span class="value">${bagsNeeded}</span></div>
-      <div class="result-item"><span>Total Cost</span><span class="value">UGX ${totalCost.toLocaleString()}</span></div>
-      <div class="result-item"><span>Expected Revenue</span><span class="value">UGX ${totalRevenue.toLocaleString()}</span></div>
-      <div class="result-item"><span><strong>Estimated Profit</strong></span><span class="value" style="color:${profit>=0?'#4caf50':'#f44336'}"><strong>UGX ${profit.toLocaleString()} (${profitMargin}%)</strong></span></div>
-    </div>
-  `;
-
-  document.getElementById('local-results').innerHTML = html;
-}
-
-// ==================== PAYMENT FUNCTIONS ====================
-function copyCryptoAddress() {
-  const address = 'TAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2';
-  navigator.clipboard.writeText(address).then(() => {
-    alert('TRC20 Address copied to clipboard!\n\n' + address + '\n\nPlease send $2.00 USDT on Tron Network.');
-  }).catch(() => {
-    prompt('Copy this TRC20 address:', address);
+  // Shared labels
+  document.querySelectorAll('[id^="lbl-b-"], [id^="lbl-l-"], [id^="lbl-lc-"]').forEach(el => {
+    const id = el.id;
+    if (id.includes('cost')) el.textContent = t.lbl_cost;
+    if (id.includes('feed')) el.textContent = t.lbl_feed;
+    if (id.includes('days')) el.textContent = t.lbl_days;
+    if (id.includes('months')) el.textContent = t.lbl_months;
+    if (id.includes('price')) el.textContent = t.lbl_price;
+    if (id.includes('eggs')) el.textContent = t.lbl_eggs;
+    if (id.includes('eprice')) el.textContent = t.lbl_eprice;
+    if (id.includes('mort')) el.textContent = t.lbl_mort;
   });
+
+  // Calc buttons
+  document.getElementById('btn-b-calc').textContent = t.btn_b_calc;
+  document.getElementById('btn-l-calc').textContent = t.btn_l_calc;
+  document.getElementById('btn-lc-calc').textContent = t.btn_lc_calc;
+
+  // Premium section - ALL payment text
+  document.getElementById('prem-title').textContent = t.prem_title;
+  document.getElementById('prem-desc').textContent = t.prem_desc;
+  document.getElementById('pay-p').textContent = t.pay_paypal;
+  document.getElementById('pay-a').textContent = t.pay_airtel;
+  document.getElementById('pay-t').textContent = t.pay_trc20;
+  document.getElementById('msg-lock').textContent = t.msg_lock;
+  document.getElementById('btn-unlock').textContent = t.btn_unlock;
+  document.getElementById('msg-ok').textContent = t.msg_ok;
+  document.getElementById('btn-dl').textContent = t.btn_dl;
+
+  // Re-render results if visible
+  if (document.getElementById('b-res').innerHTML) calcB();
+  if (document.getElementById('l-res').innerHTML) calcL();
+  if (document.getElementById('lc-res').innerHTML) calcLC();
 }
 
-// ==================== I HAVE PAID - UNCHECKED BY DEFAULT ====================
-function markPaid() {
-  const btn = document.getElementById('paid-btn');
-  const text = document.getElementById('paid-text');
-  const premiumContent = document.getElementById('premium-content');
-
-  if (!isPaid) {
-    isPaid = true;
-    btn.classList.add('paid');
-    text.textContent = '✅ Paid - Report Unlocked!';
-    premiumContent.classList.add('unlocked');
-
-    // Send notification (simulate)
-    console.log('Payment notification sent to farm owner');
-    alert('Thank you! Your report has been unlocked.\n\nA notification has been sent to the farm owner.\n\nYou can now download the Professional PDF Report.');
-  }
+function switchType(t) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
+  document.querySelector('[data-t="' + t + '"]').classList.add('active');
+  document.getElementById(t + '-calc').classList.add('active');
 }
 
-// ==================== PREVIEW REPORT ====================
-function previewReport() {
-  if (!lastCalculationData) {
-    alert('Please calculate your feed budget first before previewing the report.');
-    return;
-  }
+// ===== CALCULATIONS =====
+function fmt(n) { return curSym + n.toLocaleString('en', {maximumFractionDigits:2}); }
 
-  let preview = '📄 PROFESSIONAL PDF REPORT PREVIEW\n\n';
-  preview += '═══════════════════════════════════════\n\n';
-  preview += 'FARM INFORMATION\n';
-  preview += '─────────────────\n';
-  preview += 'Farm: ' + (lastCalculationData.farmName || 'Not specified') + '\n';
-  preview += 'Farmer: ' + (lastCalculationData.farmerName || 'Not specified') + '\n';
-  preview += 'Location: ' + (lastCalculationData.location || 'Not specified') + '\n';
-  preview += 'Type: ' + lastCalculationData.type + '\n\n';
+function calcB() {
+  const c = +document.getElementById('b-c').value;
+  const cc = +document.getElementById('b-cc').value;
+  const fc = +document.getElementById('b-fc').value;
+  const d = +document.getElementById('b-d').value;
+  const mp = +document.getElementById('b-mp').value;
+  const m = +document.getElementById('b-m').value;
+  const t = T[lang];
 
-  preview += 'FEED MIXING BLUEPRINT\n';
-  preview += '──────────────────────\n';
-  preview += '• Maize: 50%\n';
-  preview += '• Soybean Cake: 25%\n';
-  preview += '• Fish Meal: 10%\n';
-  preview += '• Premix: 5%\n';
-  preview += '• Others: 10%\n\n';
+  const surv = Math.round(c * (1 - m/100));
+  const feed = surv * d * 0.12;
+  const bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc;
+  const rev = surv * mp;
+  const prof = rev - tc;
 
-  preview += 'WEEKLY FEEDING SCHEDULE\n';
-  preview += '───────────────────────\n';
-  preview += 'Week 1-2: Starter feed, 35g/bird/day\n';
-  preview += 'Week 3-5: Grower feed, 65g/bird/day\n';
-  preview += 'Week 6-8: Finisher feed, 100g/bird/day\n\n';
+  document.getElementById('b-res').innerHTML = `
+    <div class="results">
+      <h3>📊 ${t.btn_b_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
+      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
+      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
+      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
+      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
+      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
+      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
+      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
+    </div>`;
 
-  preview += 'PROFIT SCENARIOS\n';
-  preview += '─────────────────\n';
-  preview += 'Best Case: UGX ' + (lastCalculationData.profit * 1.2).toLocaleString() + '\n';
-  preview += 'Expected: UGX ' + lastCalculationData.profit.toLocaleString() + '\n';
-  preview += 'Worst Case: UGX ' + (lastCalculationData.profit * 0.6).toLocaleString() + '\n\n';
-
-  preview += 'FARM RECOMMENDATIONS\n';
-  preview += '─────────────────────\n';
-  preview += '1. Ensure clean water always\n';
-  preview += '2. Vaccinate on schedule\n';
-  preview += '3. Monitor feed conversion weekly\n';
-  preview += '4. Keep mortality under 5%\n';
-  preview += '5. Pre-sell to secure market\n\n';
-
-  preview += '═══════════════════════════════════════\n';
-  preview += 'Unlock full PDF with premium features!\n';
-  preview += 'Includes detailed blueprints, schedules,\n';
-  preview += 'and professional formatting.';
-
-  alert(preview);
+  document.getElementById('b-tip').innerHTML = `
+    <div class="tips">
+      <h3>💡 Tips</h3>
+      <p>• ${t.tip_b1}</p>
+      <p>• ${t.tip_b2}</p>
+      <p>• ${t.tip_b3}</p>
+      <p>• ${t.tip_b4}</p>
+    </div>`;
 }
 
-// ==================== GENERATE PDF ====================
-function generatePDF() {
-  if (!isPaid) {
-    alert('Please complete payment and click "I Have Paid" to unlock the PDF download.');
-    return;
-  }
+function calcL() {
+  const c = +document.getElementById('l-c').value;
+  const cc = +document.getElementById('l-cc').value;
+  const fc = +document.getElementById('l-fc').value;
+  const e = +document.getElementById('l-e').value;
+  const ep = +document.getElementById('l-ep').value;
+  const m = +document.getElementById('l-m').value;
+  const t = T[lang];
 
-  if (!lastCalculationData) {
-    alert('Please calculate your feed budget first.');
-    return;
-  }
+  const surv = Math.round(c * (1 - m/100));
+  const feed = surv * 365 * 0.11;
+  const bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc;
+  const rev = surv * e * ep;
+  const prof = rev - tc;
 
+  document.getElementById('l-res').innerHTML = `
+    <div class="results">
+      <h3>📊 ${t.btn_l_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
+      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
+      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
+      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
+      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
+      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
+      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
+      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
+    </div>`;
+
+  document.getElementById('l-tip').innerHTML = `
+    <div class="tips">
+      <h3>💡 Tips</h3>
+      <p>• ${t.tip_l1}</p>
+      <p>• ${t.tip_l2}</p>
+      <p>• ${t.tip_l3}</p>
+      <p>• ${t.tip_l4}</p>
+    </div>`;
+}
+
+function calcLC() {
+  const c = +document.getElementById('lc-c').value;
+  const cc = +document.getElementById('lc-cc').value;
+  const fc = +document.getElementById('lc-fc').value;
+  const mo = +document.getElementById('lc-mo').value;
+  const mp = +document.getElementById('lc-mp').value;
+  const m = +document.getElementById('lc-m').value;
+  const t = T[lang];
+
+  const surv = Math.round(c * (1 - m/100));
+  const feed = surv * mo * 30 * 0.08;
+  const bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc;
+  const rev = surv * mp;
+  const prof = rev - tc;
+
+  document.getElementById('lc-res').innerHTML = `
+    <div class="results">
+      <h3>📊 ${t.btn_lc_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
+      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
+      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
+      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
+      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
+      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
+      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
+      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
+    </div>`;
+
+  document.getElementById('lc-tip').innerHTML = `
+    <div class="tips">
+      <h3>💡 Tips</h3>
+      <p>• ${t.tip_lc1}</p>
+      <p>• ${t.tip_lc2}</p>
+      <p>• ${t.tip_lc3}</p>
+      <p>• ${t.tip_lc4}</p>
+    </div>`;
+}
+
+// ===== PAYMENT =====
+function payT() { alert('TRC20 USDT Address:\nTAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2'); }
+function unlock() { document.getElementById('pay-area').style.display='none'; document.getElementById('dl-area').style.display='block'; }
+
+// ===== PDF =====
+async function genPDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  document.getElementById('pdate').textContent = new Date().toLocaleString();
+  document.getElementById('ptype').textContent = document.querySelector('.type-btn.active span:last-child').textContent;
 
-  // Header
-  doc.setFillColor(45, 74, 62);
-  doc.rect(0, 0, 210, 40, 'F');
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(22);
-  doc.text('Unified Farm BLM', 105, 20, { align: 'center' });
-  doc.setFontSize(14);
-  doc.text('Professional Poultry Feed Report', 105, 30, { align: 'center' });
-
-  let y = 50;
-
-  // Farm Info
-  doc.setTextColor(45, 74, 62);
-  doc.setFontSize(16);
-  doc.text('Farm Information', 20, y);
-  y += 10;
-
-  doc.setFontSize(11);
-  doc.setTextColor(80, 80, 80);
-  const info = [
-    ['Farm Name:', lastCalculationData.farmName || '-'],
-    ['Farmer Name:', lastCalculationData.farmerName || '-'],
-    ['Location:', lastCalculationData.location || '-'],
-    ['Poultry Type:', lastCalculationData.type],
-    ['Report Date:', new Date().toLocaleDateString()]
-  ];
-
-  info.forEach(([label, value]) => {
-    doc.setTextColor(45, 74, 62);
-    doc.text(label, 20, y);
-    doc.setTextColor(80, 80, 80);
-    doc.text(value, 80, y);
-    y += 8;
-  });
-
-  y += 10;
-
-  // Feed Mixing Blueprint
-  doc.setTextColor(45, 74, 62);
-  doc.setFontSize(16);
-  doc.text('Feed Mixing Blueprint', 20, y);
-  y += 10;
-
-  const blueprint = [
-    ['Ingredient', 'Percentage', 'Amount (kg)', 'Cost (UGX)'],
-    ['Maize', '50%', (lastCalculationData.totalFeedKg * 0.5).toFixed(1), '-'],
-    ['Soybean Cake', '25%', (lastCalculationData.totalFeedKg * 0.25).toFixed(1), '-'],
-    ['Fish Meal', '10%', (lastCalculationData.totalFeedKg * 0.1).toFixed(1), '-'],
-    ['Premix/Vitamins', '5%', (lastCalculationData.totalFeedKg * 0.05).toFixed(1), '-'],
-    ['Others', '10%', (lastCalculationData.totalFeedKg * 0.1).toFixed(1), '-']
-  ];
-
-  doc.setFontSize(10);
-  blueprint.forEach((row, i) => {
-    const fillColor = i === 0 ? [240, 247, 244] : [255, 255, 255];
-    doc.setFillColor(...fillColor);
-    doc.rect(20, y - 5, 170, 8, 'F');
-    doc.setTextColor(i === 0 ? 45 : 80, i === 0 ? 74 : 80, i === 0 ? 62 : 80);
-    row.forEach((cell, j) => {
-      doc.text(cell, 25 + j * 45, y);
-    });
-    y += 8;
-  });
-
-  y += 10;
-
-  // Weekly Schedule
-  doc.setTextColor(45, 74, 62);
-  doc.setFontSize(16);
-  doc.text('Weekly Feeding Schedule', 20, y);
-  y += 10;
-
-  const schedule = [
-    ['Week', 'Feed Type', 'Daily/Bird(g)', 'Total(kg)', 'Cost(UGX)'],
-    ['1-2', 'Starter', '35', Math.ceil(lastCalculationData.chicks * 0.035 * 14), '-'],
-    ['3-5', 'Grower', '65', Math.ceil(lastCalculationData.chicks * 0.065 * 21), '-'],
-    ['6-8', 'Finisher', '100', Math.ceil(lastCalculationData.chicks * 0.1 * 21), '-']
-  ];
-
-  doc.setFontSize(10);
-  schedule.forEach((row, i) => {
-    const fillColor = i === 0 ? [240, 247, 244] : [255, 255, 255];
-    doc.setFillColor(...fillColor);
-    doc.rect(20, y - 5, 170, 8, 'F');
-    doc.setTextColor(i === 0 ? 45 : 80, i === 0 ? 74 : 80, i === 0 ? 62 : 80);
-    row.forEach((cell, j) => {
-      doc.text(cell, 25 + j * 35, y);
-    });
-    y += 8;
-  });
-
-  y += 10;
-
-  // Profit Scenarios
-  doc.setTextColor(45, 74, 62);
-  doc.setFontSize(16);
-  doc.text('Profit Scenarios', 20, y);
-  y += 10;
-
-  const profit = lastCalculationData.profit;
-  const scenarios = [
-    ['Scenario', 'Revenue (UGX)', 'Cost (UGX)', 'Profit (UGX)', 'Margin'],
-    ['Best Case', (lastCalculationData.totalRevenue * 1.2).toLocaleString(), lastCalculationData.totalCost.toLocaleString(), (profit * 1.2).toLocaleString(), ((profit * 1.2 / (lastCalculationData.totalRevenue * 1.2)) * 100).toFixed(1) + '%'],
-    ['Expected', lastCalculationData.totalRevenue.toLocaleString(), lastCalculationData.totalCost.toLocaleString(), profit.toLocaleString(), lastCalculationData.profitMargin + '%'],
-    ['Worst Case', (lastCalculationData.totalRevenue * 0.8).toLocaleString(), lastCalculationData.totalCost.toLocaleString(), (profit * 0.6).toLocaleString(), ((profit * 0.6 / (lastCalculationData.totalRevenue * 0.8)) * 100).toFixed(1) + '%']
-  ];
-
-  doc.setFontSize(9);
-  scenarios.forEach((row, i) => {
-    const fillColor = i === 0 ? [240, 247, 244] : [255, 255, 255];
-    doc.setFillColor(...fillColor);
-    doc.rect(20, y - 5, 170, 8, 'F');
-    doc.setTextColor(i === 0 ? 45 : 80, i === 0 ? 74 : 80, i === 0 ? 62 : 80);
-    row.forEach((cell, j) => {
-      doc.text(cell, 25 + j * 35, y);
-    });
-    y += 8;
-  });
-
-  y += 10;
-
-  // Recommendations
-  if (y > 250) {
-    doc.addPage();
-    y = 20;
-  }
-
-  doc.setTextColor(45, 74, 62);
-  doc.setFontSize(16);
-  doc.text('Farm Recommendations', 20, y);
-  y += 10;
-
-  const recommendations = [
-    '1. Ensure clean, fresh water is available at all times',
-    '2. Follow vaccination schedule strictly (Gumboro, Newcastle)',
-    '3. Monitor feed conversion ratio weekly for efficiency',
-    '4. Target mortality rate under 5% for broilers, 8% for layers',
-    '5. Pre-sell to hotels, restaurants, and markets before harvest',
-    '6. Maintain proper biosecurity - foot baths, restricted access',
-    '7. Record daily mortality and feed consumption for tracking',
-    '8. Consider cooperative buying to reduce feed costs'
-  ];
-
-  doc.setFontSize(10);
-  doc.setTextColor(80, 80, 80);
-  recommendations.forEach(rec => {
-    doc.text(rec, 20, y);
-    y += 8;
-  });
-
-  // Footer
-  doc.setFontSize(9);
-  doc.setTextColor(150, 150, 150);
-  doc.text('Generated by Unified Farm BLM Professional Poultry Feed Calculator', 105, 280, { align: 'center' });
-  doc.text('Contact: +256 708 813410 | ryglutwa0@gmail.com | TRC20: TAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2', 105, 285, { align: 'center' });
-
-  doc.save('UnifiedFarm_BLM_Poultry_Report.pdf');
+  const el = document.getElementById('pdf');
+  const canvas = await html2canvas(el, {scale:2});
+  const img = canvas.toDataURL('image/png');
+  const pw = 210, ph = 297;
+  const iw = canvas.width, ih = canvas.height;
+  const ratio = Math.min(pw/iw, ph/ih);
+  const w = iw * ratio, h = ih * ratio;
+  pdf.addImage(img, 'PNG', (pw-w)/2, 10, w, h);
+  pdf.save('UnifiedFarmBLM_Poultry_Report.pdf');
 }
 
 // Initialize
-switchType('broiler');
+setCurr();
 </script>
-
 </body>
 </html>
