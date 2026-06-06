@@ -124,13 +124,13 @@
 
   <!-- Mode Switcher -->
   <div class="mode-switcher">
-    <button class="mode-btn active" onclick="switchMode('broiler')">
+    <button class="mode-btn active" onclick="switchMode('broiler', this)">
       <span class="emoji">🥩</span>Broiler
     </button>
-    <button class="mode-btn" onclick="switchMode('layer')">
-      <span class="emoji">🥚</span>Layer
+    <button class="mode-btn" onclick="switchMode('layer', this)">
+      <span class="emoji">🥚</span>Layer 
     </button>
-    <button class="mode-btn" onclick="switchMode('local')">
+    <button class="mode-btn" onclick="switchMode('local', this)">
       <span class="emoji">🐔</span>Local Chicken
     </button>
   </div>
@@ -550,25 +550,26 @@ function switchMode(mode) {
 }
 
 // ==================== CURRENCY ====================
-function updateCurrency() {
-  currentCurrency = document.getElementById('currency').value;
-  document.querySelectorAll('.currency-label').forEach(el => { el.textContent = currencies[currentCurrency].symbol; });
-  if (calcData) displayResults(calcData);
-}
-
-function formatMoney(amount) {
-  const curr = currencies[currentCurrency];
-  const converted = amount * curr.rate;
-  if (currentCurrency === 'USD') return curr.symbol + converted.toFixed(2);
-  return curr.symbol + ' ' + Math.round(converted).toLocaleString();
-}
-
-function showNotification(msg, type) {
-  const notif = document.getElementById('notification');
-  notif.textContent = msg;
-  notif.className = 'notification show ' + (type || 'success');
-  setTimeout(() => notif.classList.remove('show'), 3000);
-}
+function switchMode(mode, clickedBtn) {
+  var sections = document.querySelectorAll('.mode-section');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].style.display = 'none';
+  }
+  var selected = document.getElementById(mode + '-section');
+  if (selected) selected.style.display = 'block';
+  
+  var buttons = document.querySelectorAll('.mode-btn');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('active');
+  }
+  if (clickedBtn) clickedBtn.classList.add('active');
+  
+  var badge = document.getElementById('modeBadge');
+  if (badge) {
+    if (mode === 'broiler') badge.textContent = 'Broiler Feed Cost Estimator';
+    if (mode === 'layer') badge.textContent = 'Layer Feed Cost Estimator';
+    if (mode === 'local') badge.textContent = 'Local Chicken Feed Estimator';
+  } 
 
 // ==================== BROILER CALCULATION ====================
 function calculateBroiler() {
