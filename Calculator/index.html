@@ -532,33 +532,23 @@ let calcData = null;
 let isPremium = false;
 
 // ==================== MODE SWITCHING ====================
-function switchMode(mode) {
-  currentMode = mode;
-  document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.closest('.mode-btn').classList.add('active');
-  const badges = { broiler: 'Broiler Feed Cost Estimator', layer: 'Layer Feed & Egg Production Estimator', local: 'Local Chicken Feed & Profit Estimator' };
-  document.getElementById('modeBadge').textContent = badges[mode];
-  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
-  document.getElementById(mode + '-section').classList.add('active');
-  document.getElementById('results').classList.remove('show');
-  const descs = {
-    broiler: 'Export a complete printable broiler feed mixing blueprint with ingredient ratios, weekly schedules, profit scenarios, and farm recommendations.',
-    layer: 'Export a complete printable layer feed plan with egg production forecasts, feed schedules, profit scenarios, and flock management recommendations.',
-    local: 'Export a complete printable local chicken management guide with feed ratios, egg production schedules, profit scenarios, and free-range tips.'
-  };
-  document.getElementById('premium-desc').textContent = descs[mode];
+
 }
 
 // ==================== CURRENCY ====================
 function switchMode(mode, clickedBtn) {
   var sections = document.querySelectorAll('.mode-section');
   for (var i = 0; i < sections.length; i++) {
-    sections[i].style.display = 'none';
+ sections[i].classList.remove('active');
+sections[i].style.display = 'none';
   }
-  var selected = document.getElementById(mode + '-section');
-  if (selected) selected.style.display = 'block';
-  
-  var buttons = document.querySelectorAll('.mode-btn');
+ var selected = document.getElementById(mode + '-section');
+ if (selected) {
+   selected.classList.add('active');
+ selected.style.display = 'block'; 
+ }
+ 
+ var buttons = document.querySelectorAll('.mode-btn');
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].classList.remove('active');
   }
