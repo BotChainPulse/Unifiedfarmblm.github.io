@@ -24,7 +24,8 @@
   .card h3 { color: #2d4a3e; font-size: 1.2rem; margin-bottom: 12px; }
   .input-group { margin-bottom: 12px; }
   .input-group label { display: block; font-weight: bold; color: #555; margin-bottom: 5px; font-size: 0.9rem; }
-  .input-group input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; font-size: 1rem; font-family: inherit; }
+  .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; font-size: 1rem; font-family: inherit; }
+  .input-group textarea { min-height: 80px; resize: vertical; }
   .btn { width: 100%; padding: 15px; background: #2d4a3e; color: #fff; border: none; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: pointer; font-family: inherit; margin-bottom: 10px; }
   .results { background: #e8f0ec; border-radius: 18px; padding: 18px; margin-bottom: 12px; border-left: 5px solid #2d4a3e; }
   .results h3 { color: #2d4a3e; margin-bottom: 10px; }
@@ -45,21 +46,26 @@
   .am { background: #c0392b; }
   .tr { background: #5a2d8a; }
   .lock { background: #fff8e1; border: 2px solid #c9a84c; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: center; color: #8a6d1f; font-size: 0.9rem; }
-  .unlock-btn { width: 100%; padding: 14px; background: #2d4a3e; color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-  .dl-btn { width: 100%; padding: 15px; background: #2d8a4e; color: #fff; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-  .ok { background: #e8f5e9; border: 2px solid #2d8a4e; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: center; color: #2d8a4e; font-weight: bold; }
   .footer { text-align: center; padding: 20px; color: #888; font-size: 0.8rem; }
   #pdf { position: absolute; left: -9999px; width: 800px; background: #fff; padding: 40px; }
   .pdf-h { text-align: center; border-bottom: 3px solid #2d4a3e; padding-bottom: 20px; margin-bottom: 25px; }
   .pdf-h h1 { color: #2d4a3e; font-size: 1.8rem; }
   .pdf-h h2 { color: #c9a84c; font-size: 1.2rem; }
-  .pdf-s { margin-bottom: 20px; }
-  .pdf-s h3 { color: #2d4a3e; border-bottom: 2px solid #c9a84c; padding-bottom: 6px; margin-bottom: 12px; }
+  .pdf-s { margin-bottom: 25px; }
+  .pdf-s h3 { color: #2d4a3e; border-bottom: 2px solid #c9a84c; padding-bottom: 6px; margin-bottom: 12px; font-size: 1.1rem; }
   .p-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; }
-  .p-tbl { width: 100%; border-collapse: collapse; margin: 8px 0; }
-  .p-tbl th, .p-tbl td { border: 1px solid #ddd; padding: 8px; }
+  .p-tbl { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.85rem; }
+  .p-tbl th, .p-tbl td { border: 1px solid #ddd; padding: 6px; }
   .p-tbl th { background: #2d4a3e; color: #fff; }
+  .p-list { margin: 8px 0; padding-left: 20px; }
+  .p-list li { margin-bottom: 6px; font-size: 0.85rem; }
   .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #2d4a3e; color: #fff; padding: 12px 20px; border-radius: 12px; font-size: 0.9rem; z-index: 1000; display: none; }
+  .request-form { display: none; background: #f0f7f4; border-radius: 18px; padding: 20px; margin-top: 15px; border: 2px solid #2d8a4e; text-align: left; }
+  .request-form h4 { color: #2d4a3e; margin-bottom: 12px; text-align: center; }
+  .submit-btn { width: 100%; padding: 14px; background: #2d8a4e; color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+  .contact-box { background: #e8f0ec; border-radius: 12px; padding: 15px; margin-top: 15px; text-align: center; }
+  .contact-box p { color: #2d4a3e; font-size: 0.9rem; margin-bottom: 8px; }
+  .wa-btn { display: inline-block; padding: 10px 20px; background: #25d366; color: #fff; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
 </style>
 </head>
 <body>
@@ -77,6 +83,7 @@
     <option value="pt">🇵🇹 Português</option>
     <option value="sw">🇹🇿 Swahili</option>
     <option value="lg">🇺🇬 Luganda</option>
+    <option value="hi">🇮🇳 हिन्दी</option>
   </select>
   <select id="curr" onchange="setCurr()">
     <option value="USD">USD ($)</option>
@@ -211,7 +218,7 @@
 <!-- PREMIUM -->
 <div class="premium">
   <div class="prem-card">
-    <h3>📄 <span id="prem-title">Professional PDF Report</span></h3>
+    <h3>📄 <span id="prem-title">Professional PDF Report</h3>
     <p id="prem-desc">Complete feed blueprint with ingredient ratios, weekly schedules, profit scenarios & recommendations.</p>
 
     <div id="pay-area">
@@ -224,13 +231,46 @@
       <button class="pay-btn tr" onclick="payT()">
         ₿ <span id="pay-t">TRC20 USDT</span>
       </button>
-      <div class="lock" id="msg-lock">🔒 After paying, click "I Have Paid" to unlock.</div>
-      <button class="unlock-btn" onclick="unlock()" id="btn-unlock">☐ I Have Paid - Unlock Report</button>
+      <div class="lock" id="msg-lock">🔒 After paying, click "Request Report" below and send your payment proof.</div>
+      <button class="btn" onclick="showRequestForm()" id="btn-request" style="background:#2d8a4e;">📨 Request PDF Report</button>
     </div>
 
-    <div id="dl-area" style="display:none">
-      <div class="ok" id="msg-ok">✅ Unlocked! Download your PDF report now.</div>
-      <button class="dl-btn" onclick="genPDF()" id="btn-dl">📥 Download PDF Report</button>
+    <!-- REQUEST FORM -->
+    <div class="request-form" id="request-form">
+      <h4>📝 Send Payment Proof</h4>
+      <div class="input-group">
+        <label>Your Name</label>
+        <input type="text" id="req-name" placeholder="John Doe">
+      </div>
+      <div class="input-group">
+        <label>Email or WhatsApp Number</label>
+        <input type="text" id="req-contact" placeholder="email@example.com or +256...">
+      </div>
+      <div class="input-group">
+        <label>Payment Method Used</label>
+        <select id="req-method">
+          <option value="">Select...</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Airtel Money">Airtel Money</option>
+          <option value="TRC20 USDT">TRC20 USDT</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Transaction ID / Reference Number</label>
+        <input type="text" id="req-txid" placeholder="e.g., 8JHK20LP or screenshot name">
+      </div>
+      <div class="input-group">
+        <label>Additional Notes (optional)</label>
+        <textarea id="req-notes" placeholder="Any details about your payment..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitRequest()">✅ Submit Request</button>
+
+      <div class="contact-box">
+        <p id="contact-text">Or contact us directly:</p>
+        <p><strong>WhatsApp:</strong> +256 708 813419</p>
+        <p><strong>Email:</strong> ryglutwa0@gmail.com</p>
+        <a class="wa-btn" href="https://wa.me/256708813419" target="_blank">💬 WhatsApp Us</a>
+      </div>
     </div>
   </div>
 </div>
@@ -238,7 +278,7 @@
 <div class="footer">© 2026 Unified Farm BLM · All Rights Reserved</div>
 <div class="toast" id="toast"></div>
 
-<!-- PDF TEMPLATE -->
+<!-- PDF TEMPLATE (hidden, generated for you to send manually) -->
 <div id="pdf">
   <div class="pdf-h">
     <h1>Unified Farm BLM</h1>
@@ -261,24 +301,85 @@
     <div id="p-out"></div>
   </div>
   <div class="pdf-s">
-    <h3>🌾 Feed Mix</h3>
+    <h3>🌾 Feed Mix Formulas (Per 100kg)</h3>
     <table class="p-tbl">
-      <tr><th>Ingredient</th><th>%</th><th>Per 100kg</th></tr>
-      <tr><td>Maize</td><td>55%</td><td>55kg</td></tr>
-      <tr><td>Soybean</td><td>25%</td><td>25kg</td></tr>
-      <tr><td>Wheat Bran</td><td>10%</td><td>10kg</td></tr>
-      <tr><td>Fish Meal</td><td>5%</td><td>5kg</td></tr>
-      <tr><td>Limestone</td><td>3%</td><td>3kg</td></tr>
-      <tr><td>Vitamin Mix</td><td>2%</td><td>2kg</td></tr>
+      <tr><th>Stage</th><th>Maize</th><th>Soybean</th><th>Wheat Bran</th><th>Fish Meal</th><th>Limestone</th><th>Vitamins</th><th>Protein</th></tr>
+      <tr><td>Starter (0-2w)</td><td>55kg</td><td>28kg</td><td>5kg</td><td>6kg</td><td>2kg</td><td>4kg</td><td>22-24%</td></tr>
+      <tr><td>Grower (2-4w)</td><td>58kg</td><td>24kg</td><td>8kg</td><td>5kg</td><td>2kg</td><td>3kg</td><td>20-22%</td></tr>
+      <tr><td>Finisher (4w+)</td><td>60kg</td><td>20kg</td><td>10kg</td><td>4kg</td><td>3kg</td><td>3kg</td><td>18-20%</td></tr>
+      <tr><td>Layer Phase</td><td>55kg</td><td>25kg</td><td>8kg</td><td>5kg</td><td>4kg</td><td>3kg</td><td>16-18%</td></tr>
+    </table>
+  </div>
+  <div class="pdf-s">
+    <h3>💉 Vaccination Schedule</h3>
+    <table class="p-tbl">
+      <tr><th>Age</th><th>Vaccine</th><th>Method</th><th>Notes</th></tr>
+      <tr><td>Day 1</td><td>Marek's Disease</td><td>Subcutaneous</td><td>At hatchery</td></tr>
+      <tr><td>Day 7-10</td><td>Newcastle (NDV)</td><td>Eye drop / Drinking</td><td>First dose</td></tr>
+      <tr><td>Day 14-16</td><td>Gumboro (IBD)</td><td>Drinking water</td><td>Intermediate strain</td></tr>
+      <tr><td>Day 21-24</td><td>Newcastle (NDV)</td><td>Drinking water</td><td>Booster dose</td></tr>
+      <tr><td>Week 6-8</td><td>Fowl Pox</td><td>Wing web</td><td>If outbreak risk</td></tr>
+      <tr><td>Week 16-18</td><td>Newcastle + IB</td><td>Drinking water</td><td>Before laying</td></tr>
+    </table>
+  </div>
+  <div class="pdf-s">
+    <h3>🛡️ Biosecurity Checklist</h3>
+    <ul class="p-list">
+      <li>Footbath with disinfectant at all entry points</li>
+      <li>Restrict visitor access — sign-in log required</li>
+      <li>Quarantine new birds for 14 days before mixing</li>
+      <li>Daily cleaning of drinkers and feeders</li>
+      <li>Proper disposal of dead birds (burn or deep bury)</li>
+      <li>Rodent control — bait stations every 20 meters</li>
+      <li>Separate tools for each poultry house</li>
+      <li>Staff shower and change clothes before entering</li>
+    </ul>
+  </div>
+  <div class="pdf-s">
+    <h3>📅 Daily Management Schedule</h3>
+    <table class="p-tbl">
+      <tr><th>Time</th><th>Task</th><th>Details</th></tr>
+      <tr><td>6:00 AM</td><td>Check water</td><td>Clean and refill drinkers</td></tr>
+      <tr><td>7:00 AM</td><td>Feeding</td><td>First feed of the day</td></tr>
+      <tr><td>9:00 AM</td><td>Health check</td><td>Look for sick/dead birds</td></tr>
+      <tr><td>12:00 PM</td><td>Feeding</td><td>Second feed (layers)</td></tr>
+      <tr><td>3:00 PM</td><td>Egg collection</td><td>Layers — collect 3x daily</td></tr>
+      <tr><td>5:00 PM</td><td>Final feed</td><td>Last feed before night</td></tr>
+      <tr><td>6:00 PM</td><td>Security check</td><td>Close doors, check predators</td></tr>
+    </table>
+  </div>
+  <div class="pdf-s">
+    <h3>💰 Profit Optimization Tips</h3>
+    <ul class="p-list">
+      <li>Buy chicks in bulk (500+) for 10-15% discount</li>
+      <li>Mix your own feed — save 20-30% vs buying bags</li>
+      <li>Sell at peak market prices (festivals, holidays)</li>
+      <li>Keep mortality below 5% — every 1% = 10% profit loss</li>
+      <li>Use deep litter system for natural fertilizer income</li>
+      <li>Process manure into biogas or organic fertilizer</li>
+      <li>Contract with restaurants/hotels for steady buyers</li>
+      <li>Keep records — track feed conversion ratio (FCR)</li>
+    </ul>
+  </div>
+  <div class="pdf-s">
+    <h3>🩺 Common Diseases & Symptoms</h3>
+    <table class="p-tbl">
+      <tr><th>Disease</th><th>Symptoms</th><th>Prevention</th></tr>
+      <tr><td>Newcastle</td><td>Twisted neck, green diarrhea, paralysis</td><td>Vaccination + biosecurity</td></tr>
+      <tr><td>Gumboro (IBD)</td><td>Watery diarrhea, bursa swelling, depression</td><td>Vaccination + hygiene</td></tr>
+      <tr><td>Coccidiosis</td><td>Bloody diarrhea, lethargy, ruffled feathers</td><td>Coccidiostat in feed</td></tr>
+      <tr><td>Fowl Pox</td><td>Wart-like lesions on comb/wattle</td><td>Vaccination + mosquito control</td></tr>
+      <tr><td>Avian Influenza</td><td>Sudden death, swollen head, blue comb</td><td>Strict biosecurity + report</td></tr>
     </table>
   </div>
   <div style="margin-top:30px;text-align:center;color:#888;font-size:0.8rem;border-top:1px solid #ddd;padding-top:15px">
     <p>© 2026 Unified Farm BLM · TRC20: TAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2</p>
+    <p>This report is for educational purposes. Consult a veterinarian for medical advice.</p>
   </div>
 </div>
 
 <script>
-// ===== CURRENCY SYMBOLS & PRICES =====
+// ===== CURRENCY =====
 const CURR = { 
   USD: { sym: '$', price: '$2', phone: '+256 708 813410', code: '+256708813410' },
   EUR: { sym: '€', price: '€2', phone: '+256 708 813410', code: '+256708813410' },
@@ -290,54 +391,60 @@ const CURR = {
   BRL: { sym: 'R$', price: 'R$ 10', phone: '+55 708 813410', code: '+55708813410' },
   INR: { sym: '₹', price: '₹ 166', phone: '+91 708 813410', code: '+91708813410' }
 };
-let curSym = '$';
-let curCode = 'USD';
-let currentPhone = '+256 708 813410';
-let currentPhoneCode = '+256708813410';
+let curSym = '$', curCode = 'USD', currentPhone = '+256 708 813410', currentPhoneCode = '+256708813410';
 
 function setCurr() {
   curCode = document.getElementById('curr').value;
   const c = CURR[curCode];
-  curSym = c.sym;
-  currentPhone = c.phone;
-  currentPhoneCode = c.code;
-
-  // Update all currency symbols in labels
+  curSym = c.sym; currentPhone = c.phone; currentPhoneCode = c.code;
   document.querySelectorAll('.cy').forEach(el => el.textContent = '(' + c.sym + ')');
-
-  // Update payment price
   document.getElementById('pay-price').textContent = c.price;
-
-  // Update Airtel phone number
   document.getElementById('pay-phone').textContent = c.phone;
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 4000);
 }
 
 function payAirtel() {
-  // Try to copy number to clipboard
-  try {
-    navigator.clipboard.writeText(currentPhone).then(() => {
-      showToast('Number copied: ' + currentPhone);
-    }).catch(() => {
-      showToast('Airtel Money: ' + currentPhone);
-    });
-  } catch(e) {
-    showToast('Airtel Money: ' + currentPhone);
-  }
-
-  // Also try to open dialer after short delay
-  setTimeout(() => {
-    window.location.href = 'tel:' + currentPhoneCode;
-  }, 500);
+  try { navigator.clipboard.writeText(currentPhone).then(() => showToast('Copied: ' + currentPhone)).catch(() => showToast('Airtel: ' + currentPhone)); }
+  catch(e) { showToast('Airtel: ' + currentPhone); }
+  setTimeout(() => window.location.href = 'tel:' + currentPhoneCode, 500);
 }
 
-// ===== TRANSLATIONS - ALL TEXT =====
+function payT() { alert('TRC20 USDT Address:\nTAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2'); }
+
+function showRequestForm() {
+  document.getElementById('request-form').style.display = 'block';
+  document.getElementById('btn-request').style.display = 'none';
+  document.getElementById('msg-lock').textContent = '🔒 Fill the form below after payment. We will verify and send your PDF within 24 hours.';
+}
+
+function submitRequest() {
+  const name = document.getElementById('req-name').value;
+  const contact = document.getElementById('req-contact').value;
+  const method = document.getElementById('req-method').value;
+  const txid = document.getElementById('req-txid').value;
+  const notes = document.getElementById('req-notes').value;
+
+  if (!name || !contact || !method || !txid) {
+    showToast('Please fill all required fields');
+    return;
+  }
+
+  const msg = `NEW PDF REQUEST\nName: ${name}\nContact: ${contact}\nMethod: ${method}\nTxID: ${txid}\nNotes: ${notes}\nLanguage: ${lang}\nCurrency: ${curCode}`;
+
+  // Open WhatsApp with pre-filled message
+  const waUrl = 'https://wa.me/256708813419?text=' + encodeURIComponent(msg);
+  window.open(waUrl, '_blank');
+
+  showToast('Request sent! Check WhatsApp.');
+  document.getElementById('request-form').innerHTML = '<div style="text-align:center;padding:20px;"><h4 style="color:#2d8a4e;">✅ Request Sent!</h4><p>We will verify your payment and send the PDF within 24 hours.</p><p><strong>WhatsApp:</strong> +256 708 813419</p></div>';
+}
+
+// ===== TRANSLATIONS =====
 const T = {
   en: {
     btn_broiler: "Broiler", btn_layer: "Layer", btn_local: "Local Chicken",
@@ -349,24 +456,16 @@ const T = {
     btn_b_calc: "Calculate Broiler Budget", btn_l_calc: "Calculate Layer Budget", btn_lc_calc: "Calculate Local Budget",
     prem_title: "Professional PDF Report", prem_desc: "Complete feed blueprint with ingredient ratios, weekly schedules, profit scenarios & recommendations.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 After paying, click 'I Have Paid' to unlock.",
-    btn_unlock: "☐ I Have Paid - Unlock Report",
-    msg_ok: "✅ Unlocked! Download your PDF report now.",
-    btn_dl: "📥 Download PDF Report",
+    msg_lock: "🔒 Pay $2, then click 'Request Report' and send your payment proof.",
+    btn_request: "📨 Request PDF Report",
     res_tot: "Total Birds", res_surv: "Surviving", res_feed: "Feed Needed", res_bags: "Bags Required",
     res_tc: "Total Cost", res_rev: "Revenue", res_prof: "Profit",
-    tip_b1: "Broilers reach market weight in 6-8 weeks",
-    tip_b2: "High protein starter (22-24%) for first 2 weeks",
-    tip_b3: "Switch to finisher (18-20%) from week 4",
-    tip_b4: "24-hour lighting for first 3 days",
-    tip_l1: "Layers start laying at 18-20 weeks",
-    tip_l2: "Peak production 85-90% in prime months",
-    tip_l3: "Calcium improves shell quality",
-    tip_l4: "Clean water essential for eggs",
-    tip_lc1: "Local chickens are hardy, low feed needs",
-    tip_lc2: "Free-ranging reduces feed costs",
-    tip_lc3: "Higher price due to organic demand",
-    tip_lc4: "Vaccinate against Newcastle regularly"
+    tip_b1: "Broilers reach market weight in 6-8 weeks", tip_b2: "High protein starter (22-24%) for first 2 weeks",
+    tip_b3: "Switch to finisher (18-20%) from week 4", tip_b4: "24-hour lighting for first 3 days",
+    tip_l1: "Layers start laying at 18-20 weeks", tip_l2: "Peak production 85-90% in prime months",
+    tip_l3: "Calcium improves shell quality", tip_l4: "Clean water essential for eggs",
+    tip_lc1: "Local chickens are hardy, low feed needs", tip_lc2: "Free-ranging reduces feed costs",
+    tip_lc3: "Higher price due to organic demand", tip_lc4: "Vaccinate against Newcastle regularly"
   },
   fr: {
     btn_broiler: "Poulet de Chair", btn_layer: "Pondeuse", btn_local: "Poulet Local",
@@ -378,24 +477,16 @@ const T = {
     btn_b_calc: "Calculer Budget Chair", btn_l_calc: "Calculer Budget Pondeuse", btn_lc_calc: "Calculer Budget Local",
     prem_title: "Rapport PDF Professionnel", prem_desc: "Plan complet de mélange d'aliments avec ratios, calendriers, scénarios de profit.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 Après paiement, cliquez 'J'ai Payé' pour déverrouiller.",
-    btn_unlock: "☐ J'ai Payé - Déverrouiller",
-    msg_ok: "✅ Déverrouillé! Téléchargez le PDF.",
-    btn_dl: "📥 Télécharger PDF",
+    msg_lock: "🔒 Payez 2€, puis cliquez 'Demander Rapport' et envoyez votre preuve.",
+    btn_request: "📨 Demander Rapport PDF",
     res_tot: "Total Oiseaux", res_surv: "Survivants", res_feed: "Aliment Nécessaire", res_bags: "Sacs Requis",
     res_tc: "Coût Total", res_rev: "Revenu", res_prof: "Profit",
-    tip_b1: "Chair atteint poids marché en 6-8 semaines",
-    tip_b2: "Démarrage protéiné élevé (22-24%)",
-    tip_b3: "Passer finisseur (18-20%) semaine 4",
-    tip_b4: "Éclairage 24h 3 premiers jours",
-    tip_l1: "Pondeuses commencent à 18-20 semaines",
-    tip_l2: "Production pic 85-90% mois optimaux",
-    tip_l3: "Calcium améliore coquille",
-    tip_l4: "Eau propre essentielle",
-    tip_lc1: "Poulets locaux robustes",
-    tip_lc2: "Élevage libre réduit coûts",
-    tip_lc3: "Prix plus élevé demande bio",
-    tip_lc4: "Vacciner Newcastle régulièrement"
+    tip_b1: "Chair atteint poids marché en 6-8 semaines", tip_b2: "Démarrage protéiné élevé (22-24%)",
+    tip_b3: "Passer finisseur (18-20%) semaine 4", tip_b4: "Éclairage 24h 3 premiers jours",
+    tip_l1: "Pondeuses commencent à 18-20 semaines", tip_l2: "Production pic 85-90% mois optimaux",
+    tip_l3: "Calcium améliore coquille", tip_l4: "Eau propre essentielle",
+    tip_lc1: "Poulets locaux robustes", tip_lc2: "Élevage libre réduit coûts",
+    tip_lc3: "Prix plus élevé demande bio", tip_lc4: "Vacciner Newcastle régulièrement"
   },
   es: {
     btn_broiler: "Pollo Engorde", btn_layer: "Ponedora", btn_local: "Pollo Local",
@@ -407,24 +498,16 @@ const T = {
     btn_b_calc: "Calcular Presupuesto Engorde", btn_l_calc: "Calcular Presupuesto Ponedora", btn_lc_calc: "Calcular Presupuesto Local",
     prem_title: "Informe PDF Profesional", prem_desc: "Plan completo de mezcla de alimentos con ratios, calendarios, escenarios de ganancia.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 Después de pagar, haga clic 'He Pagado' para desbloquear.",
-    btn_unlock: "☐ He Pagado - Desbloquear",
-    msg_ok: "✅ ¡Desbloqueado! Descargue el PDF.",
-    btn_dl: "📥 Descargar PDF",
+    msg_lock: "🔒 Pague $2, luego haga clic 'Solicitar Informe' y envíe su prueba.",
+    btn_request: "📨 Solicitar Informe PDF",
     res_tot: "Total Aves", res_surv: "Sobrevivientes", res_feed: "Alimento Necesario", res_bags: "Sacos Requeridos",
     res_tc: "Costo Total", res_rev: "Ingreso", res_prof: "Ganancia",
-    tip_b1: "Engorde alcanza peso en 6-8 semanas",
-    tip_b2: "Inicio alto proteína (22-24%)",
-    tip_b3: "Cambiar finalizador (18-20%) semana 4",
-    tip_b4: "Iluminación 24h primeros 3 días",
-    tip_l1: "Ponedoras empiezan a las 18-20 semanas",
-    tip_l2: "Producción pico 85-90% meses óptimos",
-    tip_l3: "Calcio mejora cáscara",
-    tip_l4: "Agua limpia esencial",
-    tip_lc1: "Pollos locales resistentes",
-    tip_lc2: "Pastoreo libre reduce costos",
-    tip_lc3: "Precio más alto demanda orgánica",
-    tip_lc4: "Vacunar Newcastle regularmente"
+    tip_b1: "Engorde alcanza peso en 6-8 semanas", tip_b2: "Inicio alto proteína (22-24%)",
+    tip_b3: "Cambiar finalizador (18-20%) semana 4", tip_b4: "Iluminación 24h primeros 3 días",
+    tip_l1: "Ponedoras empiezan a las 18-20 semanas", tip_l2: "Producción pico 85-90% meses óptimos",
+    tip_l3: "Calcio mejora cáscara", tip_l4: "Agua limpia esencial",
+    tip_lc1: "Pollos locales resistentes", tip_lc2: "Pastoreo libre reduce costos",
+    tip_lc3: "Precio más alto demanda orgánica", tip_lc4: "Vacunar Newcastle regularmente"
   },
   pt: {
     btn_broiler: "Frango Corte", btn_layer: "Poedeira", btn_local: "Frango Local",
@@ -436,24 +519,16 @@ const T = {
     btn_b_calc: "Calcular Orçamento Corte", btn_l_calc: "Calcular Orçamento Poedeira", btn_lc_calc: "Calcular Orçamento Local",
     prem_title: "Relatório PDF Profissional", prem_desc: "Plano completo de mistura de ração com proporções, calendários, cenários de lucro.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 Após pagar, clique 'Paguei' para desbloquear.",
-    btn_unlock: "☐ Paguei - Desbloquear",
-    msg_ok: "✅ Desbloqueado! Baixe o PDF.",
-    btn_dl: "📥 Baixar PDF",
+    msg_lock: "🔒 Pague $2, depois clique 'Solicitar Relatório' e envie seu comprovante.",
+    btn_request: "📨 Solicitar Relatório PDF",
     res_tot: "Total Aves", res_surv: "Sobreviventes", res_feed: "Ração Necessária", res_bags: "Sacos Requeridos",
     res_tc: "Custo Total", res_rev: "Receita", res_prof: "Lucro",
-    tip_b1: "Corte atinge peso em 6-8 semanas",
-    tip_b2: "Início alto proteína (22-24%)",
-    tip_b3: "Mudar finalizador (18-20%) semana 4",
-    tip_b4: "Iluminação 24h primeiros 3 dias",
-    tip_l1: "Poedeiras começam às 18-20 semanas",
-    tip_l2: "Produção pico 85-90% meses ótimos",
-    tip_l3: "Cálcio melhora casca",
-    tip_l4: "Água limpa essencial",
-    tip_lc1: "Frangos locais resistentes",
-    tip_lc2: "Pastoreio livre reduz custos",
-    tip_lc3: "Preço mais alto demanda orgânica",
-    tip_lc4: "Vacinar Newcastle regularmente"
+    tip_b1: "Corte atinge peso em 6-8 semanas", tip_b2: "Início alto proteína (22-24%)",
+    tip_b3: "Mudar finalizador (18-20%) semana 4", tip_b4: "Iluminação 24h primeiros 3 dias",
+    tip_l1: "Poedeiras começam às 18-20 semanas", tip_l2: "Produção pico 85-90% meses ótimos",
+    tip_l3: "Cálcio melhora casca", tip_l4: "Água limpa essencial",
+    tip_lc1: "Frangos locais resistentes", tip_lc2: "Pastoreio livre reduz custos",
+    tip_lc3: "Preço mais alto demanda orgânica", tip_lc4: "Vacinar Newcastle regularmente"
   },
   sw: {
     btn_broiler: "Kuku wa Nyama", btn_layer: "Kuku wa Mayai", btn_local: "Kuku wa Kienyeji",
@@ -465,24 +540,16 @@ const T = {
     btn_b_calc: "Hesabu Bajeti ya Nyama", btn_l_calc: "Hesabu Bajeti ya Mayai", btn_lc_calc: "Hesabu Bajeti ya Kienyeji",
     prem_title: "Ripoti ya PDF ya Kitaaluma", prem_desc: "Mpango kamili wa chakula na viwango, ratiba ya wiki, hali ya faida na mapendekezo.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 Baada ya kulipa, bonyeza 'Nimelipa' kufungua.",
-    btn_unlock: "☐ Nimelipa - Fungua Ripoti",
-    msg_ok: "✅ Imefunguliwa! Pakua ripoti ya PDF sasa.",
-    btn_dl: "📥 Pakua Ripoti ya PDF",
+    msg_lock: "🔒 Lipa $2, kisha bonyeza 'Omba Ripoti' na tuma ushahidi wa malipo.",
+    btn_request: "📨 Omba Ripoti ya PDF",
     res_tot: "Idadi ya Kuku", res_surv: "Waliobaki Hai", res_feed: "Chakula Kinachohitajika", res_bags: "Mifuko Inayohitajika",
     res_tc: "Gharama Jumla", res_rev: "Mapato", res_prof: "Faida",
-    tip_b1: "Kuku wa nyama hufikia uzito wa soko katika wiki 6-8",
-    tip_b2: "Chakula cha mwanzo chenye protini (22-24%) kwa wiki 2 za kwanza",
-    tip_b3: "Badilisha kwa finisher (18-20%) kutoka wiki 4",
-    tip_b4: "Mwangaza wa masaa 24 kwa siku 3 za kwanza",
-    tip_l1: "Kuku wa mayai huanza kutaga katika wiki 18-20",
-    tip_l2: "Uzalishaji wa juu 85-90% katika miezi bora",
-    tip_l3: "Kalisi inaboresha ubora wa ganda",
-    tip_l4: "Maji safi ni muhimu kwa mayai",
-    tip_lc1: "Kuku wa kienyeji ni imara, mahitaji ya chakula madogo",
-    tip_lc2: "Kulisha huru kupunguza gharama za chakula",
-    tip_lc3: "Bei ya juu kutokana na mahitaji ya kiorganiki",
-    tip_lc4: "Chanja dhidi ya Newcastle mara kwa mara"
+    tip_b1: "Kuku wa nyama hufikia uzito wa soko katika wiki 6-8", tip_b2: "Chakula cha mwanzo chenye protini (22-24%) kwa wiki 2 za kwanza",
+    tip_b3: "Badilisha kwa finisher (18-20%) kutoka wiki 4", tip_b4: "Mwangaza wa masaa 24 kwa siku 3 za kwanza",
+    tip_l1: "Kuku wa mayai huanza kutaga katika wiki 18-20", tip_l2: "Uzalishaji wa juu 85-90% katika miezi bora",
+    tip_l3: "Kalisi inaboresha ubora wa ganda", tip_l4: "Maji safi ni muhimu kwa mayai",
+    tip_lc1: "Kuku wa kienyeji ni imara, mahitaji ya chakula madogo", tip_lc2: "Kulisha huru kupunguza gharama za chakula",
+    tip_lc3: "Bei ya juu kutokana na mahitaji ya kiorganiki", tip_lc4: "Chanja dhidi ya Newcastle mara kwa mara"
   },
   lg: {
     btn_broiler: "Kkoko wa Broiler", btn_layer: "Kkoko wa Egg", btn_local: "Kkoko wa Kikajjo",
@@ -494,24 +561,37 @@ const T = {
     btn_b_calc: "Okubala Broiler Budget", btn_l_calc: "Okubala Egg Budget", btn_lc_calc: "Okubala Kikajjo Budget",
     prem_title: "Ripoti ya PDF ya Kikugu", prem_desc: "Enteekateeka y'okulya enkoko n'ebikozesebwa, enteekateeka ya wiiki, ebyokusobola okufuna ssente n'okuteesa.",
     pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
-    msg_lock: "🔒 Oluvannyuma lw'okusasula, nyiga 'Nsasudde' okuggulawo.",
-    btn_unlock: "☐ Nsasudde - Ggulawo Ripoti",
-    msg_ok: "✅ Egguddwa! Wanula ripoti ya PDF kati.",
-    btn_dl: "📥 Wanula Ripoti ya PDF",
+    msg_lock: "🔒 Ssasula $2, oluvannyuma nyiga 'Saba Ripoti' era weereze obukakafu.",
+    btn_request: "📨 Saba Ripoti ya PDF",
     res_tot: "Enkoko Zonna", res_surv: "Eziramu", res_feed: "Ebyokulya Byetagisa", res_bags: "Ebifuko Byetagisa",
     res_tc: "Omuwendo Gwonna", res_rev: "Empeera", res_prof: "Obugagga",
-    tip_b1: "Enkoko za Broiler zituuka ku buzito bw'okutunda mu wiiki 6-8",
-    tip_b2: "Ebyokulya by'okutandika ebirina protein (22-24%) mu wiiki 2 ez'okutandika",
-    tip_b3: "Kyuka ku finisher (18-20%) okuva mu wiiki 4",
-    tip_b4: "Ottawa okumulisa ennaku 3 ez'okutandika",
-    tip_l1: "Enkoko za Egg zitandika okutaga mu wiiki 18-20",
-    tip_l2: "Okuzaala okw'omugaso 85-90% mu myezi egy'omugaso",
-    tip_l3: "Calcium eyongera obulungi bw'amagi",
-    tip_l4: "Amazzi amalongoofu ge magala ku mayai",
-    tip_lc1: "Enkoko za kikajjo zimazima, tezetaaga byokulya bingi",
-    tip_lc2: "Okulira mu buso kikendeeza omuwendo gw'okulya",
-    tip_lc3: "Omuwendo ogw'omugaso olw'okwetaaga eby'obulimbugumu",
-    tip_lc4: "Sibula ekirwadde kya Newcastle buli kiseera"
+    tip_b1: "Enkoko za Broiler zituuka ku buzito bw'okutunda mu wiiki 6-8", tip_b2: "Ebyokulya by'okutandika ebirina protein (22-24%) mu wiiki 2 ez'okutandika",
+    tip_b3: "Kyuka ku finisher (18-20%) okuva mu wiiki 4", tip_b4: "Ottawa okumulisa ennaku 3 ez'okutandika",
+    tip_l1: "Enkoko za Egg zitandika okutaga mu wiiki 18-20", tip_l2: "Okuzaala okw'omugaso 85-90% mu myezi egy'omugaso",
+    tip_l3: "Calcium eyongera obulungi bw'amagi", tip_l4: "Amazzi amalongoofu ge magala ku mayai",
+    tip_lc1: "Enkoko za kikajjo zimazima, tezetaaga byokulya bingi", tip_lc2: "Okulira mu buso kikendeeza omuwendo gw'okulya",
+    tip_lc3: "Omuwendo ogw'omugaso olw'okwetaaga eby'obulimbugumu", tip_lc4: "Sibula ekirwadde kya Newcastle buli kiseera"
+  },
+  hi: {
+    btn_broiler: "ब्रॉयलर", btn_layer: "अंडे देने वाली", btn_local: "देसी मुर्गी",
+    title_b: "ब्रॉयलर फार्म डेटा", title_l: "अंडे वाली फार्म डेटा", title_lc: "देसी मुर्गी फार्म डेटा",
+    lbl_b_num: "ब्रॉयलर चूजों की संख्या", lbl_l_num: "अंडे वाली चूजों की संख्या", lbl_lc_num: "देसी चूजों की संख्या",
+    lbl_cost: "प्रति चूजा लागत", lbl_feed: "50kg बैग चारा लागत", lbl_days: "बाजार के दिन (42-56)",
+    lbl_months: "बाजार के महीने", lbl_price: "प्रति पक्षी बाजार मूल्य", lbl_eggs: "प्रति पक्षी सालाना अंडे",
+    lbl_eprice: "प्रति अंडा मूल्य", lbl_mort: "मृत्यु दर (%)",
+    btn_b_calc: "ब्रॉयलर बजट की गणना", btn_l_calc: "अंडे वाली बजट की गणना", btn_lc_calc: "देसी बजट की गणना",
+    prem_title: "पेशेवर PDF रिपोर्ट", prem_desc: "पूर्ण चारा मिश्रण योजना अनुपात, साप्ताहिक कार्यक्रम, लाभ परिदृश्य और सिफारिशें।",
+    pay_paypal: "PayPal", pay_airtel: "Airtel Money", pay_trc20: "TRC20 USDT",
+    msg_lock: "🔒 $2 भुगतान करें, फिर 'रिपोर्ट अनुरोध' दबाएं और भुगतान प्रमाण भेजें।",
+    btn_request: "📨 PDF रिपोर्ट अनुरोध करें",
+    res_tot: "कुल पक्षी", res_surv: "बचे हुए", res_feed: "चारे की जरूरत", res_bags: "बैग की जरूरत",
+    res_tc: "कुल लागत", res_rev: "आय", res_prof: "लाभ",
+    tip_b1: "ब्रॉयलर 6-8 हफ्तों में बाजार वजन तक पहुंचते हैं", tip_b2: "पहले 2 हफ्तों के लिए उच्च प्रोटीन स्टार्टर (22-24%)",
+    tip_b3: "4 हफ्ते से फिनिशर (18-20%) पर स्विच करें", tip_b4: "पहले 3 दिन 24 घंटे रोशनी",
+    tip_l1: "अंडे वाली 18-20 हफ्तों में अंडे देना शुरू करती हैं", tip_l2: "शीर्ष उत्पादन 85-90% प्रमुख महीनों में",
+    tip_l3: "कैल्शियम खोल की गुणवत्ता में सुधार करता है", tip_l4: "अंडों के लिए साफ पानी आवश्यक",
+    tip_lc1: "देसी मुर्गियां मजबूत होती हैं, कम चारा चाहिए", tip_lc2: "खुला चरागाह चारा लागत कम करता है",
+    tip_lc3: "जैविक मांग के कारण उच्च मूल्य", tip_lc4: "नियमित रूप से न्यूकासल का टीकाकरण करें"
   }
 };
 
@@ -520,23 +600,15 @@ let lang = 'en';
 function setLang() {
   lang = document.getElementById('lang').value;
   const t = T[lang];
-
-  // Type buttons
   document.getElementById('btn-broiler').textContent = t.btn_broiler;
   document.getElementById('btn-layer').textContent = t.btn_layer;
   document.getElementById('btn-local').textContent = t.btn_local;
-
-  // Titles
   document.getElementById('title-b').textContent = t.title_b;
   document.getElementById('title-l').textContent = t.title_l;
   document.getElementById('title-lc').textContent = t.title_lc;
-
-  // Labels
   document.getElementById('lbl-b-num').textContent = t.lbl_b_num;
   document.getElementById('lbl-l-num').textContent = t.lbl_l_num;
   document.getElementById('lbl-lc-num').textContent = t.lbl_lc_num;
-
-  // Shared labels
   document.querySelectorAll('[id^="lbl-b-"], [id^="lbl-l-"], [id^="lbl-lc-"]').forEach(el => {
     const id = el.id;
     if (id.includes('cost')) el.textContent = t.lbl_cost;
@@ -548,24 +620,16 @@ function setLang() {
     if (id.includes('eprice')) el.textContent = t.lbl_eprice;
     if (id.includes('mort')) el.textContent = t.lbl_mort;
   });
-
-  // Calc buttons
   document.getElementById('btn-b-calc').textContent = t.btn_b_calc;
   document.getElementById('btn-l-calc').textContent = t.btn_l_calc;
   document.getElementById('btn-lc-calc').textContent = t.btn_lc_calc;
-
-  // Premium section - ALL payment text
   document.getElementById('prem-title').textContent = t.prem_title;
   document.getElementById('prem-desc').textContent = t.prem_desc;
   document.getElementById('pay-p').textContent = t.pay_paypal;
   document.getElementById('pay-a').textContent = t.pay_airtel;
   document.getElementById('pay-t').textContent = t.pay_trc20;
   document.getElementById('msg-lock').textContent = t.msg_lock;
-  document.getElementById('btn-unlock').textContent = t.btn_unlock;
-  document.getElementById('msg-ok').textContent = t.msg_ok;
-  document.getElementById('btn-dl').textContent = t.btn_dl;
-
-  // Re-render results if visible
+  document.getElementById('btn-request').textContent = t.btn_request;
   if (document.getElementById('b-res').innerHTML) calcB();
   if (document.getElementById('l-res').innerHTML) calcL();
   if (document.getElementById('lc-res').innerHTML) calcLC();
@@ -578,146 +642,35 @@ function switchType(t) {
   document.getElementById(t + '-calc').classList.add('active');
 }
 
-// ===== CALCULATIONS =====
 function fmt(n) { return curSym + n.toLocaleString('en', {maximumFractionDigits:2}); }
 
 function calcB() {
-  const c = +document.getElementById('b-c').value;
-  const cc = +document.getElementById('b-cc').value;
-  const fc = +document.getElementById('b-fc').value;
-  const d = +document.getElementById('b-d').value;
-  const mp = +document.getElementById('b-mp').value;
-  const m = +document.getElementById('b-m').value;
-  const t = T[lang];
-
-  const surv = Math.round(c * (1 - m/100));
-  const feed = surv * d * 0.12;
-  const bags = Math.ceil(feed / 50);
-  const tc = c * cc + bags * fc;
-  const rev = surv * mp;
-  const prof = rev - tc;
-
-  document.getElementById('b-res').innerHTML = `
-    <div class="results">
-      <h3>📊 ${t.btn_b_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
-      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
-      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
-      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
-      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
-      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
-      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
-      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
-    </div>`;
-
-  document.getElementById('b-tip').innerHTML = `
-    <div class="tips">
-      <h3>💡 Tips</h3>
-      <p>• ${t.tip_b1}</p>
-      <p>• ${t.tip_b2}</p>
-      <p>• ${t.tip_b3}</p>
-      <p>• ${t.tip_b4}</p>
-    </div>`;
+  const c = +document.getElementById('b-c').value, cc = +document.getElementById('b-cc').value, fc = +document.getElementById('b-fc').value;
+  const d = +document.getElementById('b-d').value, mp = +document.getElementById('b-mp').value, m = +document.getElementById('b-m').value;
+  const t = T[lang], surv = Math.round(c * (1 - m/100)), feed = surv * d * 0.12, bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc, rev = surv * mp, prof = rev - tc;
+  document.getElementById('b-res').innerHTML = `<div class="results"><h3>📊 ${t.btn_b_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3><div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div><div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div><div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div><div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div><div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div><div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div><div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div></div>`;
+  document.getElementById('b-tip').innerHTML = `<div class="tips"><h3>💡 Tips</h3><p>• ${t.tip_b1}</p><p>• ${t.tip_b2}</p><p>• ${t.tip_b3}</p><p>• ${t.tip_b4}</p></div>`;
 }
 
 function calcL() {
-  const c = +document.getElementById('l-c').value;
-  const cc = +document.getElementById('l-cc').value;
-  const fc = +document.getElementById('l-fc').value;
-  const e = +document.getElementById('l-e').value;
-  const ep = +document.getElementById('l-ep').value;
-  const m = +document.getElementById('l-m').value;
-  const t = T[lang];
-
-  const surv = Math.round(c * (1 - m/100));
-  const feed = surv * 365 * 0.11;
-  const bags = Math.ceil(feed / 50);
-  const tc = c * cc + bags * fc;
-  const rev = surv * e * ep;
-  const prof = rev - tc;
-
-  document.getElementById('l-res').innerHTML = `
-    <div class="results">
-      <h3>📊 ${t.btn_l_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
-      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
-      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
-      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
-      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
-      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
-      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
-      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
-    </div>`;
-
-  document.getElementById('l-tip').innerHTML = `
-    <div class="tips">
-      <h3>💡 Tips</h3>
-      <p>• ${t.tip_l1}</p>
-      <p>• ${t.tip_l2}</p>
-      <p>• ${t.tip_l3}</p>
-      <p>• ${t.tip_l4}</p>
-    </div>`;
+  const c = +document.getElementById('l-c').value, cc = +document.getElementById('l-cc').value, fc = +document.getElementById('l-fc').value;
+  const e = +document.getElementById('l-e').value, ep = +document.getElementById('l-ep').value, m = +document.getElementById('l-m').value;
+  const t = T[lang], surv = Math.round(c * (1 - m/100)), feed = surv * 365 * 0.11, bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc, rev = surv * e * ep, prof = rev - tc;
+  document.getElementById('l-res').innerHTML = `<div class="results"><h3>📊 ${t.btn_l_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3><div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div><div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div><div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div><div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div><div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div><div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div><div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div></div>`;
+  document.getElementById('l-tip').innerHTML = `<div class="tips"><h3>💡 Tips</h3><p>• ${t.tip_l1}</p><p>• ${t.tip_l2}</p><p>• ${t.tip_l3}</p><p>• ${t.tip_l4}</p></div>`;
 }
 
 function calcLC() {
-  const c = +document.getElementById('lc-c').value;
-  const cc = +document.getElementById('lc-cc').value;
-  const fc = +document.getElementById('lc-fc').value;
-  const mo = +document.getElementById('lc-mo').value;
-  const mp = +document.getElementById('lc-mp').value;
-  const m = +document.getElementById('lc-m').value;
-  const t = T[lang];
-
-  const surv = Math.round(c * (1 - m/100));
-  const feed = surv * mo * 30 * 0.08;
-  const bags = Math.ceil(feed / 50);
-  const tc = c * cc + bags * fc;
-  const rev = surv * mp;
-  const prof = rev - tc;
-
-  document.getElementById('lc-res').innerHTML = `
-    <div class="results">
-      <h3>📊 ${t.btn_lc_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3>
-      <div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div>
-      <div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div>
-      <div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div>
-      <div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div>
-      <div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div>
-      <div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div>
-      <div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div>
-    </div>`;
-
-  document.getElementById('lc-tip').innerHTML = `
-    <div class="tips">
-      <h3>💡 Tips</h3>
-      <p>• ${t.tip_lc1}</p>
-      <p>• ${t.tip_lc2}</p>
-      <p>• ${t.tip_lc3}</p>
-      <p>• ${t.tip_lc4}</p>
-    </div>`;
+  const c = +document.getElementById('lc-c').value, cc = +document.getElementById('lc-cc').value, fc = +document.getElementById('lc-fc').value;
+  const mo = +document.getElementById('lc-mo').value, mp = +document.getElementById('lc-mp').value, m = +document.getElementById('lc-m').value;
+  const t = T[lang], surv = Math.round(c * (1 - m/100)), feed = surv * mo * 30 * 0.08, bags = Math.ceil(feed / 50);
+  const tc = c * cc + bags * fc, rev = surv * mp, prof = rev - tc;
+  document.getElementById('lc-res').innerHTML = `<div class="results"><h3>📊 ${t.btn_lc_calc.replace('Calculate ', '').replace('Budget', 'Results')}</h3><div class="row"><span class="label">${t.res_tot}</span><span class="val">${c}</span></div><div class="row"><span class="label">${t.res_surv}</span><span class="val">${surv}</span></div><div class="row"><span class="label">${t.res_feed}</span><span class="val">${feed.toFixed(1)} kg</span></div><div class="row"><span class="label">${t.res_bags}</span><span class="val">${bags}</span></div><div class="row"><span class="label">${t.res_tc}</span><span class="val">${fmt(tc)}</span></div><div class="row"><span class="label">${t.res_rev}</span><span class="val">${fmt(rev)}</span></div><div class="row"><span class="label">${t.res_prof}</span><span class="val ${prof>=0?'pos':'prof'}">${fmt(prof)}</span></div></div>`;
+  document.getElementById('lc-tip').innerHTML = `<div class="tips"><h3>💡 Tips</h3><p>• ${t.tip_lc1}</p><p>• ${t.tip_lc2}</p><p>• ${t.tip_lc3}</p><p>• ${t.tip_lc4}</p></div>`;
 }
 
-// ===== PAYMENT =====
-function payT() { alert('TRC20 USDT Address:\nTAXXNC44Q6YYRiFjV2odhw4PXwMt2m3ep2'); }
-function unlock() { document.getElementById('pay-area').style.display='none'; document.getElementById('dl-area').style.display='block'; }
-
-// ===== PDF =====
-async function genPDF() {
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  document.getElementById('pdate').textContent = new Date().toLocaleString();
-  document.getElementById('ptype').textContent = document.querySelector('.type-btn.active span:last-child').textContent;
-
-  const el = document.getElementById('pdf');
-  const canvas = await html2canvas(el, {scale:2});
-  const img = canvas.toDataURL('image/png');
-  const pw = 210, ph = 297;
-  const iw = canvas.width, ih = canvas.height;
-  const ratio = Math.min(pw/iw, ph/ih);
-  const w = iw * ratio, h = ih * ratio;
-  pdf.addImage(img, 'PNG', (pw-w)/2, 10, w, h);
-  pdf.save('UnifiedFarmBLM_Poultry_Report.pdf');
-}
-
-// Initialize
 setCurr();
 </script>
 </body>
