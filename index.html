@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="google-adsense-account" content="ca-pub-6880789718761474">   
+<meta name="google-adsense-account" content="ca-pub-6880789718761474">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UnifiedfarmBLM — Premium Poultry Farm & Fresh Eggs | Uganda</title>
 <meta name="description" content="UnifiedfarmBLM is a family-run poultry farm in Uganda producing farm-fresh eggs, broiler chicken, day-old chicks, and practical farming guides. Basuuta, Lutwama, Muyingo — BLM Family Farm.">
@@ -32,7 +32,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var
 a { text-decoration: none; color: inherit; transition: var(--transition); }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Ad Slots */
+/* Ad Slots - KEEP AS IS for AdSense */
 .ad-slot { background: #f5f5f5; border: 2px dashed #ccc; border-radius: 8px; text-align: center; padding: 15px; margin: 20px auto; max-width: 100%; overflow: hidden; }
 .ad-slot p { color: #999; font-size: 0.8rem; font-weight: 600; }
 .ad-banner { width: 100%; min-height: 90px; max-width: 728px; }
@@ -65,9 +65,12 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 .btn-primary:hover { background: linear-gradient(135deg, #ff8f00, var(--accent)); color: white; transform: translateY(-4px); }
 .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.5); }
 .btn-outline:hover { background: white; color: var(--primary-dark); border-color: white; transform: translateY(-4px); }
+
+/* HERO IMAGE - NOW WITH REAL FARM PHOTO */
 .hero-image { position: relative; }
-.hero-image-main { width: 100%; max-width: 500px; border-radius: var(--radius); box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 4px solid rgba(255,255,255,0.25); background: linear-gradient(135deg, #43a047, #66bb6a); height: 420px; display: flex; align-items: center; justify-content: center; font-size: 9rem; }
-.hero-float-card { position: absolute; bottom: -25px; left: -25px; background: white; padding: 18px 24px; border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 14px; animation: bounce 3s ease-in-out infinite; border: 2px solid var(--border); }
+.hero-image-main { width: 100%; max-width: 500px; border-radius: var(--radius); box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 4px solid rgba(255,255,255,0.25); overflow: hidden; }
+.hero-image-main img { width: 100%; height: 420px; object-fit: cover; display: block; }
+.hero-float-card { position: absolute; bottom: -25px; left: -25px; background: white; padding: 18px 24px; border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 14px; animation: bounce 3s ease-in-out infinite; border: 2px solid var(--border); z-index: 2; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 .hero-float-card .icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--gold), #ff8f00); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 .hero-float-card .text h4 { font-size: 0.85rem; color: var(--text-light); font-weight: 500; }
@@ -93,13 +96,13 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
 .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--accent)); opacity: 0; transition: var(--transition); }
 .product-card:hover::before { opacity: 1; }
-.product-image { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; color: white; position: relative; overflow: hidden; }
-.product-image.eggs { background: linear-gradient(135deg, #ff8f00, #ffc107); }
-.product-image.broiler { background: linear-gradient(135deg, #e65100, #ff8f00); }
-.product-image.manure { background: linear-gradient(135deg, #5d4037, #8d6e63); }
-.product-image.consult { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
-.product-image.chicks { background: linear-gradient(135deg, #ff6f00, #ffab40); }
-.product-image.brooded { background: linear-gradient(135deg, #f57c00, #ffca28); }
+
+/* PRODUCT IMAGE - NOW WITH REAL PHOTOS */
+.product-image { height: 200px; overflow: hidden; position: relative; }
+.product-image img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+.product-card:hover .product-image img { transform: scale(1.05); }
+.product-image .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.3) 100%); }
+
 .product-body { padding: 28px; }
 .product-body h3 { font-size: 1.2rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px; }
 .product-body p { color: var(--text-light); font-size: 0.92rem; margin-bottom: 18px; line-height: 1.6; }
@@ -163,6 +166,18 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 .location-badge.orange { background: linear-gradient(135deg, var(--accent), var(--accent-hover)); color: white; }
 .location-badge.gold { background: linear-gradient(135deg, var(--gold), #ff8f00); color: var(--primary-dark); font-weight: 700; }
 
+/* FARM GALLERY - NEW SECTION WITH REAL PHOTOS */
+.gallery-section { background: linear-gradient(135deg, #0d3311, #1b5e20, #2e7d32); padding: 80px 0; }
+.gallery-section .section-header h2 { color: white; }
+.gallery-section .section-header p { color: rgba(255,255,255,0.8); }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.gallery-item { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3); transition: var(--transition); border: 3px solid rgba(255,255,255,0.2); }
+.gallery-item:hover { transform: scale(1.03); border-color: var(--gold); }
+.gallery-item img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.gallery-item.tall { grid-row: span 2; }
+.gallery-item.tall img { height: 456px; }
+.gallery-caption { background: rgba(0,0,0,0.6); color: white; padding: 10px 14px; font-size: 0.85rem; font-weight: 600; text-align: center; }
+
 /* CTA */
 .cta-section { background: linear-gradient(135deg, var(--primary-dark), var(--primary), #2e7d32); text-align: center; padding: 100px 20px; position: relative; overflow: hidden; }
 .cta-section h2 { font-size: 2.6rem; font-weight: 900; color: white; margin-bottom: 22px; }
@@ -185,6 +200,8 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 .footer-links a:hover { color: var(--gold); padding-left: 8px; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
 .footer-bottom p { font-size: 0.85rem; }
+.footer-bottom a { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.footer-bottom a:hover { color: var(--gold); }
 
 /* Ecosystem Bar */
 .ecosystem-bar { background: #050510; padding: 18px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -218,27 +235,35 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
   .hero-image { order: -1; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .chatbot-panel { width: 300px; right: -10px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item.tall { grid-row: span 1; }
+  .gallery-item.tall img { height: 220px; }
 }
 @media (max-width: 640px) {
   .nav-links { display: none; }
   .mobile-toggle { display: block; }
   .hero-content h1 { font-size: 1.8rem; }
-  .section-header h2 { font-size: 1.8rem; }
-  .cta-section h2 { font-size: 1.8rem; }
+  .section { padding: 50px 0; }
+  .products-grid, .guides-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .chatbot-panel { width: calc(100vw - 40px); right: -10px; }
+  .hero-image-main { max-width: 100%; }
+  .hero-image-main img { height: 300px; }
+  .hero-float-card { display: none; }
+  .gallery-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- AdSense Top Banner -->
-<div class="ad-slot ad-banner">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6880789718761474" data-ad-slot="TOP_BANNER_SLOT" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<!-- ==================== AD SLOT 1: Top Banner ==================== -->
+<!-- KEEP EMPTY - AdSense will fill this after approval -->
+<div style="background: var(--bg); padding-top: 80px;">
+  <div class="ad-slot ad-banner" style="margin: 0 auto;">
+    <p>Advertisement</p>
+  </div>
 </div>
 
-<!-- Navbar -->
+<!-- ==================== NAVBAR ==================== -->
 <nav class="navbar">
   <div class="container">
     <a href="/" class="logo">
@@ -247,18 +272,18 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/about.html">About</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="#products">Products</a></li>
       <li><a href="#guides">Guides</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="/privacy.html">Privacy</a></li>
-      <li><a href="#contact" class="nav-cta">Order Now</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
     </ul>
+    <a href="#order" class="nav-cta">Order Now</a>
     <div class="mobile-toggle">☰</div>
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- ==================== HERO ==================== -->
 <section class="hero">
   <div class="container">
     <div class="hero-content">
@@ -276,7 +301,10 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
       </div>
     </div>
     <div class="hero-image">
-      <div class="hero-image-main">🐔</div>
+      <!-- REAL FARM PHOTO replaces chicken emoji -->
+      <div class="hero-image-main">
+        <img src="images/roosters.jpg" alt="Healthy roosters at UnifiedfarmBLM poultry farm in Uganda">
+      </div>
       <div class="hero-float-card">
         <div class="icon">🥚</div>
         <div class="text">
@@ -288,99 +316,137 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
   </div>
 </section>
 
-<!-- Family Banner -->
+<!-- ==================== FAMILY BANNER ==================== -->
 <div class="family-banner">
   <div class="container">
-    <p><strong>BLM Family Farm</strong> — Basuuta · Lutwama · Muyingo | Proudly Ugandan, Family-Run Since Day One</p>
+    <p>BLM Family Farm — <strong>Basuuta · Lutwama · Muyingo</strong> | Proudly Ugandan, Family-Run Since Day One</p>
   </div>
 </div>
 
-<!-- Products Section -->
+<!-- ==================== AD SLOT 2: Native In-Article ==================== -->
+<div class="container">
+  <div class="ad-slot ad-native">
+    <p>Advertisement</p>
+  </div>
+</div>
+
+<!-- ==================== PRODUCTS ==================== -->
 <section class="section products-section" id="products">
   <div class="container">
     <div class="section-header">
       <span class="section-label">🛒 Our Products</span>
       <h2>Fresh From the <span>Farm</span></h2>
-      <p>Quality poultry products raised with care and delivered fresh to your doorstep.</p>
+      <p>Everything you need for your poultry farm or household — delivered fresh across Uganda.</p>
     </div>
     <div class="products-grid">
+
+      <!-- Product 1: Table Eggs -->
       <div class="product-card">
-        <div class="product-image eggs">🥚</div>
+        <div class="product-image">
+          <img src="images/eggs.jpg" alt="Fresh organic eggs from UnifiedfarmBLM">
+          <div class="overlay"></div>
+        </div>
         <div class="product-body">
-          <h3>Farm-Fresh Eggs</h3>
-          <p>Large, nutrient-rich eggs collected daily from our free-range layer hens. Perfect for households, restaurants, and bakeries.</p>
+          <h3>🥚 Table Eggs</h3>
+          <p>Farm-fresh organic eggs collected daily. Rich in nutrients, perfect for households, bakeries, and restaurants.</p>
           <div class="product-meta">
-            <span class="price">UGX 500 / egg</span>
-            <a href="#contact" class="product-link">Order →</a>
+            <span class="price">UGX 12,000 / tray</span>
+            <a href="#order" class="product-link">Order →</a>
           </div>
         </div>
       </div>
+
+      <!-- Product 2: Broiler Chicken -->
       <div class="product-card">
-        <div class="product-image broiler">🍗</div>
+        <div class="product-image">
+          <img src="images/roosters.jpg" alt="Mature broiler chickens ready for sale">
+          <div class="overlay"></div>
+        </div>
         <div class="product-body">
-          <h3>Broiler Chicken</h3>
-          <p>Healthy, well-fed broiler chickens ready for the table. Clean, dressed, and delivered fresh.</p>
+          <h3>🍗 Broiler Chicken</h3>
+          <p>Healthy, mature broilers raised on natural feed. Clean dressed or live — your choice.</p>
           <div class="product-meta">
-            <span class="price">UGX 15,000 / bird</span>
-            <a href="#contact" class="product-link">Order →</a>
+            <span class="price">UGX 30,000 / bird</span>
+            <a href="#order" class="product-link">Order →</a>
           </div>
         </div>
       </div>
+
+      <!-- Product 3: Organic Manure -->
       <div class="product-card">
-        <div class="product-image chicks">🐣</div>
-        <div class="product-body">
-          <h3>Day-Old Chicks</h3>
-          <p>Vaccinated, healthy day-old chicks for farmers starting or expanding their flocks. Available in batches.</p>
-          <div class="product-meta">
-            <span class="price">UGX 3,500 / chick</span>
-            <a href="#contact" class="product-link">Order →</a>
-          </div>
+        <div class="product-image" style="background: linear-gradient(135deg, #5d4037, #8d6e63);">
+          <span style="display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:4.5rem;">🌱</span>
         </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image brooded">🐤</div>
         <div class="product-body">
-          <h3>One-Month Brooded Chicks</h3>
-          <p>Strong, vaccinated chicks raised for 30 days under expert care. Higher survival rate for new farmers.</p>
-          <div class="product-meta">
-            <span class="price">UGX 8,000 / chick</span>
-            <a href="#contact" class="product-link">Order →</a>
-          </div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image manure">🌱</div>
-        <div class="product-body">
-          <h3>Organic Chicken Manure</h3>
+          <h3>🌱 Organic Manure</h3>
           <p>Rich, composted poultry manure — nature's best fertilizer for your crops and garden.</p>
           <div class="product-meta">
             <span class="price">UGX 50,000 / ton</span>
-            <a href="#contact" class="product-link">Order →</a>
+            <a href="#order" class="product-link">Order →</a>
           </div>
         </div>
       </div>
+
+      <!-- Product 4: Farm Consultation -->
       <div class="product-card">
-        <div class="product-image consult">📞</div>
+        <div class="product-image" style="background: linear-gradient(135deg, var(--primary), var(--primary-light));">
+          <span style="display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:4.5rem;">📞</span>
+        </div>
         <div class="product-body">
-          <h3>Farm Consultation</h3>
+          <h3>📞 Farm Consultation</h3>
           <p>Expert guidance on poultry management, feeding, disease prevention, and farm setup. Free for customers.</p>
           <div class="product-meta">
             <span class="price">FREE</span>
-            <a href="#contact" class="product-link">Book →</a>
+            <a href="#order" class="product-link">Book →</a>
           </div>
         </div>
       </div>
+
+      <!-- Product 5: Day-Old Chicks -->
+      <div class="product-card">
+        <div class="product-image">
+          <img src="images/chicks.jpg" alt="Day-old chicks at UnifiedfarmBLM">
+          <div class="overlay"></div>
+        </div>
+        <div class="product-body">
+          <h3>🐣 Day-Old Chicks</h3>
+          <p>High-quality day-old layer and broiler chicks. Vaccinated, healthy, and ready to grow on your farm.</p>
+          <div class="product-meta">
+            <span class="price">UGX 3,500 / chick</span>
+            <a href="#order" class="product-link">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6: Brooded Chicks -->
+      <div class="product-card">
+        <div class="product-image" style="background: linear-gradient(135deg, #f57c00, #ffca28);">
+          <span style="display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:4.5rem;">🐤</span>
+        </div>
+        <div class="product-body">
+          <h3>🐤 One-Month Brooded Chicks</h3>
+          <p>Strong, vaccinated chicks raised for 30 days under expert care. Higher survival rate for new farmers.</p>
+          <div class="product-meta">
+            <span class="price">UGX 8,000 / chick</span>
+            <a href="#order" class="product-link">Order →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- AdSense Rectangle -->
-<div class="ad-slot ad-rectangle">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6880789718761474" data-ad-slot="RECTANGLE_SLOT" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<!-- ==================== AD SLOT 3: Rectangle Sidebar Area ==================== -->
+<div class="container">
+  <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
+    <div class="ad-slot ad-rectangle">
+      <p>Advertisement</p>
+    </div>
+  </div>
 </div>
 
-<!-- Why Us Section -->
+<!-- ==================== WHY CHOOSE US ==================== -->
 <section class="section why-section">
   <div class="container">
     <div class="section-header">
@@ -413,76 +479,119 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
   </div>
 </section>
 
-<!-- Guides Section -->
+<!-- ==================== FARM GALLERY - NEW SECTION WITH YOUR REAL PHOTOS ==================== -->
+<section class="section gallery-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">📸 Our Farm</span>
+      <h2>Life at <span>UnifiedfarmBLM</span></h2>
+      <p>Take a look at our daily operations — from healthy roosters to fluffy chicks and fresh eggs.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item tall">
+        <img src="images/roosters.jpg" alt="Healthy roosters at our Uganda poultry farm">
+      </div>
+      <div class="gallery-item">
+        <img src="images/chicks.jpg" alt="Day-old chicks at UnifiedfarmBLM">
+      </div>
+      <div class="gallery-item">
+        <img src="images/eggs.jpg" alt="Fresh organic eggs from our farm">
+      </div>
+      <div class="gallery-item">
+        <img src="images/worker.jpg" alt="Farm worker collecting fresh eggs at UnifiedfarmBLM">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GUIDES ==================== -->
 <section class="section guides-section" id="guides">
   <div class="container">
     <div class="section-header">
       <span class="section-label">📚 Learn & Grow</span>
       <h2>Farming <span>Guides</span></h2>
-      <p>Practical knowledge from our farm to yours. Written for Ugandan farmers, by Ugandan farmers.</p>
+      <p>Practical tips and expert advice to help you succeed in poultry farming.</p>
     </div>
     <div class="guides-grid">
       <div class="guide-card">
         <span class="tag">Beginner</span>
-        <h3>Starting a Poultry Farm in Uganda</h3>
-        <p>Step-by-step guide to setting up your first poultry farm — from choosing land to your first sale.</p>
+        <h3>🐣 Starting a Poultry Farm in Uganda</h3>
+        <p>Everything you need to know — from choosing land to buying your first batch of chicks. A complete roadmap for beginners.</p>
         <a href="#" class="read-more">Read Guide →</a>
       </div>
       <div class="guide-card">
-        <span class="tag">Layer Management</span>
-        <h3>Layer Hen Management: 0 to 1000 Eggs</h3>
-        <p>Maximize egg production with proper feeding, lighting, and health management for your layers.</p>
+        <span class="tag">Health</span>
+        <h3>💉 Vaccination Schedule for Chickens</h3>
+        <p>Protect your flock with our proven vaccination calendar. Prevent diseases and keep your birds healthy year-round.</p>
         <a href="#" class="read-more">Read Guide →</a>
       </div>
       <div class="guide-card">
-        <span class="tag">Disease Control</span>
-        <h3>Common Poultry Diseases in Uganda</h3>
-        <p>Identify, prevent, and treat the most common diseases affecting chickens in the Ugandan climate.</p>
+        <span class="tag">Feeding</span>
+        <h3>🌽 Best Feed for Layers & Broilers</h3>
+        <p>Learn what to feed your chickens at each growth stage. Maximize egg production and weight gain with proper nutrition.</p>
+        <a href="#" class="read-more">Read Guide →</a>
+      </div>
+      <div class="guide-card">
+        <span class="tag">Business</span>
+        <h3>📈 Poultry Farming as a Business</h3>
+        <p>Turn your small farm into a profitable enterprise. Pricing, marketing, and scaling strategies that work in Uganda.</p>
+        <a href="#" class="read-more">Read Guide →</a>
+      </div>
+      <div class="guide-card">
+        <span class="tag">Housing</span>
+        <h3>🏠 Building Chicken Coops on a Budget</h3>
+        <p>Affordable coop designs that keep your chickens safe, healthy, and productive. Step-by-step construction guide.</p>
+        <a href="#" class="read-more">Read Guide →</a>
+      </div>
+      <div class="guide-card">
+        <span class="tag">Disease</span>
+        <h3>⚠️ Common Chicken Diseases & Prevention</h3>
+        <p>Know the warning signs and how to prevent the most common poultry diseases in Uganda. Save your flock before it's too late.</p>
         <a href="#" class="read-more">Read Guide →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Testimonials -->
+<!-- ==================== TESTIMONIALS ==================== -->
 <section class="section testimonials">
   <div class="container">
     <div class="section-header">
       <span class="section-label" style="background: rgba(255,255,255,0.2); color: white;">💬 Testimonials</span>
-      <h2>What Our <span>Customers</span> Say</h2>
-      <p>Real feedback from farmers and families who trust UnifiedfarmBLM.</p>
+      <h2>What Our <span style="color: var(--gold);">Customers</span> Say</h2>
+      <p>Trusted by farmers, families, and businesses across Uganda.</p>
     </div>
     <div class="testimonial-grid">
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
-        <p>"The day-old chicks I bought were strong and healthy. Out of 200 chicks, I only lost 3. That's incredible!"</p>
+        <p>"The best eggs I've ever bought in Kampala. Consistently fresh, large yolks, and my customers love them. UnifiedfarmBLM is now my only supplier."</p>
         <div class="testimonial-author">
-          <div class="author-avatar">JM</div>
+          <div class="author-avatar">S</div>
           <div class="author-info">
-            <h4>John M.</h4>
-            <span>Farmer, Mukono</span>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p>"Their eggs are the freshest I've ever bought. My customers at the restaurant can taste the difference."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">SK</div>
-          <div class="author-info">
-            <h4>Sarah K.</h4>
+            <h4>Sarah Nakato</h4>
             <span>Restaurant Owner, Kampala</span>
           </div>
         </div>
       </div>
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
-        <p>"The free consultation saved my farm. I was about to quit poultry, but their advice turned everything around."</p>
+        <p>"I bought 200 day-old chicks and the survival rate was incredible. Their vaccination program really works. Reagan even called to check on my progress!"</p>
         <div class="testimonial-author">
-          <div class="author-avatar">DN</div>
+          <div class="author-avatar">M</div>
           <div class="author-info">
-            <h4>David N.</h4>
-            <span>New Farmer, Jinja</span>
+            <h4>Moses Tumusiime</h4>
+            <span>New Farmer, Mpigi</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"The brooded chicks saved me so much stress. Already 1 month old and healthy — perfect for a beginner like me. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">G</div>
+          <div class="author-info">
+            <h4>Grace Auma</h4>
+            <span>Teacher & Side Farmer, Entebbe</span>
           </div>
         </div>
       </div>
@@ -490,258 +599,169 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- FAQ SECTION - ADDED HERE -->
-<!-- ============================================ -->
+<!-- ==================== AD SLOT 4: Bottom Banner ==================== -->
+<div class="container">
+  <div class="ad-slot ad-banner">
+    <p>Advertisement</p>
+  </div>
+</div>
+
+<!-- ==================== FAQ ==================== -->
 <section class="section faq-section" id="faq">
   <div class="container">
     <div class="section-header">
-      <span class="section-label">❓ Got Questions?</span>
+      <span class="section-label">❓ FAQ</span>
       <h2>Frequently Asked <span>Questions</span></h2>
-      <p>Everything you need to know before placing your order. Can't find your answer? Chat with us below!</p>
+      <p>Got questions? We've got answers. If you don't see yours, message us on WhatsApp!</p>
     </div>
-
-    <div style="max-width: 800px; margin: 0 auto;">
-      <!-- FAQ Item 1 -->
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>🐣 Do you deliver chicks?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>Yes, we deliver day-old chicks and one-month brooded chicks across Uganda. Our farm is located in <strong style="color: var(--primary);">Mpigi on Masaka Road, 26 km from Kampala</strong>, making delivery to central Uganda fast and affordable. We use specialized transport to ensure chicks arrive healthy. Contact us for a delivery quote to your area!</p>
-        </div>
+    <div class="faq-list">
+      <div class="faq-item active">
+        <div class="faq-question">Where is your farm located? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>We are located in Mpigi District, along the Kampala-Masaka highway. We also deliver to Kampala, Entebbe, and surrounding areas.</p></div>
       </div>
-
-      <!-- FAQ Item 2 -->
       <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>📦 How do I place an order?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>You can place an order via WhatsApp, phone call, or email. We recommend calling <strong style="color: var(--primary);">+256 708 813 419</strong> for fastest response. For large orders, we require a 50% deposit to confirm your booking. Walk-ins are also welcome at our farm in Mpigi!</p>
-        </div>
+        <div class="faq-question">Do you deliver? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>Yes! We deliver across Uganda within 24-48 hours. Delivery fees depend on your location. Orders above UGX 200,000 get free delivery within Kampala.</p></div>
       </div>
-
-      <!-- FAQ Item 3 -->
       <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>💳 What payment methods do you accept?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>We accept Mobile Money (MTN & Airtel), bank transfers, and cash on delivery for local orders within Kampala and surrounding areas. For bulk orders, we also accept installment payments. All payments are secure and confirmed before delivery.</p>
-        </div>
+        <div class="faq-question">Are your chicks vaccinated? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>Absolutely. All our chicks come fully vaccinated against Newcastle disease, Gumboro, and Marek's disease. We provide a vaccination certificate with every purchase.</p></div>
       </div>
-
-      <!-- FAQ Item 4 -->
       <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>🌾 Do you offer farm advice?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>Absolutely! We provide free consultation on poultry management, feeding programs, and disease prevention for all our customers. Follow our <a href="#guides" style="color: var(--primary); font-weight: 700;">Farming Guides</a> section for detailed articles, or chat with us directly using the orange button at the bottom right of your screen.</p>
-        </div>
+        <div class="faq-question">What breeds do you sell? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>We specialize in improved Kuroiler, layers (Hy-Line Brown), and broilers (Cobb 500). All breeds are selected for high productivity in Uganda's climate.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can I visit the farm? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>Yes! We welcome farm visits by appointment. It's a great way to see our operations firsthand and learn from our team. Contact us to schedule.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How do I place an order? <span class="faq-icon">+</span></div>
+        <div class="faq-answer"><p>Click the "Order Now" button, send us a WhatsApp message, or call us directly. We'll confirm your order and arrange delivery.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- LOCATION / MAP SECTION - ADDED HERE -->
-<!-- ============================================ -->
-<section class="section location-section" id="location">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">📍 Find Us</span>
-      <h2>Our <span>Location</span></h2>
-      <p>Visit our farm in Mpigi, Uganda — right on Masaka Road, just 26 km from Kampala.</p>
-    </div>
-
-    <div style="max-width: 900px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); border: 3px solid var(--border);">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.947745588104!2d32.32000000000001!3d0.2333333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177d0b6e5e5e5e5e%3A0x7c4d5e5e5e5e5e5e!2sMpigi%2C%20Uganda!5e0!3m2!1sen!2s!4v1700000000000"
-        width="100%" 
-        height="350" 
-        style="border:0; display: block;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    </div>
-
+<!-- ==================== LOCATION ==================== -->
+<section class="location-section">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">📍 Our Location</span>
+    <h2 style="font-size:2rem;margin-bottom:16px;">Find Us in <span style="color:var(--accent);">Uganda</span></h2>
+    <p style="color:var(--text-light);margin-bottom:24px;">Located along the Kampala-Masaka highway in Mpigi District</p>
     <div class="location-badges">
-      <span class="location-badge green">📍 Mpigi Town, Uganda</span>
-      <span class="location-badge orange">🛣️ Masaka Road</span>
-      <span class="location-badge gold">📏 26 km from Kampala</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 20px;">
-      <p style="color: var(--text-light); font-size: 0.95rem;">
-        🚚 We deliver farm-fresh products to <strong>Kampala, Entebbe, Jinja, Mukono, Masaka, Mbarara</strong> and all major towns across Uganda.
-      </p>
+      <span class="location-badge green">📍 Mpigi District</span>
+      <span class="location-badge orange">🛣️ Kampala-Masaka Rd</span>
+      <span class="location-badge gold">🇺🇬 Uganda</span>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- CTA SECTION -->
-<!-- ============================================ -->
-<section class="cta-section" id="contact">
+<!-- ==================== CTA ==================== -->
+<section class="cta-section" id="order">
   <div class="container">
-    <h2>Ready to Start Your <span style="color: var(--gold);">Poultry Journey?</span></h2>
-    <p>Whether you need fresh eggs, healthy chicks, or expert farming advice — we're here to help. Reach out today and let's grow together.</p>
+    <h2>Ready to Stock Your Farm?</h2>
+    <p>Join hundreds of satisfied farmers and households across Uganda. Fresh eggs, healthy chicks, and expert advice — all from one trusted family farm.</p>
     <div class="cta-buttons">
-      <a href="https://wa.me/256708813419" class="btn btn-primary" style="background: linear-gradient(135deg, #25d366, #128c7e); color: white; box-shadow: 0 6px 25px rgba(37,211,102,0.4);">💬 WhatsApp Us</a>
-      <a href="tel:+256708813419" class="btn btn-outline" style="border-color: white; color: white;">📞 Call Now</a>
+      <a href="#" class="btn btn-primary" style="font-size:1.2rem;padding:18px 40px;">💬 Order on WhatsApp</a>
+      <a href="#" class="btn btn-outline" style="font-size:1.1rem;padding:18px 40px;border-color:rgba(255,255,255,0.4);">📞 Call: 0700-XXX-XXX</a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <h3>Unifiedfarm<span>BLM</span></h3>
-        <p>Family-run poultry farm in Mpigi, Uganda. Delivering farm-fresh eggs, healthy chicks, and expert farming guidance to households and businesses across the nation.</p>
+        <p>Premium poultry products and expert farming guidance from a family-run farm in Uganda. Basuuta, Lutwama, Muyingo — the BLM Family.</p>
         <div class="footer-social">
-          <a href="#" title="Facebook">📘</a>
-          <a href="#" title="Twitter">🐦</a>
-          <a href="#" title="Instagram">📸</a>
-          <a href="#" title="WhatsApp">💬</a>
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="WhatsApp">📱</a>
+          <a href="#" title="YouTube">▶</a>
+          <a href="#" title="Instagram">📷</a>
         </div>
-      </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about.html">About Us</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#guides">Guides</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
       </div>
       <div class="footer-links">
         <h4>Products</h4>
         <ul>
-          <li><a href="#products">Fresh Eggs</a></li>
-          <li><a href="#products">Broiler Chicken</a></li>
-          <li><a href="#products">Day-Old Chicks</a></li>
-          <li><a href="#products">Brooded Chicks</a></li>
-          <li><a href="#products">Organic Manure</a></li>
+          <li><a href="#">Table Eggs</a></li>
+          <li><a href="#">Broiler Chicken</a></li>
+          <li><a href="#">Day-Old Chicks</a></li>
+          <li><a href="#">Brooded Chicks</a></li>
+          <li><a href="#">Organic Manure</a></li>
         </ul>
       </div>
       <div class="footer-links">
-        <h4>Contact</h4>
+        <h4>Resources</h4>
         <ul>
-          <li><a href="tel:+256708813419">📞 +256 708 813 419</a></li>
-          <li><a href="https://wa.me/256708813419">💬 WhatsApp</a></li>
-          <li><a href="mailto:info@unifiedfarmblm.com">📧 info@unifiedfarmblm.com</a></li>
-          <li><a href="#location">📍 Mpigi, Uganda</a></li>
+          <li><a href="#">Farming Guides</a></li>
+          <li><a href="#">Vaccination Schedule</a></li>
+          <li><a href="#">Feed Calculator</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 UnifiedfarmBLM. All rights reserved. Basuuta · Lutwama · Muyingo Family Farm.</p>
-      <p><a href="/privacy.html" style="color: rgba(255,255,255,0.5);">Privacy Policy</a></p>
+      <p>&copy; 2026 UnifiedfarmBLM. All rights reserved. Basuuta · Lutwama · Muyingo</p>
+      <p>Made with ❤️ in Uganda</p>
     </div>
   </div>
 </footer>
 
-<!-- Ecosystem Bar -->
 <div class="ecosystem-bar">
   <div class="container">
-    <p>Part of the <a href="https://botchainpulse.github.io/botchainpulse/" target="_blank">BotChain Pulse</a> ecosystem · Built with ❤️ in Uganda</p>
+    <p>Part of the <a href="https://botchainpulse.github.io" target="_blank">BotChainPulse</a> ecosystem — building digital tools for African agriculture.</p>
   </div>
 </div>
 
-<!-- Chatbot Widget -->
+<!-- Chatbot -->
 <div class="chatbot-widget">
-  <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
   <div class="chatbot-panel" id="chatbotPanel">
     <div class="chatbot-header">
       <h4>🐔 UnifiedfarmBLM Assistant</h4>
-      <button class="close-btn" onclick="toggleChatbot()">✕</button>
+      <button class="close-btn" onclick="document.getElementById('chatbotPanel').style.display='none'">&times;</button>
     </div>
     <div class="chatbot-body">
       <div class="chatbot-msg bot">
         <strong>Hello! 👋</strong><br>
-        Welcome to UnifiedfarmBLM. I'm here to help you with:<br><br>
-        • Product orders & pricing<br>
-        • Delivery information<br>
-        • Farming advice<br>
-        • General inquiries<br><br>
-        How can I assist you today?
+        Welcome to UnifiedfarmBLM. I'm here to help you with:
+        <ul style="margin-top:8px;padding-left:18px">
+          <li>Product orders & pricing</li>
+          <li>Farm consultation</li>
+          <li>Delivery information</li>
+          <li>Farming advice</li>
+        </ul>
       </div>
     </div>
     <div class="chatbot-quick-replies">
-      <button onclick="sendQuickReply('I want to order eggs')">Order Eggs</button>
-      <button onclick="sendQuickReply('I want to buy chicks')">Buy Chicks</button>
-      <button onclick="sendQuickReply('Delivery to my area')">Delivery Info</button>
-      <button onclick="sendQuickReply('Farm consultation')">Consultation</button>
+      <button onclick="window.location.href='#products'">🛒 View Products</button>
+      <button onclick="window.location.href='https://wa.me/256XXXXXXXXX'">💬 WhatsApp Us</button>
+      <button onclick="window.location.href='#order'">📞 Call Now</button>
     </div>
   </div>
+  <button class="chatbot-toggle" onclick="var p=document.getElementById('chatbotPanel');p.style.display=p.style.display==='flex'?'none':'flex'">💬</button>
 </div>
 
-<!-- ============================================ -->
-<!-- JAVASCRIPT - ADDED AT BOTTOM -->
-<!-- ============================================ -->
+<!-- FAQ Toggle Script -->
 <script>
-// FAQ Toggle Function
-function toggleFaq(element) {
-  const item = element.parentElement;
-  const answer = element.nextElementSibling;
-  const icon = element.querySelector('.faq-icon');
-
-  // Close all other FAQ items
-  document.querySelectorAll('.faq-item').forEach(faq => {
-    if (faq !== item && faq.classList.contains('active')) {
-      faq.classList.remove('active');
-      faq.querySelector('.faq-answer').style.maxHeight = '0px';
-      faq.querySelector('.faq-icon').textContent = '+';
-    }
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    q.parentElement.classList.toggle('active');
   });
-
-  // Toggle current item
-  if (item.classList.contains('active')) {
-    item.classList.remove('active');
-    answer.style.maxHeight = '0px';
-    icon.textContent = '+';
-  } else {
-    item.classList.add('active');
-    answer.style.maxHeight = answer.scrollHeight + 'px';
-    icon.textContent = '×';
-  }
-}
-
-// Chatbot Toggle
-function toggleChatbot() {
-  const panel = document.getElementById('chatbotPanel');
-  panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
-}
-
-// Quick Reply
-function sendQuickReply(message) {
-  const body = document.querySelector('.chatbot-body');
-  const userMsg = document.createElement('div');
-  userMsg.className = 'chatbot-msg';
-  userMsg.style.borderLeftColor = 'var(--accent)';
-  userMsg.innerHTML = '<strong>You:</strong> ' + message;
-  body.appendChild(userMsg);
-  body.scrollTop = body.scrollHeight;
-
-  setTimeout(() => {
-    const botMsg = document.createElement('div');
-    botMsg.className = 'chatbot-msg bot';
-    botMsg.innerHTML = '<strong>Thanks!</strong> One of our team members will respond shortly. For faster service, please call <strong>+256 708 813 419</strong> or WhatsApp us.';
-    body.appendChild(botMsg);
-    body.scrollTop = body.scrollHeight;
-  }, 800);
-}
+});
 </script>
-     
+
 </body>
 </html>
+           
