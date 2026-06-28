@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Unified Farm BLM | Poultry Farming Tips & Guides</title>
+    <meta name="description" content="Practical poultry farming guides, tips, and stories from Unified Farm BLM in Mpigi, Uganda. Learn how to start and grow your chicken farm.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: #2c5f2d; color: white; padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: white; text-decoration: none; }
+        
+        .hero-section { background: #f8f9fa; padding: 3rem 0; text-align: center; }
+        .hero-section h1 { font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1rem; }
+        .hero-section p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #666; }
+        
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .blog-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .blog-card:hover { transform: translateY(-5px); }
+        .blog-card-content { padding: 1.5rem; }
+        .blog-card .category { display: inline-block; background: #2c5f2d; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; margin-bottom: 0.5rem; }
+        .blog-card h2 { color: #2c5f2d; margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .blog-card .date { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+        .blog-card p { margin-bottom: 1rem; }
+        .read-more { color: #f4a261; text-decoration: none; font-weight: bold; }
+        
+        .newsletter { background: #2c5f2d; color: white; padding: 3rem 0; text-align: center; }
+        .newsletter h2 { color: white; margin-bottom: 1rem; }
+        .newsletter-form { display: flex; max-width: 500px; margin: 0 auto; gap: 1rem; }
+        .newsletter-form input { flex: 1; padding: 12px; border: none; border-radius: 5px; font-size: 1rem; }
+        .newsletter-form button { padding: 12px 24px; background: #f4a261; color: #333; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        footer { background: #1a3a1b; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .footer-links a { color: white; text-decoration: none; opacity: 0.8; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🐔 Unified Farm BLM</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about-us.html">About Us</a></li>
+                <li><a href="index.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>From Our Farm</h1>
+            <p>Practical guides, farming tips, and real stories from the field. Learn from our mistakes and successes.</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="blog-grid">
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category">Beginner Guide</span>
+                    <h2>How to Start a Backyard Chicken Farm with $50</h2>
+                    <p class="date">June 26, 2026</p>
+                    <p>Starting a chicken farm doesn't require a big budget, land, or expensive equipment. Here's the exact step-by-step process to start your own backyard chicken farm with just $50 — based on real-world experience and practical advice that actually works.</p>
+                    <a href="how-to-start-backyard-chicken-farm-50-dollars.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: #333;">Coming Soon</span>
+                    <h2>Understanding Chicken Vaccination Schedules</h2>
+                    <p class="date">Coming July 2026</p>
+                    <p>A complete guide to protecting your flock from Newcastle Disease, Gumboro, Fowl Pox, and other common poultry diseases in Uganda. Includes a downloadable vaccination calendar.</p>
+                    <span class="read-more" style="opacity: 0.5;">Coming Soon</span>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: #333;">Coming Soon</span>
+                    <h2>From 5 Hens to 500 Eggs a Day</h2>
+                    <p class="date">Coming July 2026</p>
+                    <p>Our founder's journey from a small backyard operation to a thriving poultry farm in Mpigi, Uganda. Real numbers, real mistakes, real lessons learned over three years.</p>
+                    <span class="read-more" style="opacity: 0.5;">Coming Soon</span>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: #333;">Coming Soon</span>
+                    <h2>Feeding Your Flock: What, When, and How Much</h2>
+                    <p class="date">Coming August 2026</p>
+                    <p>Everything you need to know about layer mash, broiler feed, supplements, and kitchen scraps. Includes a feeding schedule and cost calculator for Ugandan farmers.</p>
+                    <span class="read-more" style="opacity: 0.5;">Coming Soon</span>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: #333;">Coming Soon</span>
+                    <h2>Building Your First Chicken Coop on a Budget</h2>
+                    <p class="date">Coming August 2026</p>
+                    <p>Step-by-step instructions for building a functional, predator-proof chicken coop using local materials. Costs less than $30 and can house 15-20 hens.</p>
+                    <span class="read-more" style="opacity: 0.5;">Coming Soon</span>
+                </div>
+            </article>
+            
+            <article class="blog-card">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: #333;">Coming Soon</span>
+                    <h2>Marketing Your Eggs: From Backyard to Business</h2>
+                    <p class="date">Coming September 2026</p>
+                    <p>How to find your first customers, price your products, and build a reputation. Real strategies that work in Ugandan markets and communities.</p>
+                    <span class="read-more" style="opacity: 0.5;">Coming Soon</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <h2>Get Farming Tips in Your Inbox</h2>
+            <p>Join 500+ farmers getting weekly tips, guides, and exclusive updates from Unified Farm BLM.</p>
+            <form class="newsletter-form" action="mailto:info@unifiedfarmblm.com" method="post" enctype="text/plain">
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../about-us.html">About Us</a>
+            <a href="index.html">Blog</a>
+            <a href="../contact.html">Contact</a>
+            <a href="../privacy-policy.html">Privacy Policy</a>
+            <a href="../terms-of-service.html">Terms of Service</a>
+        </div>
+        <p>© 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
+    </footer>
+</body>
+</html>
