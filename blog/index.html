@@ -9,17 +9,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
+
         header { background: #2c5f2d; color: white; padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
         nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .logo { font-size: 1.5rem; font-weight: bold; }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: white; text-decoration: none; }
-        
+
         .hero-section { background: #f8f9fa; padding: 3rem 0; text-align: center; }
         .hero-section h1 { font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1rem; }
         .hero-section p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #666; }
-        
+
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
         .blog-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
@@ -30,17 +30,17 @@
         .blog-card .date { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
         .blog-card p { margin-bottom: 1rem; }
         .read-more { color: #f4a261; text-decoration: none; font-weight: bold; }
-        
+
         .newsletter { background: #2c5f2d; color: white; padding: 3rem 0; text-align: center; }
         .newsletter h2 { color: white; margin-bottom: 1rem; }
         .newsletter-form { display: flex; max-width: 500px; margin: 0 auto; gap: 1rem; }
         .newsletter-form input { flex: 1; padding: 12px; border: none; border-radius: 5px; font-size: 1rem; }
         .newsletter-form button { padding: 12px 24px; background: #f4a261; color: #333; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        
+
         footer { background: #1a3a1b; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem; }
         .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
         .footer-links a { color: white; text-decoration: none; opacity: 0.8; }
-        
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .blog-grid { grid-template-columns: 1fr; }
@@ -50,6 +50,22 @@
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Unified Farm BLM Blog",
+      "description": "Practical poultry farming guides and tips from Mpigi, Uganda",
+      "url": "https://www.unifiedfarmblm.com/blog/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Unified Farm BLM",
+        "logo": { "@type": "ImageObject", "url": "https://www.unifiedfarmblm.com/favicon.svg" }
+      }
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -67,7 +83,7 @@
     <section class="hero-section">
         <div class="container">
             <h1>From Our Farm</h1>
-            <p>Practical guides, farming tips, and real stories from the field. Learn from our mistakes and successes.</p>
+            <p>Practical guides, farming tips, and real stories from the field. Learn from our mistakes and successes raising poultry in Uganda.</p>
         </div>
     </section>
 
@@ -79,51 +95,51 @@
                     <span class="category">Beginner Guide</span>
                     <h2>How to Start a Backyard Chicken Farm with $50</h2>
                     <p class="date">June 26, 2026</p>
-                    <p>Starting a chicken farm doesn't require a big budget, land, or expensive equipment. Here's the exact step-by-step process to start your own backyard chicken farm with just $50 — based on real-world experience and practical advice that actually works.</p>
+                    <p>Starting a chicken farm does not require a big budget. Here is the exact step-by-step process to start with just $50 — based on real-world experience.</p>
                     <a href="how-to-start-backyard-chicken-farm-50-dollars.html" class="read-more">Read More →</a>
                 </div>
             </article>
-            
+
             <article class="blog-card">
                 <img src="../images/vet-care.jpg" alt="Chicken vaccination and health care" class="blog-card-img" loading="lazy">
                 <div class="blog-card-content">
                     <span class="category" style="background: #2c5f2d; color: white;">Health Guide</span>
                     <h2>Understanding Chicken Vaccination Schedules in Uganda</h2>
                     <p class="date">June 29, 2026</p>
-                    <p>Complete vaccination schedule for backyard chickens in Uganda. Protect your flock from Newcastle Disease, Gumboro, Fowl Pox, and Marek's Disease. Includes costs and practical tips.</p>
+                    <p>Complete vaccination schedule for backyard chickens in Uganda. Protect your flock from Newcastle Disease, Gumboro, Fowl Pox, and Marek's Disease.</p>
                     <a href="chicken-vaccination-schedule-uganda.html" class="read-more">Read More →</a>
                 </div>
             </article>
-            
+
             <article class="blog-card">
                 <img src="../images/eggs-basket.jpg" alt="Fresh organic eggs from the farm" class="blog-card-img" loading="lazy">
                 <div class="blog-card-content">
                     <span class="category" style="background: #2c5f2d; color: white;">Practical Tips</span>
                     <h2>How to Tell Egg Freshness, Predict Egg Color, and Master Hatching</h2>
                     <p class="date">June 29, 2026</p>
-                    <p>Learn the water test for egg freshness, how to predict egg color by a hen's ear lobe, and the complete hatching and incubation guide for backyard farmers.</p>
+                    <p>Learn the water test for egg freshness, how to predict egg color by a hen's ear lobe, and the complete hatching and incubation guide.</p>
                     <a href="egg-freshness-hatching-guide.html" class="read-more">Read More →</a>
                 </div>
             </article>
-            
+
             <article class="blog-card">
                 <img src="../images/chicken-coop.jpg" alt="Chickens feeding in the coop" class="blog-card-img" loading="lazy">
                 <div class="blog-card-content">
                     <span class="category" style="background: #2c5f2d; color: white;">Nutrition Guide</span>
-                    <h2>Chicken Feeding &amp; Nutrition Guide for Ugandan Farmers</h2>
+                    <h2>Chicken Feeding & Nutrition Guide for Ugandan Farmers</h2>
                     <p class="date">June 29, 2026</p>
-                    <p>Complete feeding guide for layers and broilers in Uganda. Learn about layer mash, starter feed, supplements, kitchen scraps, and how to reduce feed costs while maximizing egg production.</p>
+                    <p>Complete feeding guide for layers and broilers in Uganda. Learn about layer mash, starter feed, supplements, and how to reduce feed costs.</p>
                     <a href="chicken-feeding-nutrition-guide.html" class="read-more">Read More →</a>
                 </div>
             </article>
-            
+
             <article class="blog-card">
                 <img src="../images/coop-building.jpg" alt="Building a chicken coop with local materials" class="blog-card-img" loading="lazy">
                 <div class="blog-card-content">
                     <span class="category" style="background: #2c5f2d; color: white;">Housing Guide</span>
                     <h2>Building Your First Chicken Coop on a Budget</h2>
                     <p class="date">July 5, 2026</p>
-                    <p>Step-by-step instructions for building a functional, predator-proof chicken coop using local materials. Costs less than UGX 100,000 and can house 15-20 hens.</p>
+                    <p>Step-by-step instructions for building a functional, predator-proof chicken coop using local materials. Costs less than UGX 100,000.</p>
                     <a href="how-to-build-chicken-coop-budget.html" class="read-more">Read More →</a>
                 </div>
             </article>
@@ -134,8 +150,52 @@
                     <span class="category" style="background: #2c5f2d; color: white;">Business Guide</span>
                     <h2>Marketing Your Eggs: From Backyard to Business</h2>
                     <p class="date">July 5, 2026</p>
-                    <p>How to find your first customers, price your products, and build a reputation. Real strategies that work in Ugandan markets and communities.</p>
+                    <p>How to find your first customers, price your products, and build a reputation. Real strategies that work in Ugandan markets.</p>
                     <a href="marketing-eggs-backyard-business.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="../images/rooster.jpg" alt="Healthy chicken on the farm" class="blog-card-img" loading="lazy">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #dc3545; color: white;">Disease Guide</span>
+                    <h2>5 Common Poultry Diseases in Uganda: Prevention & Treatment</h2>
+                    <p class="date">July 8, 2026</p>
+                    <p>Identify, prevent, and treat the 5 most common poultry diseases. Save your flock with expert guidance and vaccination schedules.</p>
+                    <a href="common-poultry-diseases-uganda.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="../images/farm-aerial.jpg" alt="Broiler chickens in the farm" class="blog-card-img" loading="lazy">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #f4a261; color: white;">Broiler Guide</span>
+                    <h2>Broiler Farming in Uganda: Complete 8-Week Cycle Guide</h2>
+                    <p class="date">July 9, 2026</p>
+                    <p>Complete broiler farming guide with feed schedules, vaccination, housing, and profit calculations. Turn chicks to market birds in 8 weeks.</p>
+                    <a href="broiler-farming-complete-guide.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="../images/chicks.jpg" alt="Different chicken breeds" class="blog-card-img" loading="lazy">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #28a745; color: white;">Breeds Guide</span>
+                    <h2>Best Chicken Breeds for Uganda: Local vs Imported</h2>
+                    <p class="date">July 10, 2026</p>
+                    <p>Compare Kuroilers, ISA Browns, Cobb 500 broilers, and local village chickens. Find the right breed for your farm goals.</p>
+                    <a href="chicken-breeds-uganda-guide.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="../images/eggs-basket.jpg" alt="Layer hens producing eggs" class="blog-card-img" loading="lazy">
+                <div class="blog-card-content">
+                    <span class="category" style="background: #6f42c1; color: white;">Layer Guide</span>
+                    <h2>Layer Farming in Uganda: Guide to 300+ Eggs Per Year</h2>
+                    <p class="date">July 10, 2026</p>
+                    <p>Complete layer farming guide. Raise productive hens, maximize egg production, and build a profitable daily income stream.</p>
+                    <a href="layer-farming-uganda-guide.html" class="read-more">Read More →</a>
                 </div>
             </article>
         </div>
@@ -159,9 +219,9 @@
             <a href="index.html">Blog</a>
             <a href="../contact.html">Contact</a>
             <a href="../privacy-policy.html">Privacy Policy</a>
-            <a href="../terms-of-service.html">Terms of Service</a>
+            <a href="../disclaimer.html">Disclaimer</a>
         </div>
-        <p>© 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
+        <p>&copy; 2026 Unified Farm BLM. All rights reserved.</p>
     </footer>
 </body>
 </html>
