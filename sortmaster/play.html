@@ -274,8 +274,13 @@ function showRewarded(){
   if(window.AndroidAds){ try{ AndroidAds.showRewarded(); }catch(e){ grantReward(); } }
   else { grantReward(); } // browser fallback: just grant
 }
-window.onRewardEarned=function(){ grantReward(); };
-window.onRewardUnavailable=function(){ toast('Ad not ready — try again in a moment'); };
+window.onRewardEarned=function(){ adFailCount=0; grantReward(); };
+let adFailCount=0;
+window.onRewardUnavailable=function(){
+  adFailCount++;
+  if(adFailCount>=2){ adFailCount=0; toast('No ads available — here, it\'s free! 🎁'); grantReward(); }
+  else toast('Ad not ready — tap again to get it free');
+};
 function grantReward(){
   sfx.tube();
   if(pendingAction==='tube'){ tubes.push([]); extraTubeUsed=true; render(); toast('➕ Extra tube added!'); }
