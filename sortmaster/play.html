@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sort Master — Color Sorting Puzzle</title>
+<meta name="description" content="Play Sort Master free online — sort colorful liquids into tubes in this relaxing water sort puzzle. Thousands of levels, no download needed.">
+<link rel="canonical" href="https://www.unifiedfarmblm.com/sortmaster/play.html">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+  :root {
+    --bg:#0b0e1a; --panel:#151a2e; --accent:#6c5ce7; --accent2:#00d2ff;
+    --text:#eef1ff; --dim:#8a90b8;
+  }
+  html,body { height:100%; background:radial-gradient(1200px 800px at 50% -10%, #1b2140 0%, var(--bg) 60%); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; overflow:hidden; }
+  #app { height:100%; display:flex; flex-direction:column; max-width:520px; margin:0 auto; }
+
+  /* header */
+  header { padding:12px 16px 6px; display:flex; align-items:center; justify-content:space-between; }
+  .logo { font-size:20px; font-weight:800; letter-spacing:.5px;
+    background:linear-gradient(90deg,var(--accent2),var(--accent)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .lvl { font-size:13px; color:var(--dim); }
+  .lvl b { color:var(--text); font-size:16px; }
+
+  /* toolbar */
+  #toolbar { display:flex; gap:8px; padding:6px 16px 10px; }
+  .tbtn { flex:1; background:var(--panel); border:1px solid #262c4a; border-radius:12px; padding:9px 4px;
+    font-size:12px; font-weight:700; color:var(--text); text-align:center; cursor:pointer; transition:transform .08s; }
+  .tbtn:active { transform:scale(.94); }
+  .tbtn small { display:block; font-size:9px; color:var(--dim); font-weight:600; margin-top:1px; }
+  .tbtn.ad { border-color:var(--accent); background:linear-gradient(180deg,#241f4d,#151a2e); }
+
+  /* board */
+  #board { flex:1; overflow-y:auto; display:flex; flex-wrap:wrap; align-content:center; justify-content:center;
+    gap:18px 14px; padding:16px 12px 20px; }
+
+  .tube { width:44px; cursor:pointer; position:relative; transition:transform .18s; }
+  .tube .glass { width:44px; height:150px; border:3px solid rgba(255,255,255,.28); border-top:none;
+    border-radius:0 0 22px 22px; display:flex; flex-direction:column-reverse; overflow:hidden;
+    background:rgba(255,255,255,.05); position:relative; }
+  .tube .lip { width:54px; height:6px; background:rgba(255,255,255,.35); border-radius:3px; margin:0 auto -3px; position:relative; z-index:2; }
+  .tube.sel { transform:translateY(-16px); }
+  .tube.sel .glass { border-color:var(--accent2); box-shadow:0 0 18px rgba(0,210,255,.45); }
+  .tube.hint .glass { border-color:#2ed573; box-shadow:0 0 14px rgba(46,213,115,.4); }
+  .seg { width:100%; height:25%; transition:transform .2s, opacity .2s; position:relative; }
+  .seg::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,.28),transparent 40%,rgba(0,0,0,.15)); }
+  .tube.done .glass { border-color:gold; box-shadow:0 0 14px rgba(255,215,0,.35); }
+  .check { position:absolute; top:-26px; left:50%; transform:translateX(-50%); font-size:18px; opacity:0; transition:opacity .3s; }
+  .tube.done .check { opacity:1; }
+
+  /* banner spacer */
+  #adspace { height:60px; flex:none; }
+
+  /* modal */
+  .modal { position:fixed; inset:0; background:rgba(5,7,15,.85); display:none; align-items:center; justify-content:center; z-index:50; backdrop-filter:blur(4px); }
+  .modal.show { display:flex; }
+  .card { background:var(--panel); border:1px solid #2a3156; border-radius:20px; padding:28px 24px; text-align:center; width:82%; max-width:320px; animation:pop .25s; }
+  @keyframes pop { from{transform:scale(.8); opacity:0} }
+  .card h2 { font-size:24px; margin-bottom:6px; }
+  .card p { color:var(--dim); font-size:14px; margin-bottom:18px; }
+  .card .big { font-size:44px; margin-bottom:8px; }
+  .btn { display:block; width:100%; padding:14px; border:none; border-radius:14px; font-size:16px; font-weight:800;
+    cursor:pointer; margin-top:10px; transition:transform .08s; }
+  .btn:active { transform:scale(.96); }
+  .btn-p { background:linear-gradient(90deg,var(--accent),#8e7bff); color:#fff; }
+  .btn-s { background:#232a48; color:var(--text); }
+
+  /* toast */
+  #toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#232a48; color:var(--text);
+    padding:10px 18px; border-radius:24px; font-size:13px; font-weight:600; opacity:0; transition:opacity .25s; z-index:60; pointer-events:none; white-space:nowrap; }
+  #toast.show { opacity:1; }
+
+  /* splash */
+  #splash { position:fixed; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:radial-gradient(1200px 800px at 50% -10%, #1b2140 0%, var(--bg) 60%); transition:opacity .4s; }
+  #splash h1 { font-size:40px; font-weight:900; background:linear-gradient(90deg,#00d2ff,#6c5ce7,#ff6b9d); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  #splash p { color:var(--dim); margin:10px 0 30px; }
+  #splash .demo { display:flex; gap:6px; margin-bottom:34px; }
+  #splash .demo div { width:26px; height:70px; border:2px solid rgba(255,255,255,.3); border-top:none; border-radius:0 0 13px 13px; display:flex; flex-direction:column-reverse; overflow:hidden; }
+  #splash .demo i { display:block; height:25%; animation:bub 1.6s infinite alternate; }
+  @keyframes bub { to{transform:translateY(-4px)} }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div>
+      <div class="logo">SORT MASTER</div>
+      <div class="lvl">Level <b id="lvlNum">1</b> · Moves <b id="moveNum">0</b></div>
+    </div>
+    <div class="lvl" style="text-align:right">🏆 Best<br><b id="bestLvl" style="font-size:16px">1</b></div>
+  </header>
+  <div id="toolbar">
+    <button class="tbtn" id="btnUndo">↩️ Undo<small id="undoInfo">unlimited</small></button>
+    <button class="tbtn" id="btnRestart">🔄 Restart<small>this level</small></button>
+    <button class="tbtn ad" id="btnTube">➕ Tube<small>watch ad</small></button>
+    <button class="tbtn" id="btnSkip">⏭️ Skip<small>watch ad</small></button>
+  </div>
+  <div id="board"></div>
+  <div id="adspace"></div>
+</div>
+
+<div class="modal" id="winModal">
+  <div class="card">
+    <div class="big">🎉</div>
+    <h2>Level Complete!</h2>
+    <p id="winStats">Solved in 0 moves</p>
+    <button class="btn btn-p" id="btnNext">Next Level ▶</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<div id="splash">
+  <h1>SORT MASTER</h1>
+  <p>The satisfying color-sorting puzzle</p>
+  <div class="demo">
+    <div><i style="background:#ff4757"></i><i style="background:#ff4757"></i><i style="background:#2ed573"></i></div>
+    <div><i style="background:#2ed573"></i><i style="background:#1e90ff"></i><i style="background:#1e90ff"></i></div>
+    <div><i style="background:#ffa502"></i><i style="background:#ffa502"></i><i style="background:#ff4757"></i></div>
+  </div>
+  <button class="btn btn-p" style="width:200px" onclick="startGame()">▶ &nbsp;Play</button>
+</div>
+
+<script>
+/* ============ AUDIO (tiny synth, no assets) ============ */
+let AC=null;
+function beep(f,d,type,vol){ try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain(); o.type=type||'sine'; o.frequency.value=f;
+  g.gain.setValueAtTime(vol||.08,AC.currentTime); g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);
+  o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+d);}catch(e){} }
+const sfx = {
+  pick:()=>beep(520,.08,'sine',.06),
+  pour:()=>{beep(300,.12,'triangle',.07); setTimeout(()=>beep(400,.1,'triangle',.05),60);},
+  bad :()=>beep(160,.15,'sawtooth',.05),
+  win :()=>{[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18,'sine',.08),i*110));},
+  tube:()=>beep(700,.12,'square',.05)
+};
+
+/* ============ GAME CORE ============ */
+const CAP=4;
+const PALETTE=['#ff4757','#2ed573','#1e90ff','#ffa502','#a55eea','#00d2ff','#ff6b9d','#f9ca24','#7bed9f','#eccc68','#ff7f50','#70a1ff'];
+
+let level=1, moves=0, tubes=[], history=[], selected=-1, extraTubeUsed=false, won=false;
+let best = +(localStorage.getItem('sm_best')||1);
+level = +(localStorage.getItem('sm_level')||1);
+
+function colorsForLevel(l){ return Math.min(3+Math.floor((l-1)/2), 10); }
+
+function genLevel(l){
+  const k=colorsForLevel(l);
+  for(let tries=0; tries<60; tries++){
+    const arr=[];
+    for(let c=0;c<k;c++) for(let i=0;i<CAP;i++) arr.push(c);
+    // fisher-yates
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+    const t=[];
+    for(let c=0;c<k;c++) t.push(arr.slice(c*CAP,c*CAP+CAP));
+    // reject if any tube starts uniform (too easy / partially solved)
+    if(t.some(tb=>tb.every(x=>x===tb[0]))) continue;
+    t.push([],[]); // two empties
+    return t;
+  }
+  // fallback (rare): accept last deal
+  const arr=[]; for(let c=0;c<k;c++) for(let i=0;i<CAP;i++) arr.push(c);
+  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  const t=[]; for(let c=0;c<k;c++) t.push(arr.slice(c*CAP,c*CAP+CAP)); t.push([],[]); return t;
+}
+
+function topGroup(tb){ if(!tb.length) return null; const c=tb[tb.length-1]; let n=0;
+  for(let i=tb.length-1;i>=0&&tb[i]===c;i--) n++; return {c,n}; }
+
+function canPour(a,b){
+  const src=tubes[a], dst=tubes[b];
+  if(!src.length || dst.length>=CAP) return false;
+  const g=topGroup(src);
+  return dst.length===0 || dst[dst.length-1]===g.c;
+}
+
+function pour(a,b,silent){
+  const g=topGroup(tubes[a]);
+  const space=CAP-tubes[b].length;
+  const n=Math.min(g.n,space);
+  for(let i=0;i<n;i++) tubes[b].push(tubes[a].pop());
+  return n;
+}
+
+function isDone(){ return tubes.every(tb=> tb.length===0 || (tb.length===CAP && tb.every(x=>x===tb[0]))); }
+
+function tubeComplete(tb){ return tb.length===CAP && tb.every(x=>x===tb[0]); }
+
+/* ============ RENDER ============ */
+const board=document.getElementById('board');
+function render(){
+  board.innerHTML='';
+  tubes.forEach((tb,i)=>{
+    const d=document.createElement('div');
+    d.className='tube'+(i===selected?' sel':'')+(tubeComplete(tb)?' done':'');
+    let inner='<div class="lip"></div><div class="glass">';
+    tb.forEach(c=>{ inner+=`<div class="seg" style="background:${PALETTE[c]}"></div>`; });
+    inner+='</div><div class="check">✅</div>';
+    d.innerHTML=inner;
+    d.onclick=()=>tap(i);
+    board.appendChild(d);
+  });
+  document.getElementById('lvlNum').textContent=level;
+  document.getElementById('moveNum').textContent=moves;
+  document.getElementById('bestLvl').textContent=best;
+}
+
+function tap(i){
+  if(won) return;
+  if(selected===-1){
+    if(!tubes[i].length){ sfx.bad(); return; }
+    selected=i; sfx.pick(); render();
+  } else if(selected===i){
+    selected=-1; render();
+  } else {
+    if(canPour(selected,i)){
+      history.push(JSON.stringify(tubes));
+      pour(selected,i);
+      moves++; selected=-1; sfx.pour(); render();
+      if(isDone()) onWin();
+    } else {
+      sfx.bad();
+      if(tubes[i].length){ selected=i; sfx.pick(); render(); }
+      else { selected=-1; render(); }
+    }
+  }
+}
+
+function onWin(){
+  won=true; sfx.win();
+  best=Math.max(best,level+1);
+  localStorage.setItem('sm_best',best);
+  localStorage.setItem('sm_level',level+1);
+  document.getElementById('winStats').textContent=`Solved level ${level} in ${moves} moves`;
+  setTimeout(()=>document.getElementById('winModal').classList.add('show'),450);
+}
+
+function newLevel(l){
+  level=l; moves=0; history=[]; selected=-1; extraTubeUsed=false; won=false;
+  tubes=genLevel(l); render();
+}
+
+/* ============ BUTTONS ============ */
+document.getElementById('btnUndo').onclick=()=>{
+  if(!history.length||won){ toast(history.length?'':'Nothing to undo'); if(!history.length)sfx.bad(); return; }
+  tubes=JSON.parse(history.pop()); moves++; selected=-1; sfx.pick(); render();
+};
+document.getElementById('btnRestart').onclick=()=>{
+  history.push(JSON.stringify(tubes));
+  const keep=level; newLevel(keep); toast('Level restarted');
+};
+document.getElementById('btnTube').onclick=()=>{
+  if(extraTubeUsed){ toast('Extra tube already used this level'); return; }
+  pendingAction='tube'; showRewarded();
+};
+document.getElementById('btnSkip').onclick=()=>{
+  pendingAction='skip'; showRewarded();
+};
+document.getElementById('btnNext').onclick=()=>{
+  document.getElementById('winModal').classList.remove('show');
+  const nl=level+1;
+  // interstitial every 3rd level
+  if(nl%3===0 && window.AndroidAds){ try{AndroidAds.showInterstitial();}catch(e){} }
+  newLevel(nl);
+  localStorage.setItem('sm_level',nl);
+};
+
+/* ============ ADS BRIDGE (Android) ============ */
+let pendingAction=null;
+function showRewarded(){
+  if(window.AndroidAds){ try{ AndroidAds.showRewarded(); }catch(e){ grantReward(); } }
+  else { grantReward(); } // browser fallback: just grant
+}
+window.onRewardEarned=function(){ grantReward(); };
+window.onRewardUnavailable=function(){ toast('Ad not ready — try again in a moment'); };
+function grantReward(){
+  sfx.tube();
+  if(pendingAction==='tube'){ tubes.push([]); extraTubeUsed=true; render(); toast('➕ Extra tube added!'); }
+  else if(pendingAction==='skip'){ document.getElementById('winModal').classList.remove('show'); newLevel(level+1); localStorage.setItem('sm_level',level); toast('Level skipped'); }
+  pendingAction=null;
+}
+
+/* ============ MISC ============ */
+let toastT=null;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1800); }
+
+function startGame(){
+  const s=document.getElementById('splash'); s.style.opacity=0; setTimeout(()=>s.style.display='none',400);
+  newLevel(level);
+}
+</script>
+</body>
+</html>
