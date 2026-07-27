@@ -6,53 +6,70 @@
 <title>DukaBooks — Invoice, Stock & Credit Book</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-:root{--bg:#0b0f14;--card:#131a22;--card2:#1a2330;--line:#22303f;--acc:#10b981;--acc2:#0ea5e9;--txt:#e8eef4;--dim:#7d8fa3;--red:#f87171;--gold:#fbbf24}
-html,body{height:100%;background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif}
-#app{max-width:560px;margin:0 auto;height:100%;display:flex;flex-direction:column}
-header{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:center}
-h1{font-size:19px;font-weight:800}.h-acc{color:var(--acc)}
-#view{flex:1;overflow-y:auto;padding:6px 14px 90px}
+:root{--bg:#f2f4f8;--card:#ffffff;--line:#e3e8ef;--acc:#d32f2f;--blue:#1a73e8;--green:#1e8e3e;--txt:#202124;--dim:#6b7280}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Roboto,system-ui,sans-serif}
+#app{max-width:560px;margin:0 auto;height:100%;display:flex;flex-direction:column;background:var(--bg)}
+header{background:var(--card);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+h1{font-size:18px;font-weight:700;color:var(--acc)}
+.h-biz{color:#5f6368;font-size:15px;font-weight:600}
+header .ic{font-size:20px;color:#5f6368;cursor:pointer;margin-left:14px}
+#view{flex:1;overflow-y:auto;padding:10px 12px 86px}
 nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;z-index:20}
-nav button{flex:1;background:none;border:none;color:var(--dim);padding:10px 2px 12px;font-size:10px;font-weight:700;cursor:pointer}
+nav button{flex:1;background:none;border:none;color:#6b7280;padding:8px 2px 10px;font-size:9.5px;font-weight:700;cursor:pointer;letter-spacing:.4px}
 nav button.on{color:var(--acc)}
-nav button span{display:block;font-size:19px;margin-bottom:2px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+nav button span{display:block;font-size:20px;margin-bottom:1px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:8px 0}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .dim{color:var(--dim);font-size:12px}.big{font-size:24px;font-weight:800}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{display:block;width:100%;padding:14px;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:24px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
 .btn:active{transform:scale(.98)}
-.b-acc{background:var(--acc);color:#04220f}.b-sec{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
-.b-red{background:#3a1518;color:var(--red)}.b-blue{background:var(--acc2);color:#03202e}
-input,select,textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--txt);font-size:15px;margin:5px 0;outline:none}
-input:focus,select:focus{border-color:var(--acc)}
-label{font-size:12px;color:var(--dim);font-weight:700}
-.pill{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800}
-.p-green{background:#064e3b;color:#34d399}.p-red{background:#4c1d1d;color:#fca5a5}.p-gold{background:#46350a;color:#fcd34d}
-.list-it{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0;cursor:pointer}
+.b-acc{background:var(--acc);color:#fff}.b-sec{background:var(--card);color:var(--txt);border:1px solid var(--line)}
+.b-blue{background:var(--blue);color:#fff}
+input,select,textarea{width:100%;background:var(--card);border:1.5px solid #c9d2dd;border-radius:10px;padding:12px;color:var(--txt);font-size:15px;margin:5px 0;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+label{font-size:12px;color:var(--dim);font-weight:600}
+.youget{color:var(--green);font-weight:700;text-align:right}
+.yougive{color:var(--acc);font-weight:700;text-align:right}
+.youget small,.yougive small{display:block;font-size:10px;font-weight:600}
+.party-it{background:var(--card);padding:13px 14px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.party-it b{font-size:15px}
+.tgl{display:flex;background:#eef1f6;border-radius:24px;padding:4px;margin:6px 0 10px}
+.tgl button{flex:1;border:none;background:none;padding:9px;border-radius:20px;font-size:13px;font-weight:700;color:var(--dim);cursor:pointer}
+.tgl button.on{background:var(--card);color:var(--acc);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.ql{display:flex;justify-content:space-around;background:var(--card);border-radius:12px;border:1px solid var(--line);padding:12px 4px;margin:8px 0}
+.ql div{text-align:center;font-size:11px;font-weight:600;color:#374151;cursor:pointer}
+.ql span{display:block;font-size:22px;margin-bottom:3px}
+.search-w{position:relative;margin:8px 0}
+.search-w input{padding-left:36px;border-radius:24px;background:var(--card)}
+.search-w::before{content:'🔍';position:absolute;left:12px;top:14px;font-size:14px;z-index:2}
+.menu-sec{font-size:12px;font-weight:700;color:var(--dim);margin:14px 4px 4px;text-transform:uppercase;letter-spacing:.5px}
+.menu-it{display:flex;align-items:center;gap:14px;background:var(--card);padding:15px 14px;border-bottom:1px solid var(--line);cursor:pointer;font-weight:600;font-size:15px}
+.menu-it span{font-size:20px;width:26px;text-align:center}
+.menu-it .chev{margin-left:auto;color:#9ca3af}
+.list-it{background:var(--card);border-bottom:1px solid var(--line);padding:12px 14px;cursor:pointer}
 .qty-ctl{display:flex;align-items:center;gap:10px}
-.qty-ctl button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--txt);font-size:17px;font-weight:800;cursor:pointer}
-.fab{position:fixed;bottom:76px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--acc);color:#04220f;font-size:26px;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(16,185,129,.4);z-index:15}
-.modal{position:fixed;inset:0;background:rgba(3,6,10,.92);display:none;z-index:30;overflow-y:auto}
+.qty-ctl button{width:32px;height:32px;border-radius:8px;border:1px solid #c9d2dd;background:var(--card);color:var(--txt);font-size:16px;font-weight:800;cursor:pointer}
+.fab{position:fixed;bottom:74px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--acc);color:#fff;font-size:26px;border:none;cursor:pointer;box-shadow:0 6px 16px rgba(211,47,47,.4);z-index:15}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:30;overflow-y:auto}
 .modal.show{display:block}
-.modal .sheet{max-width:560px;margin:0 auto;min-height:100%;background:var(--bg);padding:14px 16px 40px;animation:up .2s}
-@keyframes up{from{transform:translateY(40px);opacity:0}}
-.sheet-h{display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px}
-.sheet-h b{font-size:17px}.x{background:var(--card2);border:none;color:var(--txt);width:36px;height:36px;border-radius:12px;font-size:16px;cursor:pointer}
-#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);color:var(--txt);padding:11px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s;z-index:60;pointer-events:none;white-space:nowrap}
+.modal .sheet{max-width:560px;margin:0 auto;min-height:100%;background:var(--bg);padding:12px 14px 40px;animation:up .18s}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;padding:8px 0 10px}
+.sheet-h b{font-size:17px}.x{background:var(--card);border:1px solid var(--line);color:var(--txt);width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:11px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s;z-index:60;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left}
-.stat .v{font-size:19px;font-weight:800;margin-top:4px}
-.menu-it{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:8px 0;cursor:pointer;font-weight:700;font-size:15px}
-.menu-it span{font-size:22px}
-.inv-paper{background:#fff;color:#111;border-radius:12px;padding:18px;font-size:13px;line-height:1.5}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat .v{font-size:18px;font-weight:800;margin-top:3px}
+.inv-paper{background:#fff;color:#111;border-radius:12px;padding:18px;font-size:13px;line-height:1.5;border:1px solid var(--line)}
+.empty{text-align:center;color:var(--dim);padding:36px 16px;font-size:14px}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
-    <h1>Duka<span class="h-acc">Books</span></h1>
-    <div class="dim" id="bizName" style="font-weight:700">My Business</div>
+    <h1>🏪 <span class="h-biz" id="bizName">My Business</span></h1>
+    <div><span class="ic" onclick="toast('Reminders coming in v1.2')">🔔</span><span class="ic" onclick="go('menu');setTimeout(viewSettings,60)">⚙️</span></div>
   </header>
   <div id="view"></div>
   <nav id="nav"></nav>
@@ -66,7 +83,7 @@ const DB={
   get(k,d){try{return JSON.parse(localStorage.getItem('db_'+k))??d}catch(e){return d}},
   set(k,v){localStorage.setItem('db_'+k,JSON.stringify(v))}
 };
-let settings=DB.get('settings',{biz:'My Business',currency:'UGX',taxPct:0,nextInv:1,passcode:''});
+let settings=DB.get('settings',{biz:'My Business',currency:'UGX',taxPct:0,nextInv:1});
 let items=DB.get('items',[]);
 let parties=DB.get('parties',[]);
 let invoices=DB.get('invoices',[]);
@@ -76,6 +93,7 @@ function saveAll(){DB.set('settings',settings);DB.set('items',items);DB.set('par
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const today=()=>new Date().toISOString().slice(0,10);
 function fmt(n){n=Math.round(+n||0);return settings.currency+' '+n.toLocaleString('en-US');}
+function fmtN(n){return Math.round(+n||0).toLocaleString('en-US');}
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800);}
 function openSheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('modal').classList.add('show');}
@@ -83,7 +101,7 @@ function closeSheet(){document.getElementById('modal').classList.remove('show');
 function sheetHead(t){return `<div class="sheet-h"><b>${t}</b><button class="x" onclick="closeSheet()">✕</button></div>`;}
 
 /* derived */
-function partyBalance(pid){ // positive = they owe me
+function partyBalance(pid){ // positive = you'll GET (they owe me)
   let b=0;
   invoices.forEach(v=>{if(v.partyId===pid){b+= v.type==='sale'? (v.total-v.paid) : -(v.total-v.paid);}});
   payments.forEach(p=>{if(p.partyId===pid){b+= p.dir==='in'? -p.amount : p.amount;}});
@@ -91,182 +109,130 @@ function partyBalance(pid){ // positive = they owe me
 }
 function stockValue(){return items.reduce((s,i)=>s+(i.stock||0)*(i.cost||0),0);}
 function daySales(d){return invoices.filter(v=>v.type==='sale'&&v.date===d).reduce((s,v)=>s+v.total,0);}
-function receivables(){let r={};invoices.forEach(v=>{if(v.type==='sale')r[v.partyId]=(r[v.partyId]||0)+v.total-v.paid;});
-  payments.forEach(p=>{if(p.dir==='in')r[p.partyId]=(r[p.partyId]||0)-p.amount;});
-  return Object.entries(r).filter(([,b])=>b>0);}
 
-/* ================= NAV ================= */
-const TABS=[['home','🏠','Home'],['sales','🧾','Sales'],['stock','📦','Stock'],['parties','👥','Parties'],['more','⋯','More']];
+/* ================= NAV (Vyapar layout) ================= */
+const TABS=[['home','🏠','HOME'],['dash','📊','DASHBOARD'],['items','📦','ITEMS'],['menu','☰','MENU'],['pc','💻','GET DESKTOP']];
 let curTab='home';
-function go(t){curTab=t;renderNav();VIEWS[t]();window.scrollTo(0,0);document.getElementById('view').scrollTop=0;}
+function go(t){
+  if(t==='pc'){showDesktop();return;}
+  curTab=t;renderNav();VIEWS[t]();
+  document.getElementById('view').scrollTop=0;
+}
 function renderNav(){document.getElementById('nav').innerHTML=TABS.map(([id,ic,lb])=>`<button class="${id===curTab?'on':''}" onclick="go('${id}')"><span>${ic}</span>${lb}</button>`).join('');}
 function v(){return document.getElementById('view');}
+function showDesktop(){
+  openSheet(sheetHead('💻 Get Desktop Billing')+`
+  <div class="card" style="text-align:center">
+    <p style="font-size:15px;margin:8px 0">Use DukaBooks on your PC — same app, bigger screen:</p>
+    <div class="card" style="background:#eef1f6;word-break:break-all;font-weight:700;color:var(--blue)">www.unifiedfarmblm.com/dukabooks/</div>
+    <p class="dim">Open it in Chrome on your laptop.<br>Multi-device sync is coming with DukaBooks Pro.</p>
+  </div>
+  <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
+}
+
+/* ================= HOME (Transaction / Party details) ================= */
+let homeMode='party', homeQ='';
+function viewHome(){
+  v().innerHTML=`
+  <div class="tgl">
+    <button class="${homeMode==='tx'?'on':''}" onclick="homeMode='tx';viewHome()">Transaction Details</button>
+    <button class="${homeMode==='party'?'on':''}" onclick="homeMode='party';viewHome()">Party Details</button>
+  </div>
+  <div id="homeBody"></div>`;
+  homeMode==='party'?homeParties():homeTx();
+}
+function homeParties(){
+  const q=homeQ.toLowerCase();
+  const list=parties.filter(p=>!q||p.name.toLowerCase().includes(q));
+  document.getElementById('homeBody').innerHTML=`
+  <div class="ql">
+    <div onclick="newParty()"><span>👤＋</span>Add Party</div>
+    <div onclick="newInvoice()"><span>🧾</span>New Sale</div>
+    <div onclick="viewStatement()"><span>📄</span>Statements</div>
+    <div onclick="go('dash')"><span>📊</span>Reports</div>
+  </div>
+  <div class="search-w"><input placeholder="Search any party" value="${esc(homeQ)}" oninput="homeQ=this.value;homeParties()"></div>
+  <div class="card" style="padding:0;overflow:hidden">
+  ${list.length?list.map(p=>{
+    const b=partyBalance(p.id);
+    return `<div class="party-it" onclick="openParty('${p.id}')">
+      <div><b>${esc(p.name)}</b><div class="dim" style="margin-top:2px">${esc(p.phone||'')}</div></div>
+      ${b>0?`<div class="youget">${fmt(b)}<small>You'll Get</small></div>`
+        :b<0?`<div class="yougive">${fmt(-b)}<small>You'll Give</small></div>`
+        :'<div class="dim">Settled</div>'}
+    </div>`;}).join('')
+  :'<div class="empty">No parties yet.<br>Tap <b>Add Party</b> above 👆</div>'}
+  </div>`;
+}
+function homeTx(){
+  const tx=[];
+  invoices.forEach(i=>tx.push({d:i.date,id:i.id,no:i.no,name:i.partyName,total:i.total,paid:i.paid,k:'inv'}));
+  payments.forEach(p=>{const pt=parties.find(x=>x.id===p.partyId);tx.push({d:p.date,name:pt?pt.name:'Walk-in',total:p.amount,dir:p.dir,k:'pay'});});
+  tx.sort((a,b)=>b.d.localeCompare(a.d));
+  document.getElementById('homeBody').innerHTML=`
+  <div class="card" style="padding:0;overflow:hidden">
+  ${tx.length?tx.slice(0,60).map(t=>t.k==='inv'?`
+    <div class="list-it" onclick="openInvoice('${t.id}')">
+      <div class="row"><b>🧾 #${t.no} · ${esc(t.name)}</b><b>${fmt(t.total)}</b></div>
+      <div class="row" style="margin-top:3px"><span class="dim">${t.d}</span>
+      ${t.paid>=t.total?'<span style="color:var(--green);font-weight:700;font-size:11px">PAID</span>':`<span style="color:var(--acc);font-weight:700;font-size:11px">DUE ${fmtN(t.total-t.paid)}</span>`}</div>
+    </div>`:`
+    <div class="list-it">
+      <div class="row"><b>${t.dir==='in'?'💰 Payment in':'💸 Payment out'} · ${esc(t.name)}</b><b style="color:${t.dir==='in'?'var(--green)':'var(--acc)'}">${t.dir==='in'?'+':'−'}${fmtN(t.total)}</b></div>
+      <div class="dim" style="margin-top:3px">${t.d}</div>
+    </div>`).join('')
+  :'<div class="empty">No transactions yet.<br>Make your first sale! 👇</div>'}
+  </div>`;
+  const fab=document.createElement('button');fab.className='fab';fab.textContent='＋';fab.onclick=()=>newInvoice();
+  document.getElementById('app').appendChild(fab);setTimeout(()=>{const f=[...document.querySelectorAll('.fab')];f.slice(0,-1).forEach(x=>x.remove());},0);
+}
 </script>
 <script>
-/* ================= HOME ================= */
-function viewHome(){
-  const recv=receivables().reduce((s,[,b])=>s+b,0);
+/* ================= DASHBOARD ================= */
+function viewDash(){
+  const tot=invoices.filter(i=>i.type==='sale');
+  const sales=tot.reduce((s,i)=>s+i.total,0);
+  const cogs=tot.reduce((s,i)=>s+i.items.reduce((a,l)=>a+(l.cost||0)*l.qty,0),0);
+  const exp=expenses.reduce((s,e)=>s+e.amount,0);
+  const profit=sales-cogs-exp;
+  const recv=parties.map(p=>[p.id,partyBalance(p.id)]).filter(([,b])=>b>0);
+  const give=parties.map(p=>[p.id,partyBalance(p.id)]).filter(([,b])=>b<0);
   const todayExp=expenses.filter(e=>e.date===today()).reduce((s,e)=>s+e.amount,0);
   const low=items.filter(i=>(i.stock||0)<=(i.lowAt??3));
   v().innerHTML=`
-  <div class="dim" style="margin:4px 0 2px">📅 ${new Date().toDateString()}</div>
-  <div class="card" style="background:linear-gradient(135deg,#0d3b2e,#131a22)">
+  <div class="card" style="background:linear-gradient(135deg,#fff5f5,#fff)">
     <div class="dim">TODAY'S SALES</div>
     <div class="big" style="color:var(--acc)">${fmt(daySales(today()))}</div>
     <div class="dim" style="margin-top:4px">Expenses today: ${fmt(todayExp)}</div>
   </div>
   <div class="grid2">
-    <div class="stat"><div class="dim">💰 OWED TO YOU</div><div class="v" style="color:var(--gold)">${fmt(recv)}</div></div>
-    <div class="stat"><div class="dim">📦 STOCK VALUE</div><div class="v">${fmt(stockValue())}</div></div>
-    <div class="stat" onclick="go('sales')" style="cursor:pointer"><div class="dim">🧾 INVOICES</div><div class="v">${invoices.filter(i=>i.type==='sale').length}</div></div>
-    <div class="stat" onclick="go('parties')" style="cursor:pointer"><div class="dim">👥 PARTIES</div><div class="v">${parties.length}</div></div>
+    <div class="stat"><div class="dim">YOU'LL GET</div><div class="v" style="color:var(--green)">${fmt(recv.reduce((s,[,b])=>s+b,0))}</div></div>
+    <div class="stat"><div class="dim">YOU'LL GIVE</div><div class="v" style="color:var(--acc)">${fmt(-give.reduce((s,[,b])=>s+b,0))}</div></div>
+    <div class="stat"><div class="dim">STOCK VALUE</div><div class="v">${fmt(stockValue())}</div></div>
+    <div class="stat"><div class="dim">NET PROFIT</div><div class="v" style="color:${profit>=0?'var(--green)':'var(--acc)'}">${fmt(profit)}</div></div>
   </div>
-  ${low.length?`<div class="card" style="border-color:var(--red)"><b style="color:var(--red)">⚠️ Low stock (${low.length})</b>${low.map(i=>`<div class="row" style="margin-top:8px"><span>${esc(i.name)}</span><span class="pill p-red">${i.stock} left</span></div>`).join('')}</div>`:''}
-  <button class="btn b-acc" onclick="newInvoice()">＋ New Sale</button>
-  <button class="btn b-sec" onclick="go('parties');setTimeout(()=>newParty(),80)">＋ Add Customer</button>`;
+  ${low.length?`<div class="card" style="border-color:#f5c2c2"><b style="color:var(--acc)">⚠️ Low stock</b>${low.map(i=>`<div class="row" style="margin-top:8px"><span>${esc(i.name)}</span><b style="color:var(--acc)">${i.stock} left</b></div>`).join('')}</div>`:''}
+  <div class="card"><b>📕 Who owes you</b>
+    ${recv.length?recv.sort((a,b)=>b[1]-a[1]).slice(0,5).map(([pid,b])=>{const p=parties.find(x=>x.id===pid);return `
+      <div class="row" style="margin-top:8px"><span>${esc(p?p.name:'?')}</span><span class="youget">${fmt(b)}</span></div>`;}).join(''):'<div class="dim" style="margin-top:8px">Nobody owes you 🎉</div>'}
+  </div>`;
 }
 
-/* ================= SALES ================= */
-function viewSales(){
-  const list=invoices.filter(i=>i.type==='sale').sort((a,b)=>b.date.localeCompare(a.date)||b.no-a.no);
+/* ================= ITEMS ================= */
+let itemQ='';
+function viewItems(){
+  const q=itemQ.toLowerCase();
+  const list=items.filter(i=>!q||i.name.toLowerCase().includes(q));
   v().innerHTML=`
-  <div class="row" style="margin:8px 0"><b style="font-size:17px">Sales Invoices</b>
-  <input id="sSearch" placeholder="🔍 Search..." style="width:52%;margin:0" oninput="viewSales()"></div>
-  <div id="invList"></div>`;
-  const q=(document.getElementById('sSearch')?.value||'').toLowerCase();
-  document.getElementById('invList').innerHTML=list.length?list.filter(vv=>!q||vv.partyName.toLowerCase().includes(q)||String(vv.no).includes(q)).map(vv=>`
-    <div class="list-it" onclick="openInvoice('${vv.id}')">
-      <div class="row"><b>#${vv.no} · ${esc(vv.partyName)}</b><b>${fmt(vv.total)}</b></div>
-      <div class="row" style="margin-top:4px"><span class="dim">${vv.date} · ${vv.items.length} item(s)</span>
-      ${vv.paid>=vv.total?'<span class="pill p-green">PAID</span>':`<span class="pill p-red">DUE ${fmt(vv.total-vv.paid)}</span>`}</div>
-    </div>`).join(''):'<div class="card dim" style="text-align:center">No sales yet.<br>Tap ＋ to make your first sale!</div>';
-  const fab=document.createElement('button');fab.className='fab';fab.textContent='＋';fab.onclick=()=>newInvoice();
-  document.getElementById('app').appendChild(fab);setTimeout(()=>{const f=[...document.querySelectorAll('.fab')];f.slice(0,-1).forEach(x=>x.remove());},0);
-}
-
-let draft=null;
-function newInvoice(){
-  draft={partyId:'walkin',lines:[],paid:0,tax:settings.taxPct>0};
-  renderDraft();
-}
-function renderDraft(){
-  const custs=parties.filter(p=>p.type!=='supp');
-  const subtotal=draft.lines.reduce((s,l)=>s+l.qty*l.price,0);
-  const taxAmt=draft.tax?Math.round(subtotal*settings.taxPct/100):0;
-  const total=subtotal+taxAmt;
-  openSheet(sheetHead('🧾 New Sale')+`
-    <label>Customer</label>
-    <select id="dParty" onchange="draft.partyId=this.value">
-      <option value="walkin">🚶 Walk-in customer</option>
-      ${custs.map(p=>`<option value="${p.id}" ${draft.partyId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}
-    </select>
-    <div class="row" style="margin:8px 0 2px"><b>Items</b><button class="x" style="width:auto;padding:0 14px;background:var(--acc);color:#04220f;font-weight:800" onclick="pickItem()">＋ Add item</button></div>
-    ${draft.lines.map((l,i)=>`
-      <div class="card" style="padding:10px">
-        <div class="row"><b>${esc(l.name)}</b><b>${fmt(l.qty*l.price)}</b></div>
-        <div class="row" style="margin-top:6px">
-          <div class="qty-ctl">
-            <button onclick="dQty(${i},-1)">−</button><b>${l.qty}</b><button onclick="dQty(${i},1)">＋</button>
-          </div>
-          <span class="dim">@ ${fmt(l.price)}</span>
-          <button class="x" style="width:30px;height:30px" onclick="draft.lines.splice(${i},1);renderDraft()">🗑</button>
-        </div>
-      </div>`).join('')||'<div class="dim card" style="text-align:center">No items — tap ＋ Add item</div>'}
-    <div class="card">
-      <div class="row"><span class="dim">Subtotal</span><b>${fmt(subtotal)}</b></div>
-      ${settings.taxPct>0?`<div class="row" style="margin-top:6px"><span class="dim"><input type="checkbox" ${draft.tax?'checked':''} style="width:auto" onclick="draft.tax=this.checked;renderDraft()"> VAT ${settings.taxPct}%</span><b>${fmt(taxAmt)}</b></div>`:''}
-      <div class="row" style="margin-top:8px;font-size:17px"><b>TOTAL</b><b style="color:var(--acc)">${fmt(total)}</b></div>
-    </div>
-    <label>Amount paid now (${settings.currency})</label>
-    <input type="number" id="dPaid" value="${draft.paid||''}" placeholder="Full = ${total}" oninput="draft.paid=+this.value||0">
-    <button class="btn b-acc" onclick="saveInvoice(${total})">✅ Complete Sale — ${fmt(total)}</button>`);
-}
-function dQty(i,d){draft.lines[i].qty=Math.max(1,draft.lines[i].qty+d);renderDraft();}
-function pickItem(){
-  if(!items.length){toast('Add items in Stock tab first');return;}
-  openSheet(sheetHead('Add Item')+items.map((it,ix)=>`
-    <div class="list-it" onclick="addLine(${ix})">
-      <div class="row"><b>${esc(it.name)}</b><span class="pill ${it.stock<=0?'p-red':'p-green'}">${it.stock} ${esc(it.unit||'pc')}</span></div>
-      <div class="dim" style="margin-top:3px">${fmt(it.price)} per ${esc(it.unit||'pc')}</div>
-    </div>`).join('')+`<button class="btn b-sec" onclick="renderDraft()">← Back</button>`);
-}
-function addLine(ix){
-  const it=items[ix];
-  const ex=draft.lines.find(l=>l.itemId===it.id);
-  if(ex)ex.qty++;else draft.lines.push({itemId:it.id,name:it.name,price:it.price,cost:it.cost||0,qty:1});
-  renderDraft();
-}
-function saveInvoice(total){
-  if(!draft.lines.length){toast('Add at least one item');return;}
-  const paid=Math.min(draft.paid||total,total);
-  if(draft.partyId==='walkin'&&paid<total){toast('Walk-in must pay in full — add a customer for credit');return;}
-  const party=parties.find(p=>p.id===draft.partyId);
-  draft.lines.forEach(l=>{const it=items.find(i=>i.id===l.itemId);if(it)it.stock=(it.stock||0)-l.qty;});
-  const inv={id:uid(),no:settings.nextInv++,date:today(),partyId:draft.partyId,partyName:party?party.name:'Walk-in',items:draft.lines,taxPct:draft.tax?settings.taxPct:0,total,paid,type:'sale'};
-  invoices.push(inv);
-  if(paid>0)payments.push({id:uid(),date:today(),partyId:inv.partyId,amount:paid,dir:'in',note:'Invoice #'+inv.no});
-  saveAll();closeSheet();toast('✅ Sale #'+inv.no+' saved!');
-  openInvoice(inv.id);
-}
-function openInvoice(id){
-  const vv=invoices.find(i=>i.id===id);if(!vv)return;
-  const party=parties.find(p=>p.id===vv.partyId);
-  const sub=vv.items.reduce((s,l)=>s+l.qty*l.price,0);
-  openSheet(sheetHead('Invoice #'+vv.no)+`
-    <div class="inv-paper">
-      <div style="text-align:center"><b style="font-size:16px">${esc(settings.biz)}</b><br><span style="color:#666">${vv.date}</span></div>
-      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
-      <b>Bill to:</b> ${esc(vv.partyName)}${party&&party.phone?' · '+esc(party.phone):''}<br>
-      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
-      ${vv.items.map(l=>`<div style="display:flex;justify-content:space-between"><span>${esc(l.name)} × ${l.qty}</span><b>${(l.qty*l.price).toLocaleString()}</b></div>`).join('')}
-      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
-      <div style="display:flex;justify-content:space-between"><span>Subtotal</span><b>${sub.toLocaleString()}</b></div>
-      ${vv.taxPct?`<div style="display:flex;justify-content:space-between"><span>VAT ${vv.taxPct}%</span><b>${(vv.total-sub).toLocaleString()}</b></div>`:''}
-      <div style="display:flex;justify-content:space-between;font-size:16px;margin-top:4px"><b>TOTAL ${settings.currency}</b><b>${vv.total.toLocaleString()}</b></div>
-      <div style="display:flex;justify-content:space-between;color:${vv.paid>=vv.total?'#0a7a4a':'#c0392b'}"><span>Paid</span><b>${vv.paid.toLocaleString()}</b></div>
-      ${vv.paid<vv.total?`<div style="display:flex;justify-content:space-between;color:#c0392b"><span>Balance due</span><b>${(vv.total-vv.paid).toLocaleString()}</b></div>`:''}
-      <div style="text-align:center;color:#888;margin-top:12px">Thank you for your business! 🙏<br>Powered by DukaBooks</div>
-    </div>
-    <button class="btn b-acc" onclick="shareInvoice('${vv.id}')">📲 Share on WhatsApp</button>
-    ${vv.paid<vv.total?`<button class="btn b-blue" onclick="payInvoice('${vv.id}')">💰 Record Payment</button>`:''}
-    <button class="btn b-sec" onclick="closeSheet()">Done</button>`);
-}
-function shareInvoice(id){
-  const vv=invoices.find(i=>i.id===id);
-  const sub=vv.items.reduce((s,l)=>s+l.qty*l.price,0);
-  let txt=`*${settings.biz}*\nInvoice #${vv.no} — ${vv.date}\nCustomer: ${vv.partyName}\n────────────\n`;
-  vv.items.forEach(l=>{txt+=`${l.name} × ${l.qty}  =  ${(l.qty*l.price).toLocaleString()}\n`;});
-  txt+=`────────────\n${vv.taxPct?`VAT ${vv.taxPct}%: ${(vv.total-sub).toLocaleString()}\n`:''}*TOTAL: ${settings.currency} ${vv.total.toLocaleString()}*\nPaid: ${vv.paid.toLocaleString()}${vv.paid<vv.total?`\n*Balance due: ${(vv.total-vv.paid).toLocaleString()}*`:''}\n\nThank you! 🙏`;
-  const url='https://wa.me/?text='+encodeURIComponent(txt);
-  if(window.AndroidShare){AndroidShare.share(txt);}
-  else window.open(url,'_blank');
-}
-function payInvoice(id){
-  const vv=invoices.find(i=>i.id===id);const due=vv.total-vv.paid;
-  openSheet(sheetHead('💰 Record Payment')+`
-    <div class="card"><div class="row"><span>Invoice #${vv.no} balance</span><b style="color:var(--red)">${fmt(due)}</b></div></div>
-    <label>Amount received</label><input type="number" id="payAmt" value="${due}">
-    <button class="btn b-acc" onclick="doPay('${id}')">✅ Save Payment</button>`);
-}
-function doPay(id){
-  const amt=+document.getElementById('payAmt').value||0;if(amt<=0){toast('Enter amount');return;}
-  const vv=invoices.find(i=>i.id===id);
-  vv.paid=Math.min(vv.total,vv.paid+amt);
-  payments.push({id:uid(),date:today(),partyId:vv.partyId,amount:amt,dir:'in',note:'Invoice #'+vv.no});
-  saveAll();toast('💰 Payment saved');openInvoice(id);
-}
-</script>
-<script>
-/* ================= STOCK / ITEMS ================= */
-function viewStock(){
-  v().innerHTML=`<div class="row" style="margin:8px 0"><b style="font-size:17px">📦 Items & Stock</b>
-    <span class="pill p-gold">${items.length} items</span></div>`+
-    (items.length?items.map(it=>`
-    <div class="list-it" onclick="editItem('${it.id}')">
-      <div class="row"><b>${esc(it.name)}</b><b>${fmt(it.price)}</b></div>
-      <div class="row" style="margin-top:4px"><span class="dim">cost ${fmt(it.cost||0)} · per ${esc(it.unit||'pc')}</span>
-      <span class="pill ${it.stock<=(it.lowAt??3)?'p-red':'p-green'}">${it.stock} in stock</span></div>
-    </div>`).join(''):'<div class="card dim" style="text-align:center">No items yet. Add what you sell!</div>');
+  <div class="search-w"><input placeholder="Search items" value="${esc(itemQ)}" oninput="itemQ=this.value;viewItems()"></div>
+  <div class="card" style="padding:0;overflow:hidden">
+  ${list.length?list.map(it=>`
+    <div class="party-it" onclick="editItem('${it.id}')">
+      <div><b>${esc(it.name)}</b><div class="dim" style="margin-top:2px">${fmt(it.price)} / ${esc(it.unit||'pc')}</div></div>
+      <div style="text-align:right"><b style="color:${it.stock<=(it.lowAt??3)?'var(--acc)':'var(--green)'}">${it.stock}</b><div class="dim">in stock</div></div>
+    </div>`).join('')
+  :'<div class="empty">No items yet.<br>Add what you sell 👇</div>'}
+  </div>`;
   const fab=document.createElement('button');fab.className='fab';fab.textContent='＋';fab.onclick=()=>editItem();
   document.getElementById('app').appendChild(fab);setTimeout(()=>{const f=[...document.querySelectorAll('.fab')];f.slice(0,-1).forEach(x=>x.remove());},0);
 }
@@ -281,8 +247,8 @@ function editItem(id){
       <div><label>Cost price</label><input id="iCost" type="number" value="${it.cost}"></div>
     </div>
     <label>Low-stock alert at</label><input id="iLow" type="number" value="${it.lowAt??3}">
-    <button class="btn b-acc" onclick="saveItem('${id||''}')">💾 Save Item</button>
-    ${id?`<button class="btn b-red" onclick="delItem('${id}')">🗑 Delete</button>`:''}`);
+    <button class="btn b-acc" onclick="saveItem('${id||''}')">Save Item</button>
+    ${id?`<button class="btn b-sec" style="color:var(--acc)" onclick="delItem('${id}')">🗑 Delete</button>`:''}`);
 }
 function saveItem(id){
   const name=document.getElementById('iName').value.trim();if(!name){toast('Name required');return;}
@@ -290,47 +256,208 @@ function saveItem(id){
     stock:+document.getElementById('iStock').value||0,price:+document.getElementById('iPrice').value||0,
     cost:+document.getElementById('iCost').value||0,lowAt:+document.getElementById('iLow').value||3};
   if(id){Object.assign(items.find(i=>i.id===id),o);}else{o.id=uid();items.push(o);}
-  saveAll();closeSheet();toast('💾 Saved');viewStock();
+  saveAll();closeSheet();toast('Saved');viewItems();
 }
-function delItem(id){if(!confirm('Delete this item?'))return;items=items.filter(i=>i.id!==id);saveAll();closeSheet();viewStock();}
+function delItem(id){if(!confirm('Delete this item?'))return;items=items.filter(i=>i.id!==id);saveAll();closeSheet();viewItems();}
+
+/* ================= MENU ================= */
+function viewMenu(){
+  v().innerHTML=`
+  <div class="menu-sec">Money</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="menu-it" onclick="viewCash()"><span>💵</span>Cash In-Hand<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewMoney()"><span>💰</span>Payments In / Out<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewExpenses()"><span>💸</span>Expenses<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewStatement()"><span>📄</span>Party Statements<span class="chev">›</span></div>
+  </div>
+  <div class="menu-sec">Business</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="menu-it" onclick="newInvoice()"><span>🧾</span>New Sale Invoice<span class="chev">›</span></div>
+    <div class="menu-it" onclick="toast('Purchase invoices coming in v1.2')"><span>🛒</span>Purchase Bills <span class="dim" style="font-size:11px">(soon)</span><span class="chev">›</span></div>
+    <div class="menu-it" onclick="toast('Quotations coming in v1.2')"><span>📝</span>Quotations <span class="dim" style="font-size:11px">(soon)</span><span class="chev">›</span></div>
+    <div class="menu-it" onclick="openLoanLink()"><span>🏦</span>Loan Accounts <span class="pill" style="background:#e8f0fe;color:var(--blue);font-size:10px;padding:2px 8px;border-radius:10px">QuickLoan</span><span class="chev">›</span></div>
+  </div>
+  <div class="menu-sec">Utilities</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="menu-it" onclick="backupData()"><span>☁️</span>Backup Data<span class="chev">›</span></div>
+    <div class="menu-it" onclick="restoreData()"><span>♻️</span>Restore Data<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewSettings()"><span>⚙️</span>Settings<span class="chev">›</span></div>
+    <div class="menu-it" onclick="showPlans()"><span>👑</span>Plans & Pricing<span class="chev">›</span></div>
+  </div>
+  <div class="empty" style="padding:20px">DukaBooks v1.1 · Unified Farm BLM<br>Data stays on your device</div>`;
+}
+function openLoanLink(){
+  openSheet(sheetHead('🏦 Loan Accounts')+`
+  <div class="card" style="text-align:center">
+    <p style="font-size:15px;margin:8px 0">Track borrower loans with your <b>QuickLoan Uganda</b> app.</p>
+    <p class="dim">Party balances here show shop credit (deni).<br>For real money lending with KYC & approvals, use QuickLoan.</p>
+  </div>
+  <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
+}
+function showPlans(){
+  openSheet(sheetHead('👑 Plans & Pricing')+`
+  <div class="card" style="border:2px solid var(--green)">
+    <div class="row"><b style="font-size:17px">Free</b><span style="color:var(--green);font-weight:800">ACTIVE</span></div>
+    <p class="dim" style="margin-top:6px">Invoices · Parties · Stock · Reports · Manual backup</p>
+  </div>
+  <div class="card">
+    <div class="row"><b style="font-size:17px">👑 DukaBooks Pro</b><b>Coming soon</b></div>
+    <p class="dim" style="margin-top:6px">Cloud backup & multi-device sync · PDF receipts · Purchase bills & quotations · Payment reminders auto-schedule · Multiple companies</p>
+  </div>
+  <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
+}
+function viewCash(){
+  const inn=payments.filter(p=>p.dir==='in').reduce((s,p)=>s+p.amount,0);
+  const out=payments.filter(p=>p.dir==='out').reduce((s,p)=>s+p.amount,0);
+  const exp=expenses.reduce((s,e)=>s+e.amount,0);
+  openSheet(sheetHead('💵 Cash In-Hand')+`
+  <div class="card"><div class="row"><span>Money received</span><b style="color:var(--green)">+${fmt(inn)}</b></div>
+  <div class="row" style="margin-top:8px"><span>Money paid out</span><b style="color:var(--acc)">−${fmt(out)}</b></div>
+  <div class="row" style="margin-top:8px"><span>Expenses</span><b style="color:var(--acc)">−${fmt(exp)}</b></div>
+  <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
+  <div class="row"><b style="font-size:17px">CASH IN HAND</b><b style="font-size:17px;color:${inn-out-exp>=0?'var(--green)':'var(--acc)'}">${fmt(inn-out-exp)}</b></div></div>
+  <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
+}
+</script>
+<script>
+/* ================= SALES / INVOICES ================= */
+let draft=null;
+function newInvoice(){
+  if(!items.length){toast('Add items first (ITEMS tab)');go('items');return;}
+  draft={partyId:'walkin',lines:[],paid:0,tax:settings.taxPct>0};
+  renderDraft();
+}
+function renderDraft(){
+  const custs=parties.filter(p=>p.type!=='supp');
+  const subtotal=draft.lines.reduce((s,l)=>s+l.qty*l.price,0);
+  const taxAmt=draft.tax?Math.round(subtotal*settings.taxPct/100):0;
+  const total=subtotal+taxAmt;
+  openSheet(sheetHead('🧾 New Sale')+`
+    <label>Customer</label>
+    <select id="dParty" onchange="draft.partyId=this.value">
+      <option value="walkin">🚶 Walk-in (cash sale)</option>
+      ${custs.map(p=>`<option value="${p.id}" ${draft.partyId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}
+    </select>
+    <div class="row" style="margin:8px 0 2px"><b>Items</b><button class="x" style="width:auto;padding:0 14px;background:var(--acc);color:#fff;border:none;font-weight:700" onclick="pickItem()">＋ Add item</button></div>
+    ${draft.lines.map((l,i)=>`
+      <div class="card" style="padding:10px">
+        <div class="row"><b>${esc(l.name)}</b><b>${fmt(l.qty*l.price)}</b></div>
+        <div class="row" style="margin-top:6px">
+          <div class="qty-ctl"><button onclick="dQty(${i},-1)">−</button><b>${l.qty}</b><button onclick="dQty(${i},1)">＋</button></div>
+          <span class="dim">@ ${fmt(l.price)}</span>
+          <button class="x" style="width:28px;height:28px" onclick="draft.lines.splice(${i},1);renderDraft()">🗑</button>
+        </div>
+      </div>`).join('')||'<div class="empty" style="padding:20px">No items — tap ＋ Add item</div>'}
+    <div class="card">
+      <div class="row"><span class="dim">Subtotal</span><b>${fmt(subtotal)}</b></div>
+      ${settings.taxPct>0?`<div class="row" style="margin-top:6px"><span class="dim"><input type="checkbox" ${draft.tax?'checked':''} style="width:auto" onclick="draft.tax=this.checked;renderDraft()"> VAT ${settings.taxPct}%</span><b>${fmt(taxAmt)}</b></div>`:''}
+      <div class="row" style="margin-top:8px;font-size:17px"><b>TOTAL</b><b style="color:var(--acc)">${fmt(total)}</b></div>
+    </div>
+    <label>Amount paid now (leave empty = full payment)</label>
+    <input type="number" id="dPaid" value="${draft.paid||''}" placeholder="${total}" oninput="draft.paid=+this.value||0">
+    <button class="btn b-acc" onclick="saveInvoice(${total})">✅ Complete Sale — ${fmt(total)}</button>`);
+}
+function dQty(i,d){draft.lines[i].qty=Math.max(1,draft.lines[i].qty+d);renderDraft();}
+function pickItem(){
+  openSheet(sheetHead('Add Item')+items.map((it,ix)=>`
+    <div class="party-it" onclick="addLine(${ix})">
+      <div><b>${esc(it.name)}</b><div class="dim" style="margin-top:2px">${fmt(it.price)} / ${esc(it.unit||'pc')}</div></div>
+      <b style="color:${it.stock<=0?'var(--acc)':'var(--green)'}">${it.stock}</b>
+    </div>`).join('')+`<button class="btn b-sec" onclick="renderDraft()">← Back</button>`);
+}
+function addLine(ix){
+  const it=items[ix];
+  const ex=draft.lines.find(l=>l.itemId===it.id);
+  if(ex)ex.qty++;else draft.lines.push({itemId:it.id,name:it.name,price:it.price,cost:it.cost||0,qty:1});
+  renderDraft();
+}
+function saveInvoice(total){
+  if(!draft.lines.length){toast('Add at least one item');return;}
+  const paid=draft.paid>0?Math.min(draft.paid,total):total;
+  if(draft.partyId==='walkin'&&paid<total){toast('Walk-in must pay in full — add a party for credit');return;}
+  const party=parties.find(p=>p.id===draft.partyId);
+  draft.lines.forEach(l=>{const it=items.find(i=>i.id===l.itemId);if(it)it.stock=(it.stock||0)-l.qty;});
+  const inv={id:uid(),no:settings.nextInv++,date:today(),partyId:draft.partyId,partyName:party?party.name:'Walk-in',items:draft.lines,taxPct:draft.tax?settings.taxPct:0,total,paid,type:'sale'};
+  invoices.push(inv);
+  if(paid>0)payments.push({id:uid(),date:today(),partyId:inv.partyId,amount:paid,dir:'in',note:'Invoice #'+inv.no});
+  saveAll();closeSheet();toast('✅ Sale #'+inv.no+' saved');
+  openInvoice(inv.id);
+}
+function openInvoice(id){
+  const vv=invoices.find(i=>i.id===id);if(!vv)return;
+  const party=parties.find(p=>p.id===vv.partyId);
+  const sub=vv.items.reduce((s,l)=>s+l.qty*l.price,0);
+  openSheet(sheetHead('Invoice #'+vv.no)+`
+    <div class="inv-paper">
+      <div style="text-align:center"><b style="font-size:16px">${esc(settings.biz)}</b><br><span style="color:#666">${vv.date}</span></div>
+      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+      <b>Bill to:</b> ${esc(vv.partyName)}${party&&party.phone?' · '+esc(party.phone):''}
+      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+      ${vv.items.map(l=>`<div style="display:flex;justify-content:space-between"><span>${esc(l.name)} × ${l.qty}</span><b>${fmtN(l.qty*l.price)}</b></div>`).join('')}
+      <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+      <div style="display:flex;justify-content:space-between"><span>Subtotal</span><b>${fmtN(sub)}</b></div>
+      ${vv.taxPct?`<div style="display:flex;justify-content:space-between"><span>VAT ${vv.taxPct}%</span><b>${fmtN(vv.total-sub)}</b></div>`:''}
+      <div style="display:flex;justify-content:space-between;font-size:16px;margin-top:4px"><b>TOTAL ${settings.currency}</b><b>${fmtN(vv.total)}</b></div>
+      <div style="display:flex;justify-content:space-between;color:${vv.paid>=vv.total?'#0a7a4a':'#c0392b'}"><span>Paid</span><b>${fmtN(vv.paid)}</b></div>
+      ${vv.paid<vv.total?`<div style="display:flex;justify-content:space-between;color:#c0392b"><span>Balance due</span><b>${fmtN(vv.total-vv.paid)}</b></div>`:''}
+      <div style="text-align:center;color:#888;margin-top:12px">Thank you for your business! 🙏<br><small>Powered by DukaBooks</small></div>
+    </div>
+    <button class="btn b-acc" onclick="shareInvoice('${vv.id}')">📲 Share on WhatsApp</button>
+    ${vv.paid<vv.total?`<button class="btn b-blue" onclick="payInvoice('${vv.id}')">💰 Record Payment</button>`:''}
+    <button class="btn b-sec" onclick="closeSheet()">Done</button>`);
+}
+function shareInvoice(id){
+  const vv=invoices.find(i=>i.id===id);
+  const sub=vv.items.reduce((s,l)=>s+l.qty*l.price,0);
+  let txt=`*${settings.biz}*\nInvoice #${vv.no} — ${vv.date}\nCustomer: ${vv.partyName}\n────────────\n`;
+  vv.items.forEach(l=>{txt+=`${l.name} × ${l.qty}  =  ${fmtN(l.qty*l.price)}\n`;});
+  txt+=`────────────\n${vv.taxPct?`VAT ${vv.taxPct}%: ${fmtN(vv.total-sub)}\n`:''}*TOTAL: ${settings.currency} ${fmtN(vv.total)}*\nPaid: ${fmtN(vv.paid)}${vv.paid<vv.total?`\n*Balance due: ${fmtN(vv.total-vv.paid)}*`:''}\n\nThank you! 🙏`;
+  if(window.AndroidShare){AndroidShare.share(txt);}
+  else window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+function payInvoice(id){
+  const vv=invoices.find(i=>i.id===id);const due=vv.total-vv.paid;
+  openSheet(sheetHead('💰 Record Payment')+`
+    <div class="card"><div class="row"><span>Invoice #${vv.no} balance</span><b style="color:var(--acc)">${fmt(due)}</b></div></div>
+    <label>Amount received</label><input type="number" id="payAmt" value="${due}">
+    <button class="btn b-acc" onclick="doPay('${id}')">Save Payment</button>`);
+}
+function doPay(id){
+  const amt=+document.getElementById('payAmt').value||0;if(amt<=0){toast('Enter amount');return;}
+  const vv=invoices.find(i=>i.id===id);
+  vv.paid=Math.min(vv.total,vv.paid+amt);
+  payments.push({id:uid(),date:today(),partyId:vv.partyId,amount:amt,dir:'in',note:'Invoice #'+vv.no});
+  saveAll();toast('💰 Payment saved');openInvoice(id);
+}
 
 /* ================= PARTIES ================= */
-function viewParties(){
-  const q=(viewParties.q||'').toLowerCase();
-  v().innerHTML=`<div class="row" style="margin:8px 0"><b style="font-size:17px">👥 Parties</b>
-    <input placeholder="🔍 Search..." style="width:52%;margin:0" oninput="viewParties.q=this.value;viewParties()"></div>`+
-    (parties.length?parties.filter(p=>!q||p.name.toLowerCase().includes(q)).map(p=>{
-      const b=partyBalance(p.id);
-      return `<div class="list-it" onclick="openParty('${p.id}')">
-        <div class="row"><b>${esc(p.name)}</b>
-        ${b>0?`<span class="pill p-red">owes ${fmt(b)}</span>`:b<0?`<span class="pill p-green">advance ${fmt(-b)}</span>`:'<span class="pill p-green">settled</span>'}</div>
-        <div class="dim" style="margin-top:3px">${esc(p.phone||'no phone')} · ${p.type==='supp'?'supplier':'customer'}</div>
-      </div>`;}).join(''):'<div class="card dim" style="text-align:center">No customers yet.<br>Add your first one!</div>');
-  const fab=document.createElement('button');fab.className='fab';fab.textContent='＋';fab.onclick=()=>newParty();
-  document.getElementById('app').appendChild(fab);setTimeout(()=>{const f=[...document.querySelectorAll('.fab')];f.slice(0,-1).forEach(x=>x.remove());},0);
-}
 function newParty(){
   openSheet(sheetHead('＋ New Party')+`
     <label>Name</label><input id="pName" placeholder="Customer or supplier name">
     <label>Phone (WhatsApp)</label><input id="pPhone" type="tel" placeholder="07...">
     <label>Type</label><select id="pType"><option value="cust">Customer</option><option value="supp">Supplier</option></select>
-    <button class="btn b-acc" onclick="saveParty()">💾 Save</button>`);
+    <label>Opening balance (0 = none)</label><input id="pOpen" type="number" placeholder="0">
+    <label></label><select id="pOpenDir"><option value="get">They owe me (You'll Get)</option><option value="give">I owe them (You'll Give)</option></select>
+    <button class="btn b-acc" onclick="saveParty()">Save</button>`);
 }
 function saveParty(){
   const name=document.getElementById('pName').value.trim();if(!name){toast('Name required');return;}
-  parties.push({id:uid(),name,phone:document.getElementById('pPhone').value.trim(),type:document.getElementById('pType').value});
-  saveAll();closeSheet();toast('👥 Saved');viewParties();
+  const p={id:uid(),name,phone:document.getElementById('pPhone').value.trim(),type:document.getElementById('pType').value};
+  parties.push(p);
+  const ob=+document.getElementById('pOpen').value||0;
+  if(ob>0)payments.push({id:uid(),date:today(),partyId:p.id,amount:ob,dir:document.getElementById('pOpenDir').value==='get'?'out':'in',note:'Opening balance'});
+  saveAll();closeSheet();toast('Saved');viewHome();
 }
 function openParty(id){
   const p=parties.find(x=>x.id===id);const b=partyBalance(id);
   const tx=[];
   invoices.filter(i=>i.partyId===id).forEach(i=>tx.push({d:i.date,t:'🧾 Invoice #'+i.no,amt:i.total,cls:''}));
-  payments.filter(x=>x.partyId===id).forEach(x=>tx.push({d:x.date,t:(x.dir==='in'?'💰 Paid in':'💸 Paid out')+(x.note?' · '+esc(x.note):''),amt:x.amount,cls:x.dir==='in'?'var(--acc)':'var(--red)'}));
+  payments.filter(x=>x.partyId===id).forEach(x=>tx.push({d:x.date,t:(x.dir==='in'?'💰 You received':'💸 You paid')+(x.note?' · '+esc(x.note):''),amt:x.amount,cls:x.dir==='in'?'var(--green)':'var(--acc)'}));
   tx.sort((a,b)=>b.d.localeCompare(a.d));
-  openSheet(sheetHead('👥 '+esc(p.name))+`
+  openSheet(sheetHead('👤 '+esc(p.name))+`
     <div class="card"><div class="row"><span class="dim">${esc(p.phone||'')}</span>
-    ${b>0?`<b style="color:var(--red)">Owes you ${fmt(b)}</b>`:b<0?`<b style="color:var(--acc)">Advance ${fmt(-b)}</b>`:'<b style="color:var(--acc)">All settled ✅</b>'}</div></div>
-    ${tx.map(t=>`<div class="row" style="padding:9px 2px;border-bottom:1px solid var(--line)"><span style="font-size:13px">${t.t}<br><span class="dim">${t.d}</span></span><b style="color:${t.cls||'var(--txt)'}">${t.amt.toLocaleString()}</b></div>`).join('')||'<div class="dim card">No transactions yet</div>'}
+    ${b>0?`<div class="youget">${fmt(b)}<small>You'll Get</small></div>`:b<0?`<div class="yougive">${fmt(-b)}<small>You'll Give</small></div>`:'<b style="color:var(--green)">Settled ✅</b>'}</div></div>
+    ${tx.map(t=>`<div class="row" style="padding:10px 2px;border-bottom:1px solid var(--line)"><span style="font-size:13px">${t.t}<br><span class="dim">${t.d}</span></span><b style="color:${t.cls||'var(--txt)'}">${fmtN(t.amt)}</b></div>`).join('')||'<div class="empty">No transactions yet</div>'}
     <button class="btn b-acc" onclick="closeSheet();newInvoice()">🧾 New Sale</button>
     <button class="btn b-blue" onclick="quickPay('${id}')">💰 Record Payment</button>
     ${b>0&&p.phone?`<button class="btn b-sec" onclick="remindParty('${id}')">📲 Send Reminder (WhatsApp)</button>`:''}`);
@@ -340,126 +467,97 @@ function quickPay(id){
     <label>Amount</label><input type="number" id="qAmt" placeholder="0">
     <label>Direction</label><select id="qDir"><option value="in">Received (money in)</option><option value="out">Paid (money out)</option></select>
     <label>Note</label><input id="qNote" placeholder="optional">
-    <button class="btn b-acc" onclick="doQuickPay('${id}')">✅ Save</button>`);
+    <button class="btn b-acc" onclick="doQuickPay('${id}')">Save</button>`);
 }
 function doQuickPay(id){
   const amt=+document.getElementById('qAmt').value||0;if(amt<=0){toast('Enter amount');return;}
   payments.push({id:uid(),date:today(),partyId:id,amount:amt,dir:document.getElementById('qDir').value,note:document.getElementById('qNote').value.trim()});
-  saveAll();toast('💰 Saved');openParty(id);
+  saveAll();toast('Saved');openParty(id);
 }
 function remindParty(id){
   const p=parties.find(x=>x.id===id);const b=partyBalance(id);
-  const txt=`Hello ${p.name}, this is a friendly reminder from ${settings.biz}: your outstanding balance is *${settings.currency} ${Math.round(b).toLocaleString()}*. Please arrange payment. Thank you! 🙏`;
-  if(window.AndroidShare){AndroidShare.share(txt);}else window.open('https://wa.me/'+(p.phone||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(txt),'_blank');
+  const txt=`Hello ${p.name}, friendly reminder from ${settings.biz}: your outstanding balance is *${settings.currency} ${fmtN(b)}*. Please arrange payment. Thank you! 🙏`;
+  if(window.AndroidShare){AndroidShare.share(txt);}
+  else window.open('https://wa.me/'+(p.phone||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(txt),'_blank');
+}
+function viewStatement(){
+  openSheet(sheetHead('📄 Party Statements')+`
+  ${parties.length?parties.map(p=>{const b=partyBalance(p.id);return `
+    <div class="party-it" onclick="openParty('${p.id}')">
+      <b>${esc(p.name)}</b>
+      ${b>0?`<span class="youget">${fmt(b)}</span>`:b<0?`<span class="yougive">${fmt(-b)}</span>`:'<span class="dim">0</span>'}
+    </div>`;}).join(''):'<div class="empty">No parties yet</div>'}
+  <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
 }
 
-/* ================= MORE / MONEY / EXPENSES / REPORTS / SETTINGS ================= */
-function viewMore(){
-  v().innerHTML=`
-  <div class="menu-it" onclick="viewMoney()"><span>💰</span>Cash In / Out (payments)</div>
-  <div class="menu-it" onclick="viewExpenses()"><span>💸</span>Expenses</div>
-  <div class="menu-it" onclick="viewReports()"><span>📊</span>Reports</div>
-  <div class="menu-it" onclick="viewSettings()"><span>⚙️</span>Settings</div>
-  <div class="menu-it" onclick="backupData()"><span>☁️</span>Backup data (share file)</div>
-  <div class="menu-it" onclick="restoreData()"><span>♻️</span>Restore data</div>
-  <div class="card dim" style="text-align:center;margin-top:14px">DukaBooks v1.0 · by Unified Farm BLM<br>All data stays on your device</div>`;
-}
+/* ================= MONEY / EXPENSES / SETTINGS / BACKUP ================= */
 function viewMoney(){
   const list=[...payments].sort((a,b)=>b.date.localeCompare(a.date));
-  const inn=payments.filter(p=>p.dir==='in').reduce((s,p)=>s+p.amount,0);
-  const out=payments.filter(p=>p.dir==='out').reduce((s,p)=>s+p.amount,0);
-  v().innerHTML=`<b style="font-size:17px">💰 Money</b>
-  <div class="grid2" style="margin-top:8px">
-    <div class="stat"><div class="dim">TOTAL IN</div><div class="v" style="color:var(--acc)">${fmt(inn)}</div></div>
-    <div class="stat"><div class="dim">TOTAL OUT</div><div class="v" style="color:var(--red)">${fmt(out)}</div></div>
-  </div>`+(list.length?list.map(p=>{const pt=parties.find(x=>x.id===p.partyId);return `
-    <div class="list-it"><div class="row"><b>${esc(pt?pt.name:'Walk-in')}</b><b style="color:${p.dir==='in'?'var(--acc)':'var(--red)'}">${p.dir==='in'?'+':'−'}${fmt(p.amount)}</b></div>
-    <div class="dim" style="margin-top:3px">${p.date}${p.note?' · '+esc(p.note):''}</div></div>`;}).join(''):'<div class="card dim">No payments yet</div>');
+  v().innerHTML=`<div class="card" style="padding:0;overflow:hidden">`+
+    (list.length?list.map(p=>{const pt=parties.find(x=>x.id===p.partyId);return `
+    <div class="list-it"><div class="row"><b>${esc(pt?pt.name:'Walk-in')}</b><b style="color:${p.dir==='in'?'var(--green)':'var(--acc)'}">${p.dir==='in'?'+':'−'}${fmtN(p.amount)}</b></div>
+    <div class="dim" style="margin-top:3px">${p.date}${p.note?' · '+esc(p.note):''}</div></div>`;}).join(''):'<div class="empty">No payments yet</div>')+`</div>
+  <button class="btn b-sec" onclick="viewMenu()">← Back to Menu</button>`;
 }
 function viewExpenses(){
   const list=[...expenses].sort((a,b)=>b.date.localeCompare(a.date));
-  const tot=expenses.reduce((s,e)=>s+e.amount,0);
-  v().innerHTML=`<div class="row" style="margin:8px 0"><b style="font-size:17px">💸 Expenses</b><span class="pill p-red">${fmt(tot)}</span></div>`+
-    (list.length?list.map(e=>`<div class="list-it"><div class="row"><b>${esc(e.cat)}</b><b style="color:var(--red)">${fmt(e.amount)}</b></div>
-    <div class="dim" style="margin-top:3px">${e.date}${e.note?' · '+esc(e.note):''}</div></div>`).join(''):'<div class="card dim">No expenses recorded</div>');
-  const fab=document.createElement('button');fab.className='fab';fab.textContent='＋';fab.onclick=()=>newExpense();
-  document.getElementById('app').appendChild(fab);setTimeout(()=>{const f=[...document.querySelectorAll('.fab')];f.slice(0,-1).forEach(x=>x.remove());},0);
+  v().innerHTML=`<div class="card" style="padding:0;overflow:hidden">`+
+    (list.length?list.map(e=>`<div class="list-it"><div class="row"><b>${esc(e.cat)}</b><b style="color:var(--acc)">${fmt(e.amount)}</b></div>
+    <div class="dim" style="margin-top:3px">${e.date}${e.note?' · '+esc(e.note):''}</div></div>`).join(''):'<div class="empty">No expenses recorded</div>')+`</div>
+  <button class="btn b-acc" onclick="newExpense()">＋ New Expense</button>
+  <button class="btn b-sec" onclick="viewMenu()">← Back</button>`;
 }
 function newExpense(){
   openSheet(sheetHead('💸 New Expense')+`
     <label>Category</label><select id="eCat"><option>Rent</option><option>Salaries</option><option>Transport</option><option>Utilities</option><option>Stock purchase</option><option>Other</option></select>
     <label>Amount</label><input type="number" id="eAmt">
     <label>Note</label><input id="eNote" placeholder="optional">
-    <button class="btn b-acc" onclick="saveExpense()">💾 Save</button>`);
+    <button class="btn b-acc" onclick="saveExpense()">Save</button>`);
 }
 function saveExpense(){
   const amt=+document.getElementById('eAmt').value||0;if(amt<=0){toast('Enter amount');return;}
   expenses.push({id:uid(),date:today(),cat:document.getElementById('eCat').value,amount:amt,note:document.getElementById('eNote').value.trim()});
-  saveAll();closeSheet();toast('💸 Saved');viewExpenses();
-}
-function viewReports(){
-  const tot=invoices.filter(i=>i.type==='sale');
-  const sales=tot.reduce((s,i)=>s+i.total,0);
-  const cogs=tot.reduce((s,i)=>s+i.items.reduce((a,l)=>a+(l.cost||0)*l.qty,0),0);
-  const exp=expenses.reduce((s,e)=>s+e.amount,0);
-  const profit=sales-cogs-exp;
-  const recv=receivables();
-  v().innerHTML=`<b style="font-size:17px">📊 Reports</b>
-  <div class="card"><b>📈 Profit & Loss (all time)</b>
-    <div class="row" style="margin-top:10px"><span>Total sales</span><b>${fmt(sales)}</b></div>
-    <div class="row" style="margin-top:6px"><span>Cost of goods</span><b>− ${fmt(cogs)}</b></div>
-    <div class="row" style="margin-top:6px"><span>Expenses</span><b>− ${fmt(exp)}</b></div>
-    <hr style="border:none;border-top:1px solid var(--line);margin:10px 0">
-    <div class="row"><b>NET PROFIT</b><b style="color:${profit>=0?'var(--acc)':'var(--red)'}">${fmt(profit)}</b></div>
-  </div>
-  <div class="card"><b>📕 Who owes you (deni book)</b>
-    ${recv.length?recv.sort((a,b)=>b[1]-a[1]).map(([pid,b])=>{const p=parties.find(x=>x.id===pid);return `
-      <div class="row" style="margin-top:8px"><span>${esc(p?p.name:'?')}</span><b style="color:var(--red)">${fmt(b)}</b></div>`;}).join(''):'<div class="dim" style="margin-top:8px">Nobody owes you 🎉</div>'}
-  </div>
-  <div class="card"><b>📦 Stock summary</b>
-    <div class="row" style="margin-top:8px"><span>Total items</span><b>${items.length}</b></div>
-    <div class="row" style="margin-top:6px"><span>Stock value (cost)</span><b>${fmt(stockValue())}</b></div>
-    <div class="row" style="margin-top:6px"><span>Low stock alerts</span><b style="color:var(--red)">${items.filter(i=>(i.stock||0)<=(i.lowAt??3)).length}</b></div>
-  </div>`;
+  saveAll();closeSheet();toast('Saved');viewExpenses();
 }
 function viewSettings(){
-  v().innerHTML=`<b style="font-size:17px">⚙️ Settings</b>
+  v().innerHTML=`<div class="card">
   <label>Business name (on receipts)</label><input id="sBiz" value="${esc(settings.biz)}">
   <div class="grid2">
     <div><label>Currency</label><select id="sCur">${['UGX','KES','TZS','RWF','INR','USD','AED','NGN','GHS','ZAR'].map(c=>`<option ${c===settings.currency?'selected':''}>${c}</option>`).join('')}</select></div>
     <div><label>VAT/Tax % (0 = off)</label><input id="sTax" type="number" value="${settings.taxPct}"></div>
-  </div>
-  <button class="btn b-acc" onclick="saveSettings()">💾 Save Settings</button>`;
+  </div></div>
+  <button class="btn b-acc" onclick="saveSettings()">Save Settings</button>
+  <button class="btn b-sec" onclick="viewMenu()">← Back</button>`;
 }
 function saveSettings(){
   settings.biz=document.getElementById('sBiz').value.trim()||'My Business';
   settings.currency=document.getElementById('sCur').value;
   settings.taxPct=Math.max(0,+document.getElementById('sTax').value||0);
   saveAll();document.getElementById('bizName').textContent=settings.biz;
-  toast('⚙️ Saved');viewHome();
+  toast('Saved');viewHome();
 }
 function backupData(){
   const data=JSON.stringify({settings,items,parties,invoices,payments,expenses});
-  if(window.AndroidShare){AndroidShare.shareFile?AndroidShare.shareFile(data):AndroidShare.share('DukaBooks backup:\n'+data);}
+  if(window.AndroidShare){AndroidShare.share('DukaBooks backup:\n'+data);}
   else{const b=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='dukabooks-backup.json';a.click();}
-  toast('☁️ Backup shared');
+  toast('Backup shared');
 }
 function restoreData(){
-  openSheet(sheetHead('♻️ Restore')+`<p class="dim">Paste your backup text below:</p>
+  openSheet(sheetHead('♻️ Restore')+`<p class="dim">Paste your backup text:</p>
   <textarea id="rData" rows="8" placeholder='{"settings":...}'></textarea>
-  <button class="btn b-acc" onclick="doRestore()">♻️ Restore</button>`);
+  <button class="btn b-acc" onclick="doRestore()">Restore</button>`);
 }
 function doRestore(){
-  try{const d=JSON.parse(document.getElementById('rData').value);
+  try{const d=JSON.parse(document.getElementById('rData').value.replace(/^DukaBooks backup:\s*/,''));
     if(!d.settings||!d.items)throw 0;
     settings=d.settings;items=d.items;parties=d.parties||[];invoices=d.invoices||[];payments=d.payments||[];expenses=d.expenses||[];
     saveAll();closeSheet();document.getElementById('bizName').textContent=settings.biz;
-    toast('♻️ Restored!');go('home');
+    toast('Restored!');go('home');
   }catch(e){toast('Invalid backup data');}
 }
 
 /* ================= INIT ================= */
-const VIEWS={home:viewHome,sales:viewSales,stock:viewStock,parties:viewParties,more:viewMore};
+const VIEWS={home:viewHome,dash:viewDash,items:viewItems,menu:viewMenu};
 document.getElementById('bizName').textContent=settings.biz;
 go('home');
 </script>
