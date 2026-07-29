@@ -84,13 +84,14 @@ const DB={
   get(k,d){try{return JSON.parse(localStorage.getItem('db_'+k))??d}catch(e){return d}},
   set(k,v){localStorage.setItem('db_'+k,JSON.stringify(v))}
 };
-let settings=DB.get('settings',{biz:'My Business',currency:'UGX',taxPct:0,nextInv:1});
+let settings=DB.get('settings',{biz:'My Business',currency:'UGX',taxPct:0,nextInv:1,nextQuote:1,syncCode:'',syncServer:'',lastChange:0,lastPush:0});
 let items=DB.get('items',[]);
 let parties=DB.get('parties',[]);
 let invoices=DB.get('invoices',[]);
 let payments=DB.get('payments',[]);
 let expenses=DB.get('expenses',[]);
-function saveAll(){DB.set('settings',settings);DB.set('items',items);DB.set('parties',parties);DB.set('invoices',invoices);DB.set('payments',payments);DB.set('expenses',expenses);}
+let quotes=DB.get('quotes',[]);
+function saveAll(){settings.lastChange=Date.now();DB.set('settings',settings);DB.set('items',items);DB.set('parties',parties);DB.set('invoices',invoices);DB.set('payments',payments);DB.set('expenses',expenses);DB.set('quotes',quotes);}
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const today=()=>new Date().toISOString().slice(0,10);
 function fmt(n){n=Math.round(+n||0);return settings.currency+' '+n.toLocaleString('en-US');}
@@ -126,7 +127,7 @@ function showDesktop(){
   <div class="card" style="text-align:center">
     <p style="font-size:15px;margin:8px 0">Use DukaBooks on your PC — same app, bigger screen:</p>
     <div class="card" style="background:#eef1f6;word-break:break-all;font-weight:700;color:var(--blue)">www.unifiedfarmblm.com/dukabooks/</div>
-    <p class="dim">Open it in Chrome on your laptop.<br>Multi-device sync is coming with DukaBooks Pro.</p>
+    <p class="dim">Open it in Chrome on your laptop.<br>Then go to <b>MENU → Cloud Sync</b> with the same sync code to share your books between phone and PC. ☁️</p>
   </div>
   <button class="btn b-sec" onclick="closeSheet()">Close</button>`);
 }
@@ -274,18 +275,19 @@ function viewMenu(){
   <div class="menu-sec">Business</div>
   <div class="card" style="padding:0;overflow:hidden">
     <div class="menu-it" onclick="newInvoice()"><span>🧾</span>New Sale Invoice<span class="chev">›</span></div>
-    <div class="menu-it" onclick="toast('Purchase invoices coming in v1.2')"><span>🛒</span>Purchase Bills <span class="dim" style="font-size:11px">(soon)</span><span class="chev">›</span></div>
-    <div class="menu-it" onclick="toast('Quotations coming in v1.2')"><span>📝</span>Quotations <span class="dim" style="font-size:11px">(soon)</span><span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewPurchases()"><span>🛒</span>Purchase Bills<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewQuotes()"><span>📝</span>Quotations<span class="chev">›</span></div>
     <div class="menu-it" onclick="openLoanLink()"><span>🏦</span>Loan Accounts <span class="pill" style="background:#e8f0fe;color:var(--blue);font-size:10px;padding:2px 8px;border-radius:10px">QuickLoan</span><span class="chev">›</span></div>
   </div>
   <div class="menu-sec">Utilities</div>
   <div class="card" style="padding:0;overflow:hidden">
-    <div class="menu-it" onclick="backupData()"><span>☁️</span>Backup Data<span class="chev">›</span></div>
+    <div class="menu-it" onclick="viewSync()"><span>☁️</span>Cloud Sync <span class="pill" style="background:#e6f4ea;color:var(--green);font-size:10px;padding:2px 8px;border-radius:10px">phone + PC</span><span class="chev">›</span></div>
+    <div class="menu-it" onclick="backupData()"><span>💾</span>Backup Data<span class="chev">›</span></div>
     <div class="menu-it" onclick="restoreData()"><span>♻️</span>Restore Data<span class="chev">›</span></div>
     <div class="menu-it" onclick="viewSettings()"><span>⚙️</span>Settings<span class="chev">›</span></div>
     <div class="menu-it" onclick="showPlans()"><span>👑</span>Plans & Pricing<span class="chev">›</span></div>
   </div>
-  <div class="empty" style="padding:20px">DukaBooks v1.1 · Unified Farm BLM<br>Data stays on your device</div>`;
+  <div class="empty" style="padding:20px">DukaBooks v1.2 · Unified Farm BLM<br>On-device data + optional cloud sync</div>`;
 }
 function openLoanLink(){
   openSheet(sheetHead('🏦 Loan Accounts')+`
@@ -389,10 +391,10 @@ function openInvoice(id){
   const party=parties.find(p=>p.id===vv.partyId);
   const sub=vv.items.reduce((s,l)=>s+l.qty*l.price,0);
   openSheet(sheetHead('Invoice #'+vv.no)+`
-    <div class="inv-paper">
+    <div class="inv-paper" id="paper">
       <div style="text-align:center"><b style="font-size:16px">${esc(settings.biz)}</b><br><span style="color:#666">${vv.date}</span></div>
       <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
-      <b>Bill to:</b> ${esc(vv.partyName)}${party&&party.phone?' · '+esc(party.phone):''}
+      <b>${vv.type==='purchase'?'Supplier:':'Bill to:'}</b> ${esc(vv.partyName)}${party&&party.phone?' · '+esc(party.phone):''}
       <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
       ${vv.items.map(l=>`<div style="display:flex;justify-content:space-between"><span>${esc(l.name)} × ${l.qty}</span><b>${fmtN(l.qty*l.price)}</b></div>`).join('')}
       <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
@@ -404,6 +406,7 @@ function openInvoice(id){
       <div style="text-align:center;color:#888;margin-top:12px">Thank you for your business! 🙏<br><small>Powered by DukaBooks</small></div>
     </div>
     <button class="btn b-acc" onclick="shareInvoice('${vv.id}')">📲 Share on WhatsApp</button>
+    <button class="btn b-sec" onclick="printPaper('Invoice-${vv.no}')">🖨 PDF / Print</button>
     ${vv.paid<vv.total?`<button class="btn b-blue" onclick="payInvoice('${vv.id}')">💰 Record Payment</button>`:''}
     <button class="btn b-sec" onclick="closeSheet()">Done</button>`);
 }
@@ -538,7 +541,7 @@ function saveSettings(){
   toast('Saved');viewHome();
 }
 function backupData(){
-  const data=JSON.stringify({settings,items,parties,invoices,payments,expenses});
+  const data=JSON.stringify({settings,items,parties,invoices,payments,expenses,quotes});
   if(window.AndroidShare){AndroidShare.share('DukaBooks backup:\n'+data);}
   else{const b=new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='dukabooks-backup.json';a.click();}
   toast('Backup shared');
@@ -551,10 +554,263 @@ function restoreData(){
 function doRestore(){
   try{const d=JSON.parse(document.getElementById('rData').value.replace(/^DukaBooks backup:\s*/,''));
     if(!d.settings||!d.items)throw 0;
-    settings=d.settings;items=d.items;parties=d.parties||[];invoices=d.invoices||[];payments=d.payments||[];expenses=d.expenses||[];
+    settings=d.settings;items=d.items;parties=d.parties||[];invoices=d.invoices||[];payments=d.payments||[];expenses=d.expenses||[];quotes=d.quotes||[];
     saveAll();closeSheet();document.getElementById('bizName').textContent=settings.biz;
     toast('Restored!');go('home');
   }catch(e){toast('Invalid backup data');}
+}
+
+/* ================= CLOUD SYNC ================= */
+function packData(){return JSON.stringify({settings:{...settings,syncCode:undefined,syncServer:undefined,lastPush:undefined},items,parties,invoices,payments,expenses,quotes});}
+function unpackData(d){
+  settings={...settings,...d.settings,syncCode:settings.syncCode,syncServer:settings.syncServer,lastPush:settings.lastPush};
+  items=d.items||[];parties=d.parties||[];invoices=d.invoices||[];payments=d.payments||[];expenses=d.expenses||[];quotes=d.quotes||[];
+  document.getElementById('bizName').textContent=settings.biz;
+}
+function viewSync(){
+  v().innerHTML=`
+  <div class="card">
+    <b>☁️ Cloud Sync</b>
+    <p class="dim" style="margin:6px 0">Same books on your phone <b>and</b> PC. Pick a secret sync code — anyone with the code can open your books, so keep it private.</p>
+    <label>Sync server</label>
+    <input id="syServer" value="${esc(settings.syncServer||'')}" placeholder="https://your-sync-server.com">
+    <label>Your secret sync code (min 6 letters/numbers)</label>
+    <input id="syCode" value="${esc(settings.syncCode||'')}" placeholder="e.g. reagan-duka-2026" autocapitalize="off">
+    <button class="btn b-acc" onclick="saveSyncCfg()">Save Sync Settings</button>
+  </div>
+  ${settings.syncCode&&settings.syncServer?`
+  <div class="card">
+    <div class="row"><span class="dim">Last change on this device</span><b>${settings.lastChange?new Date(settings.lastChange).toLocaleString():'—'}</b></div>
+    <div class="row" style="margin-top:6px"><span class="dim">Last uploaded</span><b>${settings.lastPush?new Date(settings.lastPush).toLocaleString():'never'}</b></div>
+    <button class="btn b-blue" id="syUp" onclick="syncPush()">⬆️ Upload (this device → cloud)</button>
+    <button class="btn b-sec" id="syDown" onclick="syncPull()">⬇️ Download (cloud → this device)</button>
+    <p class="dim" style="margin-top:8px">Tip: after making sales on the phone, tap <b>Upload</b>. On the PC tap <b>Download</b> before working — and Upload when done.</p>
+  </div>`:'<div class="empty">Save a server + code above to enable sync ☝️</div>'}
+  <button class="btn b-sec" onclick="viewMenu()">← Back</button>`;
+}
+function saveSyncCfg(){
+  const server=document.getElementById('syServer').value.trim().replace(/\/+$/,'');
+  const code=document.getElementById('syCode').value.trim();
+  if(!/^https?:\/\//.test(server)){toast('Server must start with https://');return;}
+  if(!/^[a-zA-Z0-9][a-zA-Z0-9-]{5,63}$/.test(code)){toast('Code: 6+ letters/numbers/dashes');return;}
+  settings.syncServer=server;settings.syncCode=code;
+  DB.set('settings',settings);toast('Saved ✅');viewSync();
+}
+async function syncPush(){
+  const btn=document.getElementById('syUp');btn.disabled=true;btn.textContent='⏳ Uploading...';
+  try{
+    const r=await fetch(settings.syncServer+'/api/duka/sync',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({code:settings.syncCode,data:packData(),updatedAt:settings.lastChange||Date.now()})});
+    const j=await r.json();
+    if(r.status===409){toast('☁️ Cloud is newer — Download first');}
+    else if(j.saved){settings.lastPush=Date.now();DB.set('settings',settings);toast('⬆️ Uploaded!');viewSync();}
+    else toast(j.error||'Upload failed');
+  }catch(e){toast('No connection — try again');}
+  btn.disabled=false;btn.textContent='⬆️ Upload (this device → cloud)';
+}
+async function syncPull(){
+  const btn=document.getElementById('syDown');btn.disabled=true;btn.textContent='⏳ Downloading...';
+  try{
+    const r=await fetch(settings.syncServer+'/api/duka/sync/'+encodeURIComponent(settings.syncCode));
+    const j=await r.json();
+    if(!j.found){toast('Nothing on cloud yet — Upload first');}
+    else{
+      if(j.updatedAt>(settings.lastChange||0)||confirm('Cloud copy is OLDER than this device. Overwrite this device anyway?')){
+        unpackData(JSON.parse(j.data));saveAll();
+        toast('⬇️ Downloaded!');go('home');
+      }
+    }
+  }catch(e){toast('No connection — try again');}
+  btn.disabled=false;btn.textContent='⬇️ Download (cloud → this device)';
+}
+
+/* ================= PURCHASE BILLS ================= */
+let pdraft=null;
+function viewPurchases(){
+  const list=invoices.filter(i=>i.type==='purchase').sort((a,b)=>b.date.localeCompare(a.date)||b.no-a.no);
+  v().innerHTML=`
+  <div class="card" style="padding:0;overflow:hidden">
+  ${list.length?list.map(vv=>`
+    <div class="list-it" onclick="openInvoice('${vv.id}')">
+      <div class="row"><b>🛒 Bill #${vv.no} · ${esc(vv.partyName)}</b><b>${fmt(vv.total)}</b></div>
+      <div class="row" style="margin-top:3px"><span class="dim">${vv.date}</span>
+      ${vv.paid>=vv.total?'<span style="color:var(--green);font-weight:700;font-size:11px">PAID</span>':`<span style="color:var(--acc);font-weight:700;font-size:11px">OWE ${fmtN(vv.total-vv.paid)}</span>`}</div>
+    </div>`).join('')
+  :'<div class="empty">No purchase bills yet.<br>Record what you buy from suppliers 👇</div>'}
+  </div>
+  <button class="btn b-acc" onclick="newPurchase()">＋ New Purchase Bill</button>
+  <button class="btn b-sec" onclick="viewMenu()">← Back</button>`;
+}
+function newPurchase(){
+  pdraft={partyId:'cash',lines:[],paid:0};
+  renderPDraft();
+}
+function renderPDraft(){
+  const subtotal=pdraft.lines.reduce((s,l)=>s+l.qty*l.price,0);
+  openSheet(sheetHead('🛒 New Purchase Bill')+`
+    <label>Supplier</label>
+    <select id="pdParty" onchange="pdraft.partyId=this.value">
+      <option value="cash">💵 Cash purchase (no supplier)</option>
+      ${parties.map(p=>`<option value="${p.id}" ${pdraft.partyId===p.id?'selected':''}>${esc(p.name)}${p.type==='supp'?' (supplier)':''}</option>`).join('')}
+    </select>
+    <div class="row" style="margin:8px 0 2px"><b>Items bought</b> <span class="dim">(stock goes UP)</span><button class="x" style="width:auto;padding:0 14px;background:var(--acc);color:#fff;border:none;font-weight:700" onclick="pickPItem()">＋ Add item</button></div>
+    ${pdraft.lines.map((l,i)=>`
+      <div class="card" style="padding:10px">
+        <div class="row"><b>${esc(l.name)}</b><b>${fmt(l.qty*l.price)}</b></div>
+        <div class="row" style="margin-top:6px">
+          <div class="qty-ctl"><button onclick="pQty(${i},-1)">−</button><b>${l.qty}</b><button onclick="pQty(${i},1)">＋</button></div>
+          <span class="dim">cost @ ${fmt(l.price)}</span>
+          <button class="x" style="width:28px;height:28px" onclick="pdraft.lines.splice(${i},1);renderPDraft()">🗑</button>
+        </div>
+      </div>`).join('')||'<div class="empty" style="padding:20px">No items — tap ＋ Add item</div>'}
+    <div class="card"><div class="row" style="font-size:17px"><b>TOTAL</b><b style="color:var(--acc)">${fmt(subtotal)}</b></div></div>
+    <label>Amount paid now (leave empty = full payment)</label>
+    <input type="number" id="pdPaid" value="${pdraft.paid||''}" placeholder="${subtotal}" oninput="pdraft.paid=+this.value||0">
+    <button class="btn b-acc" onclick="savePurchase(${subtotal})">✅ Save Bill — ${fmt(subtotal)}</button>`);
+}
+function pQty(i,d){pdraft.lines[i].qty=Math.max(1,pdraft.lines[i].qty+d);renderPDraft();}
+function pickPItem(){
+  openSheet(sheetHead('Add Item Bought')+items.map((it,ix)=>`
+    <div class="party-it" onclick="addPLine(${ix})">
+      <div><b>${esc(it.name)}</b><div class="dim" style="margin-top:2px">cost ${fmt(it.cost||it.price)} / ${esc(it.unit||'pc')}</div></div>
+      <b>${it.stock}</b>
+    </div>`).join('')+`<button class="btn b-sec" onclick="renderPDraft()">← Back</button>`);
+}
+function addPLine(ix){
+  const it=items[ix];
+  const ex=pdraft.lines.find(l=>l.itemId===it.id);
+  if(ex)ex.qty++;else pdraft.lines.push({itemId:it.id,name:it.name,price:it.cost||it.price,qty:1});
+  renderPDraft();
+}
+function savePurchase(total){
+  if(!pdraft.lines.length){toast('Add at least one item');return;}
+  const paid=pdraft.paid>0?Math.min(pdraft.paid,total):total;
+  const party=parties.find(p=>p.id===pdraft.partyId);
+  pdraft.lines.forEach(l=>{const it=items.find(i=>i.id===l.itemId);if(it){it.stock=(it.stock||0)+l.qty;it.cost=l.price;}});
+  const inv={id:uid(),no:settings.nextInv++,date:today(),partyId:pdraft.partyId,partyName:party?party.name:'Cash purchase',items:pdraft.lines,taxPct:0,total,paid,type:'purchase'};
+  invoices.push(inv);
+  if(paid>0)payments.push({id:uid(),date:today(),partyId:inv.partyId==='cash'?'walkin':inv.partyId,amount:paid,dir:'out',note:'Purchase bill #'+inv.no});
+  saveAll();closeSheet();toast('✅ Bill #'+inv.no+' saved — stock updated');
+  openInvoice(inv.id);
+}
+
+/* ================= QUOTATIONS ================= */
+let qdraft=null;
+function viewQuotes(){
+  const list=[...quotes].sort((a,b)=>b.no-a.no);
+  v().innerHTML=`
+  <div class="card" style="padding:0;overflow:hidden">
+  ${list.length?list.map(q=>`
+    <div class="list-it" onclick="openQuote('${q.id}')">
+      <div class="row"><b>📝 Quote #${q.no} · ${esc(q.partyName)}</b><b>${fmt(q.total)}</b></div>
+      <div class="row" style="margin-top:3px"><span class="dim">${q.date}</span>
+      ${q.status==='converted'?'<span style="color:var(--green);font-weight:700;font-size:11px">CONVERTED ✅</span>':'<span style="color:var(--blue);font-weight:700;font-size:11px">OPEN</span>'}</div>
+    </div>`).join('')
+  :'<div class="empty">No quotations yet.<br>Send a customer a price offer 👇</div>'}
+  </div>
+  <button class="btn b-acc" onclick="newQuote()">＋ New Quotation</button>
+  <button class="btn b-sec" onclick="viewMenu()">← Back</button>`;
+}
+function newQuote(){
+  if(!items.length){toast('Add items first (ITEMS tab)');go('items');return;}
+  qdraft={partyId:'walkin',lines:[]};
+  renderQDraft();
+}
+function renderQDraft(){
+  const total=qdraft.lines.reduce((s,l)=>s+l.qty*l.price,0);
+  openSheet(sheetHead('📝 New Quotation')+`
+    <label>Customer</label>
+    <select id="qParty" onchange="qdraft.partyId=this.value">
+      <option value="walkin">🚶 Walk-in customer</option>
+      ${parties.map(p=>`<option value="${p.id}" ${qdraft.partyId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}
+    </select>
+    <div class="row" style="margin:8px 0 2px"><b>Items</b><button class="x" style="width:auto;padding:0 14px;background:var(--acc);color:#fff;border:none;font-weight:700" onclick="pickQItem()">＋ Add item</button></div>
+    ${qdraft.lines.map((l,i)=>`
+      <div class="card" style="padding:10px">
+        <div class="row"><b>${esc(l.name)}</b><b>${fmt(l.qty*l.price)}</b></div>
+        <div class="row" style="margin-top:6px">
+          <div class="qty-ctl"><button onclick="qQty(${i},-1)">−</button><b>${l.qty}</b><button onclick="qQty(${i},1)">＋</button></div>
+          <span class="dim">@ ${fmt(l.price)}</span>
+          <button class="x" style="width:28px;height:28px" onclick="qdraft.lines.splice(${i},1);renderQDraft()">🗑</button>
+        </div>
+      </div>`).join('')||'<div class="empty" style="padding:20px">No items — tap ＋ Add item</div>'}
+    <div class="card"><div class="row" style="font-size:17px"><b>TOTAL</b><b style="color:var(--acc)">${fmt(total)}</b></div></div>
+    <button class="btn b-acc" onclick="saveQuote(${total})">✅ Save Quotation — ${fmt(total)}</button>`);
+}
+function qQty(i,d){qdraft.lines[i].qty=Math.max(1,qdraft.lines[i].qty+d);renderQDraft();}
+function pickQItem(){
+  openSheet(sheetHead('Add Item')+items.map((it,ix)=>`
+    <div class="party-it" onclick="addQLine(${ix})">
+      <div><b>${esc(it.name)}</b><div class="dim" style="margin-top:2px">${fmt(it.price)} / ${esc(it.unit||'pc')}</div></div>
+    </div>`).join('')+`<button class="btn b-sec" onclick="renderQDraft()">← Back</button>`);
+}
+function addQLine(ix){
+  const it=items[ix];
+  const ex=qdraft.lines.find(l=>l.itemId===it.id);
+  if(ex)ex.qty++;else qdraft.lines.push({itemId:it.id,name:it.name,price:it.price,cost:it.cost||0,qty:1});
+  renderQDraft();
+}
+function saveQuote(total){
+  if(!qdraft.lines.length){toast('Add at least one item');return;}
+  const party=parties.find(p=>p.id===qdraft.partyId);
+  const q={id:uid(),no:settings.nextQuote++,date:today(),partyId:qdraft.partyId,partyName:party?party.name:'Walk-in',items:qdraft.lines,total,status:'open'};
+  quotes.push(q);
+  saveAll();closeSheet();toast('📝 Quote #'+q.no+' saved');openQuote(q.id);
+}
+function quotePaper(q){
+  return `<div class="inv-paper" id="paper">
+    <div style="text-align:center"><b style="font-size:16px">${esc(settings.biz)}</b><br><span style="color:#666">QUOTATION #${q.no} · ${q.date}</span></div>
+    <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+    <b>For:</b> ${esc(q.partyName)}
+    <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+    ${q.items.map(l=>`<div style="display:flex;justify-content:space-between"><span>${esc(l.name)} × ${l.qty}</span><b>${fmtN(l.qty*l.price)}</b></div>`).join('')}
+    <hr style="margin:10px 0;border:none;border-top:1px dashed #999">
+    <div style="display:flex;justify-content:space-between;font-size:16px"><b>TOTAL ${settings.currency}</b><b>${fmtN(q.total)}</b></div>
+    <div style="text-align:center;color:#888;margin-top:12px">Valid for 14 days · Thank you! 🙏<br><small>Powered by DukaBooks</small></div>
+  </div>`;
+}
+function openQuote(id){
+  const q=quotes.find(x=>x.id===id);if(!q)return;
+  openSheet(sheetHead('Quote #'+q.no)+quotePaper(q)+`
+    <button class="btn b-acc" onclick="shareQuote('${q.id}')">📲 Share on WhatsApp</button>
+    <button class="btn b-sec" onclick="printPaper('Quote-${q.no}')">🖨 PDF / Print</button>
+    ${q.status!=='converted'?`<button class="btn b-blue" onclick="convertQuote('${q.id}')">🔁 Convert to Sale</button>`:'<div class="empty" style="padding:12px">Already converted to a sale ✅</div>'}
+    <button class="btn b-sec" onclick="closeSheet()">Done</button>`);
+}
+function shareQuote(id){
+  const q=quotes.find(x=>x.id===id);
+  let txt=`*${settings.biz}*\nQUOTATION #${q.no} — ${q.date}\nFor: ${q.partyName}\n────────────\n`;
+  q.items.forEach(l=>{txt+=`${l.name} × ${l.qty}  =  ${fmtN(l.qty*l.price)}\n`;});
+  txt+=`────────────\n*TOTAL: ${settings.currency} ${fmtN(q.total)}*\nValid 14 days. Thank you! 🙏`;
+  if(window.AndroidShare){AndroidShare.share(txt);}
+  else window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+function convertQuote(id){
+  const q=quotes.find(x=>x.id===id);if(!q||q.status==='converted')return;
+  q.items.forEach(l=>{const it=items.find(i=>i.id===l.itemId);if(it)it.stock=(it.stock||0)-l.qty;});
+  const inv={id:uid(),no:settings.nextInv++,date:today(),partyId:q.partyId,partyName:q.partyName,items:q.items,taxPct:0,total:q.total,paid:q.total,type:'sale'};
+  invoices.push(inv);
+  payments.push({id:uid(),date:today(),partyId:inv.partyId,amount:inv.total,dir:'in',note:'Quote #'+q.no+' → Invoice #'+inv.no});
+  q.status='converted';
+  saveAll();toast('🔁 Became Sale #'+inv.no+' (fully paid — edit if credit)');openInvoice(inv.id);
+}
+
+/* ================= PDF / PRINT ================= */
+function printPaper(title){
+  const paper=document.getElementById('paper');if(!paper){toast('Nothing to print');return;}
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(title)}</title>
+  <style>body{font-family:Arial,sans-serif;max-width:400px;margin:20px auto;padding:0 12px;color:#111;font-size:13px;line-height:1.5}
+  @media print{body{margin:0}}</style></head><body>${paper.outerHTML}
+  <script>window.onload=function(){window.print();}<\/script></body></html>`;
+  if(window.AndroidShare&&AndroidShare.print){
+    document.getElementById('view').innerHTML=`<div style="max-width:400px;margin:0 auto">${paper.outerHTML}</div>`;
+    closeSheet();AndroidShare.print(esc(title));
+    setTimeout(()=>go(curTab),800);
+  }else{
+    const w=window.open('','_blank');
+    if(!w){toast('Allow pop-ups to print');return;}
+    w.document.write(html);w.document.close();
+  }
 }
 
 /* ================= INIT ================= */
