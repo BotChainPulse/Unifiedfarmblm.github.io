@@ -50,13 +50,25 @@
   </url>
   <url>
     <loc>https://www.unifiedfarmblm.com/tools/</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.unifiedfarmblm.com/tools/egg-profit-calculator.html</loc>
     <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.unifiedfarmblm.com/tools/broiler-break-even-calculator.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
