@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poultry Feed Quantity Planner Uganda | Unified Farm BLM</title>
+    <link rel="canonical" href="https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html">
+    <meta name="description" content="Free poultry feed quantity planner for Uganda. Estimate feed kilograms, number of bags and budget from flock size, daily intake, days and expected wastage.">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: #263328; background: #f6faf6; line-height: 1.6; }
+        header, footer { background: #204c27; color: white; }
+        nav, .container { width: min(94%, 1040px); margin: auto; }
+        nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo, nav a, footer a { color: white; }
+        .logo { text-decoration: none; font-weight: 800; font-size: 1.25rem; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; padding: 0; }
+        main { padding: 38px 0 60px; }
+        h1, h2, h3 { color: #204c27; line-height: 1.25; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 8px; }
+        .intro { max-width: 800px; color: #526157; }
+        .calculator { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); gap: 26px; margin: 32px 0; align-items: start; }
+        .panel { background: white; border: 1px solid #dbe6db; border-radius: 14px; padding: 24px; box-shadow: 0 8px 25px rgba(27,70,33,.07); }
+        .fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+        label { display: block; font-weight: 700; font-size: .93rem; }
+        label span { display: block; color: #67736a; font-weight: 400; font-size: .8rem; margin-top: 3px; }
+        input, select { width: 100%; margin-top: 7px; padding: 11px; border: 1px solid #b8c7ba; border-radius: 7px; font: inherit; background: white; }
+        input:focus, select:focus { outline: 3px solid #cfe8d2; border-color: #2c6a34; }
+        button { width: 100%; margin-top: 20px; padding: 13px; border: 0; border-radius: 7px; background: #2c6a34; color: white; font: inherit; font-weight: 800; cursor: pointer; }
+        .results { background: #204c27; color: white; position: sticky; top: 15px; }
+        .results h2 { color: white; margin-top: 0; }
+        .result-row { display: flex; justify-content: space-between; gap: 20px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.18); }
+        .result-row strong { text-align: right; }
+        .highlight { margin-top: 18px; padding: 18px; border-radius: 9px; background: #f3b23b; color: #203322; }
+        .highlight strong { display: block; font-size: 1.65rem; }
+        .guidance { padding: 14px; margin-top: 14px; border-radius: 8px; background: rgba(255,255,255,.12); }
+        .content { background: white; padding: 26px; border-radius: 12px; margin-top: 28px; }
+        .content li { margin-bottom: 8px; }
+        .notice { background: #fff8e5; border-left: 5px solid #e7a62c; padding: 18px; margin-top: 24px; }
+        footer { padding: 30px 0; text-align: center; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+        @media (max-width: 760px) { .calculator { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; } .results { position: static; } nav { flex-direction: column; align-items: flex-start; padding: 14px 0; } .nav-links { margin: 0; gap: 12px; } }
+    </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Uganda Poultry Feed Quantity Planner","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html"}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
+</head>
+<body>
+<header><nav><a class="logo" href="/">🐔 Unified Farm BLM</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/blog/">Blog</a></li><li><a href="/tools/">Free Tools</a></li><li><a href="/contact.html">Contact</a></li></ul></nav></header>
+<main class="container">
+    <p><a href="/tools/">← All free tools</a></p>
+    <h1>Poultry Feed Quantity Planner</h1>
+    <p class="intro">Estimate how much feed to buy before a production period starts. Choose a planning preset or enter the daily intake recommended for your breed, age and feed programme.</p>
+    <section class="calculator" aria-label="Poultry feed quantity planner">
+        <form class="panel" id="feed-form">
+            <h2>Your flock numbers</h2>
+            <div class="fields">
+                <label>Flock size <span>Birds you expect to feed</span><input id="birds" type="number" min="1" step="1" value="100" required></label>
+                <label>Planning period (days)<input id="days" type="number" min="1" step="1" value="30" required></label>
+                <label>Planning preset <span>Use as a starting point, then check your feed guide</span>
+                    <select id="preset">
+                        <option value="0.12">Layers in production — 0.12 kg/bird/day</option>
+                        <option value="0.08">Growing pullets — 0.08 kg/bird/day</option>
+                        <option value="0.055">Young broilers — 0.055 kg/bird/day</option>
+                        <option value="0.11">Mid-cycle broilers — 0.11 kg/bird/day</option>
+                        <option value="0.16">Finishing broilers — 0.16 kg/bird/day</option>
+                        <option value="custom">Custom intake</option>
+                    </select>
+                </label>
+                <label>Feed per bird/day (kg) <span>Example: 0.12 kg = 120 g</span><input id="dailyFeed" type="number" min="0" step="0.001" value="0.12" required></label>
+                <label>Expected wastage (%) <span>Spillage, damp feed and handling losses</span><input id="wastage" type="number" min="0" max="100" step="0.1" value="5" required></label>
+                <label>Feed bag size (kg)<input id="bagSize" type="number" min="1" step="1" value="50" required></label>
+                <label>Price per bag (UGX) <span>Optional, for a budget estimate</span><input id="bagPrice" type="number" min="0" step="1000" value="90000"></label>
+                <label>Safety stock (%) <span>Extra buffer if supply may be delayed</span><input id="safety" type="number" min="0" max="100" step="0.1" value="3"></label>
+            </div>
+            <button type="submit">Plan feed requirement</button>
+        </form>
+        <aside class="panel results" aria-live="polite">
+            <h2>Feed estimate</h2>
+            <div class="result-row"><span>Base feed requirement</span><strong id="baseFeed">—</strong></div>
+            <div class="result-row"><span>Including wastage</span><strong id="withWastage">—</strong></div>
+            <div class="result-row"><span>Including safety stock</span><strong id="totalFeed">—</strong></div>
+            <div class="result-row"><span>Full bags to buy</span><strong id="bags">—</strong></div>
+            <div class="result-row"><span>Feed purchased</span><strong id="purchasedKg">—</strong></div>
+            <div class="result-row"><span>Estimated feed budget</span><strong id="budget">—</strong></div>
+            <div class="highlight"><span>Average daily flock feed</span><strong id="dailyTotal">—</strong><small id="gramsBird"></small></div>
+            <div class="guidance" id="guidance">Adjust the values to match your flock, then calculate.</div>
+        </aside>
+    </section>
+    <article class="content">
+        <h2>How to use this planner</h2>
+        <p>Start with the number of birds you expect to feed and the number of days you are buying for. Daily feed intake changes with breed, age, body weight, temperature and production stage, so the presets are only planning examples. Replace the daily intake with the recommendation from your hatchery or feed manufacturer whenever you have one.</p>
+        <p>The calculator multiplies birds × daily feed × days. It then adds your expected wastage and optional safety stock. Because feed is normally purchased in whole bags, the bag estimate rounds up so you do not plan to buy part of a bag.</p>
+        <h2>Why feed planning matters</h2>
+        <ul>
+            <li>Buying too little can force an emergency purchase at a higher price or cause abrupt feed changes.</li>
+            <li>Buying too much can tie up cash and increase the risk of moisture, mould, rodents or nutrient loss during storage.</li>
+            <li>Tracking real feed used each week helps you compare your flock with the feeding guide and spot unusual waste.</li>
+            <li>Keep feed dry, raised off the floor and protected from rodents; do not use visibly mouldy or spoiled feed.</li>
+        </ul>
+        <div class="notice"><strong>Important:</strong> Feed intake is not one fixed number for every bird. Use this tool for purchasing and budgeting, then follow the feeding programme supplied for your specific breed and age. Consult a qualified poultry nutritionist or veterinarian when formulating rations or dealing with poor growth or production.</div>
+    </article>
+</main>
+<footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/tools/">Tools</a><a href="/privacy-policy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
+<script>
+    const number = id => Math.max(0, Number(document.getElementById(id).value) || 0);
+    const ugx = value => new Intl.NumberFormat('en-UG', { style: 'currency', currency: 'UGX', maximumFractionDigits: 0 }).format(value);
+    const preset = document.getElementById('preset');
+    preset.addEventListener('change', () => {
+        if (preset.value !== 'custom') document.getElementById('dailyFeed').value = preset.value;
+    });
+    function calculate(event) {
+        if (event) event.preventDefault();
+        const birds = number('birds');
+        const days = number('days');
+        const daily = number('dailyFeed');
+        const wastage = Math.min(100, number('wastage')) / 100;
+        const safety = Math.min(100, number('safety')) / 100;
+        const bagSize = Math.max(1, number('bagSize'));
+        const baseFeed = birds * days * daily;
+        const withWastage = baseFeed * (1 + wastage);
+        const totalFeed = withWastage * (1 + safety);
+        const bags = Math.ceil(totalFeed / bagSize);
+        const purchasedKg = bags * bagSize;
+        const budget = bags * number('bagPrice');
+        const dailyTotal = birds * daily;
+        document.getElementById('baseFeed').textContent = baseFeed.toFixed(1) + ' kg';
+        document.getElementById('withWastage').textContent = withWastage.toFixed(1) + ' kg';
+        document.getElementById('totalFeed').textContent = totalFeed.toFixed(1) + ' kg';
+        document.getElementById('bags').textContent = bags.toLocaleString('en-UG') + ' bag' + (bags === 1 ? '' : 's');
+        document.getElementById('purchasedKg').textContent = purchasedKg.toFixed(0) + ' kg';
+        document.getElementById('budget').textContent = number('bagPrice') ? ugx(budget) : 'Add bag price';
+        document.getElementById('dailyTotal').textContent = dailyTotal.toFixed(1) + ' kg/day';
+        document.getElementById('gramsBird').textContent = Math.round(daily * 1000) + ' g per bird/day';
+        const surplus = purchasedKg - totalFeed;
+        document.getElementById('guidance').textContent = 'Buying whole bags gives about ' + surplus.toFixed(1) + ' kg above the calculated requirement. Compare this estimate with actual feed use each week.';
+    }
+    document.getElementById('feed-form').addEventListener('submit', calculate);
+    calculate();
+</script>
+</body>
+</html>
