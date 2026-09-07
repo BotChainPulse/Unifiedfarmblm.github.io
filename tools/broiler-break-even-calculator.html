@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broiler Break-even Calculator Uganda (UGX) | Unified Farm BLM</title>
+    <link rel="canonical" href="https://www.unifiedfarmblm.com/tools/broiler-break-even-calculator.html">
+    <meta name="description" content="Free Uganda broiler break-even calculator. Estimate birds sold, feed cost, total production cost, revenue, net profit and break-even price in UGX.">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; color: #263328; background: #f6faf6; line-height: 1.6; }
+        header, footer { background: #204c27; color: white; }
+        nav, .container { width: min(94%, 1040px); margin: auto; }
+        nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo, nav a, footer a { color: white; }
+        .logo { text-decoration: none; font-weight: 800; font-size: 1.25rem; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; padding: 0; }
+        main { padding: 38px 0 60px; }
+        h1, h2, h3 { color: #204c27; line-height: 1.25; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 8px; }
+        .intro { max-width: 800px; color: #526157; }
+        .calculator { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); gap: 26px; margin: 32px 0; align-items: start; }
+        .panel { background: white; border: 1px solid #dbe6db; border-radius: 14px; padding: 24px; box-shadow: 0 8px 25px rgba(27,70,33,.07); }
+        .fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+        label { display: block; font-weight: 700; font-size: .93rem; }
+        label span { display: block; color: #67736a; font-weight: 400; font-size: .8rem; margin-top: 3px; }
+        input { width: 100%; margin-top: 7px; padding: 11px; border: 1px solid #b8c7ba; border-radius: 7px; font: inherit; }
+        input:focus { outline: 3px solid #cfe8d2; border-color: #2c6a34; }
+        button { width: 100%; margin-top: 20px; padding: 13px; border: 0; border-radius: 7px; background: #2c6a34; color: white; font: inherit; font-weight: 800; cursor: pointer; }
+        .results { background: #204c27; color: white; position: sticky; top: 15px; }
+        .results h2 { color: white; margin-top: 0; }
+        .result-row { display: flex; justify-content: space-between; gap: 20px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.18); }
+        .result-row strong { text-align: right; }
+        .profit { margin-top: 18px; padding: 18px; border-radius: 9px; background: #f3b23b; color: #203322; }
+        .profit.loss { background: #ffd2ca; color: #721c16; }
+        .profit strong { display: block; font-size: 1.65rem; }
+        .guidance { padding: 14px; margin-top: 14px; border-radius: 8px; background: rgba(255,255,255,.12); }
+        .content { background: white; padding: 26px; border-radius: 12px; margin-top: 28px; }
+        .content li { margin-bottom: 8px; }
+        .notice { background: #fff8e5; border-left: 5px solid #e7a62c; padding: 18px; margin-top: 24px; }
+        footer { padding: 30px 0; text-align: center; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+        @media (max-width: 760px) { .calculator { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; } .results { position: static; } nav { flex-direction: column; align-items: flex-start; padding: 14px 0; } .nav-links { margin: 0; gap: 12px; } }
+    </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Uganda Broiler Break-even Calculator","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/broiler-break-even-calculator.html"}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
+</head>
+<body>
+<header><nav><a class="logo" href="/">🐔 Unified Farm BLM</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/blog/">Blog</a></li><li><a href="/tools/">Free Tools</a></li><li><a href="/contact.html">Contact</a></li></ul></nav></header>
+<main class="container">
+    <p><a href="/tools/">← All free tools</a></p>
+    <h1>Uganda Broiler Break-even Calculator</h1>
+    <p class="intro">Use your own chick, feed and market prices to estimate one broiler cycle. The calculator shows how mortality and feed cost affect the minimum selling price you need to recover your expenses.</p>
+    <section class="calculator" aria-label="Broiler break-even calculator">
+        <form class="panel" id="broiler-form">
+            <h2>Your cycle numbers</h2>
+            <div class="fields">
+                <label>Chicks started <span>Birds placed at the beginning</span><input id="birds" type="number" min="1" step="1" value="100" required></label>
+                <label>Chick cost each (UGX)<input id="chickPrice" type="number" min="0" step="100" value="3500" required></label>
+                <label>Expected mortality (%) <span>Birds not reaching sale</span><input id="mortality" type="number" min="0" max="100" step="0.1" value="5" required></label>
+                <label>Feed per started bird (kg) <span>Total feed used across the cycle divided by chicks started</span><input id="feedPerBird" type="number" min="0" step="0.1" value="4.5" required></label>
+                <label>Feed price per kg (UGX) <span>Bag price divided by bag weight</span><input id="feedPrice" type="number" min="0" step="10" value="1800" required></label>
+                <label>Expected sale weight/bird (kg)<input id="weight" type="number" min="0" step="0.05" value="2.0" required></label>
+                <label>Selling price per kg (UGX)<input id="salePriceKg" type="number" min="0" step="100" value="9000" required></label>
+                <label>Vaccines & medicine (UGX)<input id="medicine" type="number" min="0" step="1000" value="90000"></label>
+                <label>Litter, heat & utilities (UGX)<input id="utilities" type="number" min="0" step="1000" value="100000"></label>
+                <label>Labour (UGX)<input id="labour" type="number" min="0" step="1000" value="150000"></label>
+                <label>Transport & marketing (UGX)<input id="transport" type="number" min="0" step="1000" value="100000"></label>
+                <label>Other cycle costs (UGX)<input id="other" type="number" min="0" step="1000" value="50000"></label>
+            </div>
+            <button type="submit">Calculate break-even</button>
+        </form>
+        <aside class="panel results" aria-live="polite">
+            <h2>Cycle estimate</h2>
+            <div class="result-row"><span>Birds expected to sell</span><strong id="soldBirds">—</strong></div>
+            <div class="result-row"><span>Total sale weight</span><strong id="saleWeight">—</strong></div>
+            <div class="result-row"><span>Chick cost</span><strong id="chickCost">—</strong></div>
+            <div class="result-row"><span>Feed required</span><strong id="feedKg">—</strong></div>
+            <div class="result-row"><span>Feed cost</span><strong id="feedCost">—</strong></div>
+            <div class="result-row"><span>Total cycle cost</span><strong id="totalCost">—</strong></div>
+            <div class="result-row"><span>Expected revenue</span><strong id="revenue">—</strong></div>
+            <div class="result-row"><span>Break-even per kg</span><strong id="breakEvenKg">—</strong></div>
+            <div class="result-row"><span>Break-even per sold bird</span><strong id="breakEvenBird">—</strong></div>
+            <div class="profit" id="profitBox"><span>Estimated net result</span><strong id="profit">—</strong><small id="margin"></small></div>
+            <div class="guidance" id="guidance">Adjust the values to match your farm, then calculate.</div>
+        </aside>
+    </section>
+    <article class="content">
+        <h2>How the break-even calculation works</h2>
+        <p>Expected birds sold equals chicks started after the mortality percentage is removed. Total sale weight is surviving birds multiplied by your expected average market weight. Revenue is sale weight multiplied by the selling price per kilogram.</p>
+        <p>Cycle cost includes every chick purchased, feed for the flock, vaccines and medicine, heating and litter, labour, transport, marketing and any other expenses you enter. Break-even price per kilogram is total cycle cost divided by expected sale weight.</p>
+        <h2>Why mortality changes the answer quickly</h2>
+        <p>When a bird dies late in the cycle, part of its chick and feed cost has already been spent but there is no sale from that bird. That is why it is useful to run this calculator more than once. Compare a normal case with a difficult case using higher mortality, more feed and a lower selling price.</p>
+        <h2>Records worth keeping each cycle</h2>
+        <ul>
+            <li>Number of chicks placed and the exact purchase price.</li>
+            <li>Every feed bag purchased, its weight and cost.</li>
+            <li>Deaths by date and likely cause.</li>
+            <li>Medicine, vaccines, heating, litter, labour and transport.</li>
+            <li>Birds sold, average weight and actual price received.</li>
+        </ul>
+        <div class="notice"><strong>Planning note:</strong> This is an educational estimate, not a guarantee of profit. Use current supplier quotations and your own farm records. Disease, weather, feed conversion, mortality and buyer prices can materially change the outcome.</div>
+    </article>
+</main>
+<footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/tools/">Tools</a><a href="/privacy-policy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
+<script>
+    const number = id => Math.max(0, Number(document.getElementById(id).value) || 0);
+    const ugx = value => new Intl.NumberFormat('en-UG', { style: 'currency', currency: 'UGX', maximumFractionDigits: 0 }).format(value);
+    function calculate(event) {
+        if (event) event.preventDefault();
+        const birds = number('birds');
+        const mortality = Math.min(100, number('mortality')) / 100;
+        const soldBirds = birds * (1 - mortality);
+        const weight = number('weight');
+        const saleWeight = soldBirds * weight;
+        const chickCost = birds * number('chickPrice');
+        const feedKg = birds * number('feedPerBird');
+        const feedCost = feedKg * number('feedPrice');
+        const totalCost = chickCost + feedCost + number('medicine') + number('utilities') + number('labour') + number('transport') + number('other');
+        const revenue = saleWeight * number('salePriceKg');
+        const profit = revenue - totalCost;
+        const breakEvenKg = saleWeight > 0 ? totalCost / saleWeight : 0;
+        const breakEvenBird = soldBirds > 0 ? totalCost / soldBirds : 0;
+        const margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+        document.getElementById('soldBirds').textContent = soldBirds.toFixed(1);
+        document.getElementById('saleWeight').textContent = saleWeight.toFixed(1) + ' kg';
+        document.getElementById('chickCost').textContent = ugx(chickCost);
+        document.getElementById('feedKg').textContent = feedKg.toFixed(1) + ' kg';
+        document.getElementById('feedCost').textContent = ugx(feedCost);
+        document.getElementById('totalCost').textContent = ugx(totalCost);
+        document.getElementById('revenue').textContent = ugx(revenue);
+        document.getElementById('breakEvenKg').textContent = saleWeight ? ugx(breakEvenKg) : 'No sale weight';
+        document.getElementById('breakEvenBird').textContent = soldBirds ? ugx(breakEvenBird) : 'No birds sold';
+        document.getElementById('profit').textContent = ugx(profit);
+        document.getElementById('margin').textContent = 'Estimated margin: ' + margin.toFixed(1) + '%';
+        const box = document.getElementById('profitBox');
+        box.classList.toggle('loss', profit < 0);
+        document.getElementById('guidance').textContent = profit >= 0 ? 'This scenario covers the entered costs. Test a lower market price and slightly higher mortality before committing to the cycle.' : 'This scenario does not cover the entered costs. Check feed price, target weight, mortality and market price before placing chicks.';
+    }
+    document.getElementById('broiler-form').addEventListener('submit', calculate);
+    calculate();
+</script>
+</body>
+</html>
