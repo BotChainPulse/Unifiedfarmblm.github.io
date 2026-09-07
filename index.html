@@ -18,7 +18,7 @@
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: white; text-decoration: none; transition: opacity 0.3s; }
         .nav-links a:hover { opacity: 0.8; }
-        .mobile-menu { display: none; font-size: 1.5rem; cursor: pointer; }
+        .mobile-menu { display: none; font-size: 1.45rem; cursor: pointer; background: transparent; color: white; border: 1px solid rgba(255,255,255,.55); border-radius: 6px; padding: .35rem .65rem; }
         
         /* Hero */
         .hero { background: linear-gradient(135deg, #2c5f2d 0%, #4a8c4b 100%); color: white; padding: 4rem 0; text-align: center; }
@@ -67,10 +67,14 @@
         .footer-links a:hover { opacity: 1; }
         
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            nav { flex-wrap: wrap; }
             .mobile-menu { display: block; }
+            .nav-links { display: none; width: 100%; flex-direction: column; gap: .2rem; padding-top: .8rem; }
+            .nav-links.open { display: flex; }
+            .nav-links a { display: block; padding: .5rem 0; }
             .about-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2rem; }
+            .hero .btn { margin: .35rem !important; }
         }
     </style>
 
@@ -81,7 +85,7 @@
     <header>
         <nav class="container">
             <div class="logo">🐔 Unified Farm BLM</div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-nav">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about-us.html">About Us</a></li>
                 <li><a href="products/">Products</a></li>
@@ -90,7 +94,7 @@
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="privacy-policy.html">Privacy</a></li>
             </ul>
-            <div class="mobile-menu">☰</div>
+            <button class="mobile-menu" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">☰</button>
         </nav>
     </header>
 
@@ -299,10 +303,24 @@
                 <a href="contact.html">Contact</a>
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="terms-of-service.html">Terms of Service</a>
-            <a href="disclaimer.html">Disclaimer</a>
+                <a href="disclaimer.html">Disclaimer</a>
             </div>
-            <p> 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
+            <p>© 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
         </div>
     </footer>
+    <script>
+        const menuButton = document.querySelector('.mobile-menu');
+        const primaryNav = document.getElementById('primary-nav');
+        menuButton.addEventListener('click', () => {
+            const isOpen = primaryNav.classList.toggle('open');
+            menuButton.setAttribute('aria-expanded', String(isOpen));
+            menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        });
+        primaryNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+            primaryNav.classList.remove('open');
+            menuButton.setAttribute('aria-expanded', 'false');
+            menuButton.setAttribute('aria-label', 'Open navigation menu');
+        }));
+    </script>
 </body>
 </html>
