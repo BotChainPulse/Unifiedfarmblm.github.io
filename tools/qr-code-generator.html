@@ -17,7 +17,7 @@
         .nav-links { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; padding: 0; }
         .nav-links a, footer a { color: white; }
         .hero { padding: 48px 0 34px; background: linear-gradient(135deg, #eaf5e9, #fff8e8); text-align: center; }
-        h1, h2 { color: #204c27; line-height: 1.25; }
+        h1, h2, h3 { color: #204c27; line-height: 1.25; }
         h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 12px; }
         main { padding: 34px 0 58px; }
         .generator { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: 28px; align-items: start; }
@@ -34,6 +34,11 @@
         #qrBox img, #qrBox canvas { max-width: 100%; height: auto !important; }
         .hint { color: #5a685e; font-size: .95rem; }
         .privacy-note { margin-top: 22px; padding: 16px; border-left: 4px solid #2c6a34; background: #eef7ee; border-radius: 6px; }
+        .guide { margin-top: 42px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin: 20px 0 28px; }
+        .info-card { background: white; border: 1px solid #dce8dc; border-radius: 12px; padding: 20px; }
+        .guide ul { padding-left: 22px; }
+        .guide li { margin-bottom: 8px; }
         .back { margin-top: 26px; }
         footer { padding: 30px 0; text-align: center; }
         .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-bottom: 12px; }
@@ -79,6 +84,43 @@
             </div>
         </aside>
     </div>
+
+    <section class="guide">
+        <h2>How to use the QR Code Generator</h2>
+        <p>A QR code is a square barcode that a phone camera can scan to open or display information quickly. To create one here, enter the website address, phone number, message or other text you want to share. Choose an image size, tap <strong>Generate QR code</strong>, test the result with your phone camera, and then download the PNG if it works as expected.</p>
+        <p>For a website, include the complete address beginning with <strong>https://</strong>. For plain text, keep the message concise so the finished code remains easy to scan. If you are printing a code on packaging, posters or signs, use one of the larger image sizes and keep enough white space around the code.</p>
+
+        <div class="info-grid">
+            <article class="info-card">
+                <h3>What can a QR code contain?</h3>
+                <p>You can encode a website link, product page, farm information page, short message, phone number, email address or another piece of text. A QR code simply stores the information you enter; what happens after scanning depends on the phone and the type of content.</p>
+            </article>
+            <article class="info-card">
+                <h3>Useful farm and business ideas</h3>
+                <p>QR codes can help connect printed materials to online information. A farmer or small business can place one on an egg tray label, product leaflet, price list, market stall sign, event poster or business card so customers can quickly reach a website, contact page or product information.</p>
+            </article>
+            <article class="info-card">
+                <h3>Make your QR code easy to scan</h3>
+                <p>Keep strong contrast between the dark and light squares, avoid stretching the downloaded image, and do not place text or logos over the code unless you have tested the result carefully. Before printing many copies, scan a sample from several distances and on more than one phone if possible.</p>
+            </article>
+        </div>
+
+        <h2>Important tips before you print or share</h2>
+        <ul>
+            <li><strong>Test the destination first:</strong> make sure the website or text is correct before printing the QR code.</li>
+            <li><strong>Remember that this is a static QR code:</strong> the encoded information is built into the image. If you later change a website address, you normally need to generate a new QR code.</li>
+            <li><strong>Use a clear print size:</strong> very small or blurry codes can be difficult for phone cameras to read.</li>
+            <li><strong>Keep the surrounding space clear:</strong> the white margin around a QR code helps scanners recognise its edges.</li>
+            <li><strong>Avoid sensitive information:</strong> anyone who receives or photographs the QR code may be able to read the encoded content.</li>
+        </ul>
+
+        <h2>Privacy and safety</h2>
+        <p>This generator creates the QR code in your browser. The text you type is not intentionally sent to Unified Farm BLM for storage. Even so, a downloaded QR code should be treated like any other public label or image: do not put passwords, private account details, secret keys or other confidential information inside it. When scanning QR codes from other people, check the destination shown by your phone before opening unfamiliar links.</p>
+
+        <h2>Why offer this tool on Unified Farm BLM?</h2>
+        <p>Unified Farm BLM provides practical digital and farming tools that can be useful to farmers, buyers and small businesses. The QR generator complements our poultry calculators by helping users connect physical products and printed materials to useful online information. It is free to use and does not require an account.</p>
+    </section>
+
     <p class="back"><a class="btn secondary" href="/tools/">← Back to all free tools</a></p>
 </main>
 <footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/privacy-policy.html">Privacy</a><a href="/terms-of-service.html">Terms</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
