@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free QR Code Generator | Unified Farm BLM</title>
+    <link rel="canonical" href="https://www.unifiedfarmblm.com/tools/qr-code-generator.html">
+    <meta name="description" content="Create a free QR code for a website, text, phone number or message. Generate and download the QR code as a PNG directly in your browser.">
+    <meta name="robots" content="index, follow">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; line-height: 1.65; color: #263328; background: #f7faf7; }
+        header, footer { background: #204c27; color: white; }
+        nav, .container { width: min(94%, 980px); margin: auto; }
+        nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo { color: white; text-decoration: none; font-weight: 800; font-size: 1.25rem; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; padding: 0; }
+        .nav-links a, footer a { color: white; }
+        .hero { padding: 48px 0 34px; background: linear-gradient(135deg, #eaf5e9, #fff8e8); text-align: center; }
+        h1, h2 { color: #204c27; line-height: 1.25; }
+        h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 12px; }
+        main { padding: 34px 0 58px; }
+        .generator { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: 28px; align-items: start; }
+        .panel { background: white; border: 1px solid #dce8dc; border-radius: 14px; padding: 24px; box-shadow: 0 8px 24px rgba(27,70,33,.07); }
+        label { display: block; font-weight: 700; margin-bottom: 8px; }
+        textarea, select { width: 100%; border: 1px solid #b8c8ba; border-radius: 8px; padding: 12px; font: inherit; background: white; }
+        textarea { min-height: 150px; resize: vertical; }
+        .row { margin-top: 18px; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        button, .btn { border: 0; border-radius: 8px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+        .primary { background: #2c6a34; color: white; }
+        .secondary { background: #edf4ed; color: #204c27; border: 1px solid #c9dacb; }
+        #qrBox { min-height: 292px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px dashed #b8c8ba; border-radius: 12px; padding: 16px; }
+        #qrBox img, #qrBox canvas { max-width: 100%; height: auto !important; }
+        .hint { color: #5a685e; font-size: .95rem; }
+        .privacy-note { margin-top: 22px; padding: 16px; border-left: 4px solid #2c6a34; background: #eef7ee; border-radius: 6px; }
+        .back { margin-top: 26px; }
+        footer { padding: 30px 0; text-align: center; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-bottom: 12px; }
+        @media (max-width: 760px) { .generator { grid-template-columns: 1fr; } nav { align-items: flex-start; padding: 15px 0; flex-direction: column; } .nav-links { margin: 0; gap: 12px; } }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
+</head>
+<body>
+<header><nav>
+    <a class="logo" href="/">🐔 Unified Farm BLM</a>
+    <ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/blog/">Blog</a></li><li><a href="/tools/">Free Tools</a></li><li><a href="/contact.html">Contact</a></li></ul>
+</nav></header>
+<section class="hero"><div class="container">
+    <h1>Free QR Code Generator</h1>
+    <p>Create a QR code for a website, message, phone number or any short text, then download it as a PNG.</p>
+</div></section>
+<main class="container">
+    <div class="generator">
+        <section class="panel">
+            <h2>Create your QR code</h2>
+            <label for="qrText">Text or link</label>
+            <textarea id="qrText" placeholder="Example: https://www.unifiedfarmblm.com/" maxlength="2000"></textarea>
+            <div class="row">
+                <label for="qrSize">Image size</label>
+                <select id="qrSize">
+                    <option value="220">220 × 220 px</option>
+                    <option value="320" selected>320 × 320 px</option>
+                    <option value="480">480 × 480 px</option>
+                    <option value="640">640 × 640 px</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button class="primary" id="generateBtn" type="button">Generate QR code</button>
+                <button class="secondary" id="clearBtn" type="button">Clear</button>
+            </div>
+            <p class="hint" id="status" aria-live="polite"></p>
+            <div class="privacy-note"><strong>Privacy:</strong> your text is converted into a QR code in your browser. Unified Farm BLM does not submit the entered text to our server.</div>
+        </section>
+        <aside class="panel">
+            <div id="qrBox" aria-label="Generated QR code preview"><span class="hint">Your QR code will appear here.</span></div>
+            <div class="actions">
+                <button class="primary" id="downloadBtn" type="button" disabled>Download PNG</button>
+            </div>
+        </aside>
+    </div>
+    <p class="back"><a class="btn secondary" href="/tools/">← Back to all free tools</a></p>
+</main>
+<footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/privacy-policy.html">Privacy</a><a href="/terms-of-service.html">Terms</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07bdLI3WmXmj4V4ME2FzQAk+PHN3F+FGBxvJdE3J9n9o8P6jc2jMTX8L9P7F1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function () {
+    var text = document.getElementById('qrText');
+    var size = document.getElementById('qrSize');
+    var box = document.getElementById('qrBox');
+    var generate = document.getElementById('generateBtn');
+    var clear = document.getElementById('clearBtn');
+    var download = document.getElementById('downloadBtn');
+    var status = document.getElementById('status');
+
+    function buildQr() {
+        var value = text.value.trim();
+        if (!value) {
+            status.textContent = 'Enter a link or text first.';
+            text.focus();
+            return;
+        }
+        if (typeof QRCode === 'undefined') {
+            status.textContent = 'The QR library could not load. Check your connection and try again.';
+            return;
+        }
+        box.innerHTML = '';
+        var px = parseInt(size.value, 10) || 320;
+        new QRCode(box, {
+            text: value,
+            width: px,
+            height: px,
+            colorDark: '#111111',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
+        status.textContent = 'QR code created.';
+        download.disabled = false;
+    }
+
+    generate.addEventListener('click', buildQr);
+    clear.addEventListener('click', function () {
+        text.value = '';
+        box.innerHTML = '<span class="hint">Your QR code will appear here.</span>';
+        status.textContent = '';
+        download.disabled = true;
+        text.focus();
+    });
+    download.addEventListener('click', function () {
+        var canvas = box.querySelector('canvas');
+        var image = box.querySelector('img');
+        var url = canvas ? canvas.toDataURL('image/png') : (image ? image.src : '');
+        if (!url) {
+            status.textContent = 'Generate a QR code before downloading.';
+            return;
+        }
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'unified-farm-qr-code.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    });
+})();
+</script>
+</body>
+</html>
