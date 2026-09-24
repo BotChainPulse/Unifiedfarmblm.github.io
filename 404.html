@@ -13,8 +13,14 @@
             var query = window.location.search || '';
             var hash = window.location.hash || '';
             var canonicalHost = 'www.unifiedfarmblm.com';
-            var legacyToolTerms = ['tool', 'calculator', 'qr', 'livestock', 'feed', 'generator'];
+            var isQrUrl = path.indexOf('qr') !== -1 || path.indexOf('qrcode') !== -1 || path.indexOf('qr-code') !== -1;
+            var legacyToolTerms = ['tool', 'calculator', 'livestock', 'feed', 'generator'];
             var isLegacyToolUrl = legacyToolTerms.some(function (term) { return path.indexOf(term) !== -1; });
+
+            if (isQrUrl) {
+                window.location.replace('https://' + canonicalHost + '/tools/qr-code-generator.html');
+                return;
+            }
 
             if (isLegacyToolUrl) {
                 window.location.replace('https://' + canonicalHost + '/tools/');
