@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Unified Farm BLM</title>
     <link rel="canonical" href="https://www.unifiedfarmblm.com/contact.html" />
-    <meta name="description" content="Contact Unified Farm BLM in Mpigi, Uganda. Order fresh eggs, day-old chicks, or get poultry farming advice.">
+    <meta name="description" content="Contact Unified Farm BLM in Mpigi, Uganda about local chickens, current availability and the farm's educational poultry guides.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
@@ -28,8 +28,10 @@
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 3rem 0; }
         .contact-info { background: #2c5f2d; color: white; padding: 2rem; border-radius: 10px; }
         .contact-info h2 { color: white; border-bottom-color: #f4a261; }
-        .contact-method { margin: 1.5rem 0; }
+        .contact-method { margin: 1.25rem 0; }
         .contact-method strong { display: block; color: #f4a261; margin-bottom: 0.3rem; }
+        .contact-method p { margin-bottom: 0; }
+        .contact-info a { color: white; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
         .contact-form { background: #f8f9fa; padding: 2rem; border-radius: 10px; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #2c5f2d; }
@@ -37,6 +39,15 @@
         .form-group textarea { min-height: 150px; resize: vertical; }
         .btn { display: inline-block; padding: 12px 30px; background: #2c5f2d; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; }
         .btn:hover { background: #4a8c4b; }
+        .whatsapp-box { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid #d8e2d8; }
+        .whatsapp-box h3 { color: #2c5f2d; margin-bottom: 0.5rem; }
+        .whatsapp-box p { margin-bottom: 1rem; }
+        .whatsapp-btn { background: #176b3a; text-align: center; text-decoration: none; }
+        .whatsapp-btn:hover { background: #12542e; }
+        .qr-option { margin-top: 1.25rem; text-align: center; }
+        #whatsapp-qr { width: 164px; min-height: 164px; margin: 0.75rem auto; padding: 8px; background: white; border: 1px solid #d8e2d8; border-radius: 8px; }
+        #whatsapp-qr img, #whatsapp-qr canvas { display: block; width: 148px !important; height: 148px !important; }
+        .qr-option small { color: #667067; }
         
         .map-section { text-align: center; padding: 3rem 0; }
         
@@ -50,7 +61,13 @@
         
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .contact-grid { grid-template-columns: 1fr; }
+            .container { padding: 16px; }
+            .hero-section { padding: 2rem 0; }
+            .hero-section h1 { font-size: 2.25rem; margin-top: 0.5rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; }
+            .contact-info, .contact-form { padding: 1.25rem; }
+            .contact-info h2, .contact-form h2 { margin-top: 0; }
+            .qr-option { display: none; }
         }
     </style>
 
@@ -73,7 +90,7 @@
     <section class="hero-section">
         <div class="container">
             <h1>Get in Touch</h1>
-            <p>Whether you're buying eggs, starting a farm, or just have questions — we're here to help.</p>
+            <p>Ask about local chickens, current availability, or information published in our poultry guides.</p>
         </div>
     </section>
 
@@ -89,17 +106,7 @@
                 
                 <div class="contact-method">
                     <strong>📧 Email</strong>
-                    <p>info@unifiedfarmblm.com</p>
-                </div>
-                
-                <div class="contact-method">
-                    <strong>📞 Phone</strong>
-                    <p>Contact us via email or WhatsApp to get our phone number<br>Monday - Saturday: 8:00 AM - 6:00 PM</p>
-                </div>
-
-                <div class="contact-method">
-                    <strong>💬 WhatsApp</strong>
-                    <p>Send us a message on WhatsApp for quick questions and orders<br>We typically respond within 1-2 hours during business hours</p>
+                    <p><a href="mailto:info@unifiedfarmblm.com?subject=Unified%20Farm%20BLM%20enquiry">info@unifiedfarmblm.com</a></p>
                 </div>
                 
                 <div class="contact-method">
@@ -113,6 +120,16 @@
                 <p>Tell us what you need, the quantity, and your location. Your email app will open with the correct address and subject ready.</p>
                 <p><a class="btn" href="mailto:info@unifiedfarmblm.com?subject=Unified%20Farm%20BLM%20enquiry">Email Unified Farm BLM</a></p>
                 <p style="font-size: 0.9rem; color: #666;">If the button does not open your email app, write directly to <strong>info@unifiedfarmblm.com</strong>.</p>
+
+                <div class="whatsapp-box">
+                    <h3>Prefer WhatsApp?</h3>
+                    <p>Open a direct chat without displaying the phone number on this page.</p>
+                    <a class="btn whatsapp-btn" href="https://wa.me/256708813419?text=Hello%20Unified%20Farm%20BLM%2C%20I%20have%20an%20enquiry." target="_blank" rel="noopener noreferrer" aria-label="Message Unified Farm BLM on WhatsApp">Message us on WhatsApp</a>
+                    <div class="qr-option">
+                        <div id="whatsapp-qr" aria-label="QR code that opens a WhatsApp chat with Unified Farm BLM"></div>
+                        <small>On a computer, scan this code with your phone to open WhatsApp.</small>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -131,22 +148,22 @@
             
             <div class="faq-item">
                 <h3>Do you deliver?</h3>
-                <p>Yes! We offer local delivery within Mpigi district and can arrange transport to Kampala for larger orders. Delivery fees depend on distance and order size.</p>
+                <p>Delivery or collection arrangements depend on the item, quantity, destination and current availability. Contact us for confirmation before making plans or paying.</p>
             </div>
             
             <div class="faq-item">
                 <h3>What is your minimum order?</h3>
-                <p>For eggs, minimum order is 1 tray (30 eggs). Chick minimums depend on the current hatch batch and delivery plan. Tell us the quantity you need and we will confirm availability before you make arrangements.</p>
+                <p>Minimum quantities can change with availability and the collection or delivery plan. Tell us what you need and we will confirm what is currently possible.</p>
             </div>
             
             <div class="faq-item">
                 <h3>Are your chicks vaccinated?</h3>
-                <p>Yes! All our day-old chicks receive Marek's disease vaccination at hatch. We also provide vaccination schedules for follow-up doses (Newcastle, Gumboro, etc.).</p>
+                <p>Vaccination information varies with the age and batch of the available local chicks. We share the information available for that batch and recommend confirming the follow-up programme with a qualified veterinary professional.</p>
             </div>
             
             <div class="faq-item">
                 <h3>Can I visit the farm?</h3>
-                <p>Absolutely! We welcome visitors, especially aspiring farmers. Please call or WhatsApp us in advance to schedule a visit. We can show you our coops, feeding routines, and answer your questions.</p>
+                <p>Visits are considered only by prior arrangement and are not guaranteed. Contact us first so we can confirm whether a suitable date and time is available.</p>
             </div>
             
             <div class="faq-item">
@@ -170,5 +187,18 @@
         </div>
         <p>© 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        if (typeof QRCode !== 'undefined') {
+            new QRCode(document.getElementById('whatsapp-qr'), {
+                text: 'https://wa.me/256708813419?text=Hello%20Unified%20Farm%20BLM%2C%20I%20have%20an%20enquiry.',
+                width: 148,
+                height: 148,
+                colorDark: '#111111',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    </script>
 </body>
 </html>
