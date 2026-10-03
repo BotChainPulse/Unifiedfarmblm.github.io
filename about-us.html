@@ -46,6 +46,18 @@
         .about-img { width: 100%; border-radius: 10px; margin: 1.5rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
         .img-grid img { width: 100%; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .farm-records { background: #f2f7f2; border-left: 4px solid #2c5f2d; padding: 1.25rem; margin: 2rem 0; }
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 1.5rem 0; }
+        .media-grid figure { margin: 0; }
+        .media-grid img, .farm-video { width: 100%; display: block; border-radius: 10px; background: #111; }
+        figcaption { color: #555; font-size: 0.95rem; line-height: 1.55; margin-top: 0.6rem; }
+        .farm-video { aspect-ratio: 16 / 9; }
+
+        @media (max-width: 650px) {
+            .nav-links { gap: 0.8rem; font-size: 0.9rem; }
+            .hero-section h1 { font-size: 2.25rem; }
+            .img-grid, .media-grid { grid-template-columns: 1fr; }
+        }
         
         footer { background: #1a3a1b; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem; }
         .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
@@ -91,6 +103,30 @@
                 <img src="images/farm-aerial.jpg" alt="Aerial view of Unified Farm BLM in Mpigi, Uganda" loading="lazy">
                 <img src="images/rooster.jpg" alt="Healthy free-range chickens at Unified Farm BLM" loading="lazy">
             </div>
+
+            <h2>Farm Records: Past and Present</h2>
+            <div class="farm-records" role="note">
+                <p><strong>Historical context:</strong> The black-and-white barred chickens in the photographs below were a past Unified Farm BLM flock. They are genuine farm photographs, but they do not show the chickens we currently raise. The short video is retained as part of our farm record and is not evidence of current flock size, current breed composition or production performance.</p>
+            </div>
+
+            <div class="media-grid">
+                <figure>
+                    <img src="images/historical-barred-flock-1.webp" alt="Past black-and-white barred chicken flock inside a Unified Farm BLM poultry house" width="1152" height="1536" loading="lazy">
+                    <figcaption>A past flock inside the Unified Farm BLM poultry house. This historical image is not presented as the farm's current flock.</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/historical-barred-flock-2.webp" alt="Historical Unified Farm BLM barred chicken flock with drinkers inside the poultry house" width="1152" height="1536" loading="lazy">
+                    <figcaption>Another view of the same past flock, showing the poultry-house environment and drinkers. Plumage alone is not used here to claim a specific breed.</figcaption>
+                </figure>
+            </div>
+
+            <figure>
+                <video class="farm-video" controls preload="metadata" playsinline poster="images/farm-record-flock-poster.webp" aria-label="Historical farm footage from Unified Farm BLM">
+                    <source src="images/farm-record-flock.mp4" type="video/mp4">
+                    Your browser does not support embedded video.
+                </video>
+                <figcaption>Footage retained in Unified Farm BLM's farm records. It documents the flock and housing visible when it was recorded; it does not represent today's flock size or guarantee any farming result.</figcaption>
+            </figure>
 
             <h2>Where We Are Today</h2>            
             <p>Today, Unified Farm BLM raises local chickens and shares practical poultry guidance from Mpigi. We continue to grow carefully, using our records rather than presenting changing flock or production figures as permanent claims.</p>
