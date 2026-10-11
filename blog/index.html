@@ -6,6 +6,13 @@
     <title>Blog - Unified Farm BLM | Poultry Farming Tips & Guides</title>
     <link rel="canonical" href="https://www.unifiedfarmblm.com/blog/" />
     <meta name="description" content="Practical local-chicken farming lessons from Unified Farm BLM in Mpigi, plus sourced educational comparisons for Ugandan poultry farmers.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Unified Farm BLM">
+    <meta property="og:title" content="Blog - Unified Farm BLM | Poultry Farming Tips & Guides">
+    <meta property="og:description" content="Practical local-chicken farming lessons from Unified Farm BLM in Mpigi, plus sourced educational comparisons for Ugandan poultry farmers.">
+    <meta property="og:url" content="https://www.unifiedfarmblm.com/blog/">
+    <meta property="og:image" content="https://www.unifiedfarmblm.com/images/farm-aerial.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
@@ -41,10 +48,13 @@
         .footer-links a { color: white; text-decoration: none; opacity: 0.8; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            nav { flex-wrap: wrap; gap: 12px; }
+            .nav-links { display: flex; flex-wrap: wrap; gap: 8px 16px; width: 100%; padding: 0; margin: 0; list-style: none; }
+            .nav-links li { margin: 0; }
+            .nav-links a { display: inline-block; padding: 6px 0; }
             .blog-grid { grid-template-columns: 1fr; }
         }
-    </style>
+    @media (max-width: 768px) { .container { max-width: 100%; } table { display: block; max-width: 100%; overflow-x: auto; } h1 { overflow-wrap: anywhere; } } </style>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
@@ -81,12 +91,13 @@
 
     <section class="hero-section">
         <div class="container">
-            <h1>From Our Farm</h1>
+            <h1>Poultry Farming Guides for Uganda</h1>
             <p>Practical local-chicken lessons from our farm, plus clearly labelled educational comparisons based on cited agricultural guidance.</p>
         </div>
     </section>
 
     <section class="container">
+        <aside style="padding:24px;background:#edf5ed;border-radius:12px;margin-top:24px"><h2>Start with local chickens</h2><p>New here? Follow our <a href="/guides/local-chicken-farming-uganda.html">local-chicken farming guide for Uganda</a> to find the housing, feed, record-keeping and buyer resources you need. Use the <a href="/tools/">free poultry calculators</a> with your own numbers.</p></aside>
         <div class="blog-grid">
             <article class="blog-card">
                 <img src="../images/chicks.jpg" alt="Kuroiler, broiler and layer chickens compared" class="blog-card-img" loading="lazy">
@@ -102,9 +113,9 @@
                 <img src="../images/eggs-basket.jpg" alt="Egg sales records in a farm notebook" class="blog-card-img" loading="lazy">
                 <div class="blog-card-content">
                     <span class="category">Farm Business</span>
-                    <h2>The Simple Record-Keeping System That Saves Ugandan Poultry Farmers Thousands</h2>
+                    <h2>Simple Poultry Record Keeping for Ugandan Farmers</h2>
                     <p class="date">July 29, 2026</p>
-                    <p>Five lines a day reveals where your money leaks — notebook or phone, start tonight.</p>
+                    <p>Record feed, eggs, losses, expenses and sales in a notebook or phone, then compare actual costs with income.</p>
                     <a href="poultry-record-keeping-simple-system.html" class="read-more">Read More →</a>
                 </div>
             </article>
@@ -124,7 +135,7 @@
                     <span class="category">Beginner Guide</span>
                     <h2>The 90-Day Backyard Poultry Starter Plan (Uganda Budget Edition)</h2>
                     <p class="date">July 19, 2026</p>
-                    <p>A week-by-week, 90-day plan to start a small flock with about UGX 190,000 — phases, budget, seasons and a simple scorecard.</p>
+                    <p>A week-by-week plan with a worked budget, preparation checklist and simple scorecard. Replace example costs with current local quotations.</p>
                     <a href="how-to-start-backyard-chicken-farm-50-dollars.html" class="read-more">Read More →</a>
                 </div>
             </article>

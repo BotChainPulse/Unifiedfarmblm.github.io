@@ -6,6 +6,13 @@
     <title>Unified Farm BLM - Local Chicken Farming in Mpigi, Uganda</title>
     <link rel="canonical" href="https://www.unifiedfarmblm.com/" />
     <meta name="description" content="Unified Farm BLM is a growing poultry project in Mpigi, Uganda, focused on raising local chickens and sharing practical small-scale farming guidance.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Unified Farm BLM">
+    <meta property="og:title" content="Unified Farm BLM - Local Chicken Farming in Mpigi, Uganda">
+    <meta property="og:description" content="Unified Farm BLM is a growing poultry project in Mpigi, Uganda, focused on raising local chickens and sharing practical small-scale farming guidance.">
+    <meta property="og:url" content="https://www.unifiedfarmblm.com/">
+    <meta property="og:image" content="https://www.unifiedfarmblm.com/images/farm-aerial.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
@@ -42,7 +49,7 @@
         
         /* Blog Preview */
         .blog-preview { background: #f8f9fa; }
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 2rem; }
         .blog-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
         .blog-card-content { padding: 1.5rem; }
@@ -55,7 +62,7 @@
         .read-more { color: #f4a261; text-decoration: none; font-weight: bold; }
         
         /* Products */
-        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 2rem; }
         .product-card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
         .product-card h3 { color: #2c5f2d; margin: 1rem 0; }
         .price { font-size: 1.3rem; color: #f4a261; font-weight: bold; }
@@ -76,7 +83,7 @@
             .hero h1 { font-size: 2rem; }
             .hero .btn { margin: .35rem !important; }
         }
-    </style>
+    .feature-card .btn { margin-top: 16px; padding: 12px 18px; } .read-more { color: #28572c; } a:focus-visible, button:focus-visible { outline: 3px solid #cf7b2d; outline-offset: 4px; } </style>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
@@ -117,12 +124,25 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Local Chickens, Practical Farm Knowledge</h1>
+            <h1>Local Chicken Farming in Mpigi, Uganda</h1>
             <p>Unified Farm BLM is a growing poultry project in Mpigi, Uganda, focused on raising local chickens and sharing practical lessons about housing, feeding, flock health and small-scale farming.</p>
             <a href="contact.html" class="btn">Contact Us</a>
-            <a href="blog/index.html" class="btn" style="background: white; margin-left: 1rem;">Read Our Blog</a>
-            <img src="images/farm-aerial.jpg" alt="Aerial view of Unified Farm BLM with free-range chickens in Mpigi, Uganda" class="hero-img" loading="lazy">
+            <a href="guides/local-chicken-farming-uganda.html" class="btn" style="background: white; margin-left: 1rem;">Start with local chickens</a>
+            <img src="images/farm-aerial.jpg" alt="Aerial view of Unified Farm BLM with free-range chickens in Mpigi, Uganda" class="hero-img" fetchpriority="high" decoding="async">
         </div>
+    </section>
+
+
+    <section class="section" aria-labelledby="start-heading">
+      <div class="container">
+        <h2 class="section-title" id="start-heading">Plan your flock before you spend</h2>
+        <p style="text-align:center;max-width:760px;margin:0 auto 24px">Start with local-chicken guides, use current supplier prices and record your own results. These free resources help you check your assumptions.</p>
+        <div class="features">
+          <article class="feature-card"><h3>New to local chickens?</h3><p>Follow a route through housing, feed, flock health, records and buyers.</p><a class="btn" href="guides/local-chicken-farming-uganda.html">Local-chicken starter guide</a></article>
+          <article class="feature-card"><h3>How much feed do you need?</h3><p>Estimate kilograms, bags and cost using your flock's intake and current prices.</p><a class="btn" href="tools/feed-quantity-planner.html">Plan your feed budget</a></article>
+          <article class="feature-card"><h3>Are your eggs covering costs?</h3><p>Use your own egg counts, sale price and expenses to estimate your margin.</p><a class="btn" href="tools/egg-profit-calculator.html">Check your egg margin</a></article>
+        </div>
+      </div>
     </section>
 
     <section class="section about-intro">

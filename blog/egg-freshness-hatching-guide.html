@@ -51,11 +51,14 @@
         .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
         .footer-links a { color: white; text-decoration: none; opacity: 0.8; }
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            nav { flex-wrap: wrap; gap: 12px; }
+            .nav-links { display: flex; flex-wrap: wrap; gap: 8px 16px; width: 100%; padding: 0; margin: 0; list-style: none; }
+            .nav-links li { margin: 0; }
+            .nav-links a { display: inline-block; padding: 6px 0; }
             h1 { font-size: 2rem; }
             .author-box { flex-direction: column; text-align: center; }
         }
-    </style>
+    @media (max-width: 768px) { .container { max-width: 100%; } table { display: block; max-width: 100%; overflow-x: auto; } h1 { overflow-wrap: anywhere; } } </style>
 </head>
 <body>
     <header>
