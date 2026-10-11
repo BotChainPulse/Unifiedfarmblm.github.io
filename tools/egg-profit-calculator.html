@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Egg Profit Calculator Uganda (UGX) | Unified Farm BLM</title>
+    <title>Egg Profit Calculator: Choose Your Currency | Unified Farm BLM</title>
     <link rel="canonical" href="https://www.unifiedfarmblm.com/tools/egg-profit-calculator.html">
-    <meta name="description" content="Calculate monthly egg revenue, feed costs, net poultry profit and break-even tray price in Uganda shillings using your flock's real numbers.">
+    <meta name="description" content="Calculate egg revenue, feed costs, net profit and break-even selling price using your currency, egg pack size and actual flock records.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unified Farm BLM">
-    <meta property="og:title" content="Egg Profit Calculator Uganda (UGX) | Unified Farm BLM">
-    <meta property="og:description" content="Calculate monthly egg revenue, feed costs, net poultry profit and break-even tray price in Uganda shillings using your flock's real numbers.">
+    <meta property="og:title" content="Egg Profit Calculator: Choose Your Currency | Unified Farm BLM">
+    <meta property="og:description" content="Calculate egg revenue, feed costs, net profit and break-even selling price using your currency, egg pack size and actual flock records.">
     <meta property="og:url" content="https://www.unifiedfarmblm.com/tools/egg-profit-calculator.html">
     <meta property="og:image" content="https://www.unifiedfarmblm.com/images/farm-aerial.jpg">
     <meta name="twitter:card" content="summary_large_image">
@@ -48,50 +48,53 @@
         footer { padding: 30px 0; text-align: center; }
         .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
         @media (max-width: 760px) { .calculator { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; } .results { position: static; } nav { flex-direction: column; align-items: flex-start; padding: 14px 0; } .nav-links { margin: 0; gap: 12px; } }
-    </style>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Uganda Egg Profit Calculator","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/egg-profit-calculator.html"}</script>
+    select { width: 100%; padding: 10px; font: inherit; border: 1px solid #b8c8ba; border-radius: 7px; } </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Egg Profit Calculator","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/egg-profit-calculator.html"}</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
 </head>
 <body>
 <header><nav><a class="logo" href="/">🐔 Unified Farm BLM</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li><a href="/tools/">Free Tools</a></li><li><a href="/contact.html">Contact</a></li></ul></nav></header>
 <main class="container">
     <p><a href="/tools/">← All free tools</a></p>
-    <h1>Uganda Egg Profit Calculator</h1>
-    <p class="intro">Enter your flock's real production and costs. The calculator estimates a 30-day month in Uganda shillings (UGX), including losses from cracked, dirty or unsold eggs.</p>
+    <h1>Egg Profit Calculator</h1>
+    <p class="intro">Enter your flock's real production and costs to estimate a 30-day month. Choose your currency and eggs per pack (for example, 12 per dozen or 30 per tray). Replace the Uganda example prices with your own local prices.</p>
     <section class="calculator" aria-label="Egg profit calculator">
         <form class="panel" id="egg-form">
             <h2>Your farm numbers</h2>
-            <div class="fields">
+            <p>Currency changes labels only; it does not convert prices. Enter every cost and selling price in the same currency.</p>
+<label>Currency<select id="currency"><option value="UGX">UGX — Uganda shilling</option><option value="USD">USD — US dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British pound</option><option value="AED">AED — UAE dirham</option><option value="KES">KES — Kenya shilling</option><option value="TZS">TZS — Tanzania shilling</option><option value="ZAR">ZAR — South African rand</option><option value="NGN">NGN — Nigerian naira</option><option value="INR">INR — Indian rupee</option><option value="CAD">CAD — Canadian dollar</option><option value="AUD">AUD — Australian dollar</option></select></label>
+<div class="fields">
+                <label>Eggs per pack <span>12 for a dozen; 30 for a tray</span><input id="packSize" type="number" min="1" step="1" value="30" required></label>
                 <label>Laying hens <span>Birds currently producing eggs</span><input id="hens" type="number" min="1" step="1" value="100" required></label>
                 <label>Laying rate (%) <span>Eggs per 100 hens each day</span><input id="rate" type="number" min="0" max="100" step="0.1" value="75" required></label>
                 <label>Losses (%) <span>Cracked, dirty or unsold eggs</span><input id="loss" type="number" min="0" max="100" step="0.1" value="3" required></label>
-                <label>Price per tray (UGX) <span>One tray contains 30 eggs</span><input id="trayPrice" type="number" min="0" step="100" value="15000" required></label>
+                <label>Price per pack <span>Use the pack size entered above</span><input id="trayPrice" type="number" min="0" step="0.01" value="15000" required></label>
                 <label>Feed per hen/day (kg) <span>Layers often consume about 0.11–0.13 kg</span><input id="feedPerHen" type="number" min="0" step="0.001" value="0.12" required></label>
-                <label>Feed price per kg (UGX) <span>Bag price divided by bag kilograms</span><input id="feedPrice" type="number" min="0" step="10" value="1800" required></label>
-                <label>Labour/month (UGX)<input id="labour" type="number" min="0" step="1000" value="150000"></label>
-                <label>Medicine/month (UGX)<input id="medicine" type="number" min="0" step="1000" value="50000"></label>
-                <label>Transport/month (UGX)<input id="transport" type="number" min="0" step="1000" value="80000"></label>
-                <label>Packaging/month (UGX)<input id="packaging" type="number" min="0" step="1000" value="30000"></label>
-                <label>Other costs/month (UGX)<input id="other" type="number" min="0" step="1000" value="20000"></label>
+                <label>Feed price per kg (selected currency) <span>Bag price divided by bag kilograms</span><input id="feedPrice" type="number" min="0" step="0.01" value="1800" required></label>
+                <label>Labour/month (selected currency)<input id="labour" type="number" min="0" step="0.01" value="150000"></label>
+                <label>Medicine/month (selected currency)<input id="medicine" type="number" min="0" step="0.01" value="50000"></label>
+                <label>Transport/month (selected currency)<input id="transport" type="number" min="0" step="0.01" value="80000"></label>
+                <label>Packaging/month (selected currency)<input id="packaging" type="number" min="0" step="0.01" value="30000"></label>
+                <label>Other costs/month (selected currency)<input id="other" type="number" min="0" step="0.01" value="20000"></label>
             </div>
             <button type="submit">Calculate monthly profit</button>
         </form>
         <aside class="panel results" aria-live="polite">
             <h2>30-day estimate</h2>
             <div class="result-row"><span>Eggs produced</span><strong id="eggs">—</strong></div>
-            <div class="result-row"><span>Saleable trays</span><strong id="trays">—</strong></div>
+            <div class="result-row"><span>Saleable packs</span><strong id="trays">—</strong></div>
             <div class="result-row"><span>Revenue</span><strong id="revenue">—</strong></div>
             <div class="result-row"><span>Feed required</span><strong id="feedKg">—</strong></div>
             <div class="result-row"><span>Feed cost</span><strong id="feedCost">—</strong></div>
             <div class="result-row"><span>Total costs</span><strong id="totalCost">—</strong></div>
-            <div class="result-row"><span>Break-even/tray</span><strong id="breakEven">—</strong></div>
+            <div class="result-row"><span>Break-even/pack</span><strong id="breakEven">—</strong></div>
             <div class="profit" id="profitBox"><span>Estimated net profit</span><strong id="profit">—</strong><small id="profitPerHen"></small></div>
             <div class="guidance" id="guidance">Adjust the values to match your farm, then calculate.</div>
         </aside>
     </section>
     <article class="content">
         <h2>How the estimate works</h2>
-        <p>Daily eggs equal laying hens multiplied by the laying rate. The calculator projects this over 30 days, removes your expected loss percentage, and divides the saleable eggs by 30 to estimate trays. Revenue is saleable trays multiplied by your tray price.</p>
+        <p>Daily eggs equal laying hens multiplied by the laying rate. The calculator projects this over 30 days, removes your expected loss percentage, and divides saleable eggs by your selected pack size. Revenue is saleable packs multiplied by your price per pack.</p>
         <p>Feed cost is calculated from hens × daily feed per hen × 30 days × feed price per kilogram. Labour, medicine, transport, packaging and other costs are then added. Net profit is revenue minus all entered costs.</p>
         <h2>Use real records for better decisions</h2>
         <ul><li>Count eggs at the same time daily and calculate your actual laying rate.</li><li>Divide the current feed-bag price by its weight to get cost per kilogram.</li><li>Record cracked, dirty, consumed and unpaid eggs as losses.</li><li>Include family labour if you want to know whether the farm truly pays for the work.</li><li>Run a second estimate with a lower egg price or laying rate to test a difficult month.</li></ul>
@@ -101,14 +104,14 @@
 <footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/privacy-policy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
 <script>
     const number = id => Math.max(0, Number(document.getElementById(id).value) || 0);
-    const ugx = value => new Intl.NumberFormat('en-UG', { style: 'currency', currency: 'UGX', maximumFractionDigits: 0 }).format(value);
+    const money = value => new Intl.NumberFormat('en', { style: 'currency', currency: document.getElementById('currency').value }).format(value);
     function calculate(event) {
         if (event) event.preventDefault();
         const hens = number('hens');
         const rate = Math.min(100, number('rate')) / 100;
         const loss = Math.min(100, number('loss')) / 100;
         const eggs = hens * rate * 30;
-        const trays = eggs * (1 - loss) / 30;
+        const trays = eggs * (1 - loss) / Math.max(1, number('packSize'));
         const revenue = trays * number('trayPrice');
         const feedKg = hens * number('feedPerHen') * 30;
         const feedCost = feedKg * number('feedPrice');
@@ -117,18 +120,19 @@
         const breakEven = trays > 0 ? totalCost / trays : 0;
         document.getElementById('eggs').textContent = Math.round(eggs).toLocaleString('en-UG');
         document.getElementById('trays').textContent = trays.toFixed(1);
-        document.getElementById('revenue').textContent = ugx(revenue);
+        document.getElementById('revenue').textContent = money(revenue);
         document.getElementById('feedKg').textContent = feedKg.toFixed(1) + ' kg';
-        document.getElementById('feedCost').textContent = ugx(feedCost);
-        document.getElementById('totalCost').textContent = ugx(totalCost);
-        document.getElementById('breakEven').textContent = trays ? ugx(breakEven) : 'No trays';
-        document.getElementById('profit').textContent = ugx(profit);
-        document.getElementById('profitPerHen').textContent = hens ? ugx(profit / hens) + ' per hen/month' : '';
+        document.getElementById('feedCost').textContent = money(feedCost);
+        document.getElementById('totalCost').textContent = money(totalCost);
+        document.getElementById('breakEven').textContent = trays ? money(breakEven) : 'No packs';
+        document.getElementById('profit').textContent = money(profit);
+        document.getElementById('profitPerHen').textContent = hens ? money(profit / hens) + ' per hen/month' : '';
         const box = document.getElementById('profitBox');
         box.classList.toggle('loss', profit < 0);
-        document.getElementById('guidance').textContent = profit >= 0 ? 'This estimate is profitable. Compare it with a lower laying rate and selling price before expanding.' : 'This estimate makes a loss. Test a better tray price, lower feed cost or improved laying rate—but keep assumptions realistic.';
+        document.getElementById('guidance').textContent = profit >= 0 ? 'This estimate is profitable. Compare it with a lower laying rate and selling price before expanding.' : 'This estimate makes a loss. Test a better pack price, lower feed cost or improved laying rate—but keep assumptions realistic.';
     }
     document.getElementById('egg-form').addEventListener('submit', calculate);
+    document.getElementById('currency').addEventListener('change', calculate);
     calculate();
 </script>
 </body>

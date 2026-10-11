@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poultry Feed Quantity Planner Uganda | Unified Farm BLM</title>
+    <title>Poultry Feed Quantity Planner: Bags & Budget | Unified Farm BLM</title>
     <link rel="canonical" href="https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html">
-    <meta name="description" content="Free poultry feed quantity planner for Uganda. Estimate feed kilograms, number of bags and budget from flock size, daily intake, days and expected wastage.">
+    <meta name="description" content="Free poultry feed planner: estimate kilograms, bags and budget using your flock size, intake, bag size and prices in your chosen currency.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unified Farm BLM">
-    <meta property="og:title" content="Poultry Feed Quantity Planner Uganda | Unified Farm BLM">
-    <meta property="og:description" content="Free poultry feed quantity planner for Uganda. Estimate feed kilograms, number of bags and budget from flock size, daily intake, days and expected wastage.">
+    <meta property="og:title" content="Poultry Feed Quantity Planner: Bags & Budget | Unified Farm BLM">
+    <meta property="og:description" content="Free poultry feed planner: estimate kilograms, bags and budget using your flock size, intake, bag size and prices in your chosen currency.">
     <meta property="og:url" content="https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html">
     <meta property="og:image" content="https://www.unifiedfarmblm.com/images/farm-aerial.jpg">
     <meta name="twitter:card" content="summary_large_image">
@@ -47,8 +47,8 @@
         footer { padding: 30px 0; text-align: center; }
         .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
         @media (max-width: 760px) { .calculator { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; } .results { position: static; } nav { flex-direction: column; align-items: flex-start; padding: 14px 0; } .nav-links { margin: 0; gap: 12px; } }
-    </style>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Uganda Poultry Feed Quantity Planner","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html"}</script>
+    select { width: 100%; padding: 10px; font: inherit; border: 1px solid #b8c8ba; border-radius: 7px; } </style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Poultry Feed Quantity Planner","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://www.unifiedfarmblm.com/tools/feed-quantity-planner.html"}</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6880789718761474" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -60,7 +60,9 @@
     <section class="calculator" aria-label="Poultry feed quantity planner">
         <form class="panel" id="feed-form">
             <h2>Your flock numbers</h2>
-            <div class="fields">
+            <p>Currency changes labels only; it does not convert prices. Enter every cost and selling price in the same currency.</p>
+<label>Currency<select id="currency"><option value="UGX">UGX — Uganda shilling</option><option value="USD">USD — US dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British pound</option><option value="AED">AED — UAE dirham</option><option value="KES">KES — Kenya shilling</option><option value="TZS">TZS — Tanzania shilling</option><option value="ZAR">ZAR — South African rand</option><option value="NGN">NGN — Nigerian naira</option><option value="INR">INR — Indian rupee</option><option value="CAD">CAD — Canadian dollar</option><option value="AUD">AUD — Australian dollar</option></select></label>
+<div class="fields">
                 <label>Flock size <span>Birds you expect to feed</span><input id="birds" type="number" min="1" step="1" value="100" required></label>
                 <label>Planning period (days)<input id="days" type="number" min="1" step="1" value="30" required></label>
                 <label>Planning preset <span>Use as a starting point, then check your feed guide</span>
@@ -76,7 +78,7 @@
                 <label>Feed per bird/day (kg) <span>Example: 0.12 kg = 120 g</span><input id="dailyFeed" type="number" min="0" step="0.001" value="0.12" required></label>
                 <label>Expected wastage (%) <span>Spillage, damp feed and handling losses</span><input id="wastage" type="number" min="0" max="100" step="0.1" value="5" required></label>
                 <label>Feed bag size (kg)<input id="bagSize" type="number" min="1" step="1" value="50" required></label>
-                <label>Price per bag (UGX) <span>Optional, for a budget estimate</span><input id="bagPrice" type="number" min="0" step="1000" value="90000"></label>
+                <label>Price per bag <span>Optional, for a budget estimate</span><input id="bagPrice" type="number" min="0" step="0.01" value="90000"></label>
                 <label>Safety stock (%) <span>Extra buffer if supply may be delayed</span><input id="safety" type="number" min="0" max="100" step="0.1" value="3"></label>
             </div>
             <button type="submit">Plan feed requirement</button>
@@ -110,7 +112,7 @@
 <footer><div class="container"><div class="footer-links"><a href="/">Home</a><a href="/about-us.html">About</a><a href="/blog/">Blog</a><a href="/tools/">Tools</a><a href="/privacy-policy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div><p>© 2026 Unified Farm BLM | Mpigi, Uganda</p></div></footer>
 <script>
     const number = id => Math.max(0, Number(document.getElementById(id).value) || 0);
-    const ugx = value => new Intl.NumberFormat('en-UG', { style: 'currency', currency: 'UGX', maximumFractionDigits: 0 }).format(value);
+    const money = value => new Intl.NumberFormat('en', { style: 'currency', currency: document.getElementById('currency').value }).format(value);
     const preset = document.getElementById('preset');
     preset.addEventListener('change', () => {
         if (preset.value !== 'custom') document.getElementById('dailyFeed').value = preset.value;
@@ -135,13 +137,14 @@
         document.getElementById('totalFeed').textContent = totalFeed.toFixed(1) + ' kg';
         document.getElementById('bags').textContent = bags.toLocaleString('en-UG') + ' bag' + (bags === 1 ? '' : 's');
         document.getElementById('purchasedKg').textContent = purchasedKg.toFixed(0) + ' kg';
-        document.getElementById('budget').textContent = number('bagPrice') ? ugx(budget) : 'Add bag price';
+        document.getElementById('budget').textContent = number('bagPrice') ? money(budget) : 'Add bag price';
         document.getElementById('dailyTotal').textContent = dailyTotal.toFixed(1) + ' kg/day';
         document.getElementById('gramsBird').textContent = Math.round(daily * 1000) + ' g per bird/day';
         const surplus = purchasedKg - totalFeed;
         document.getElementById('guidance').textContent = 'Buying whole bags gives about ' + surplus.toFixed(1) + ' kg above the calculated requirement. Compare this estimate with actual feed use each week.';
     }
     document.getElementById('feed-form').addEventListener('submit', calculate);
+    document.getElementById('currency').addEventListener('change', calculate);
     calculate();
 </script>
 </body>
