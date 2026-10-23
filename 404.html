@@ -6,33 +6,6 @@
     <title>Page Not Found - Unified Farm BLM</title>
     <meta name="description" content="Sorry, the page you are looking for does not exist. Visit our homepage for fresh poultry products and farming guides.">
     <meta name="robots" content="noindex, follow">
-    <script>
-        (function () {
-            var host = window.location.hostname.toLowerCase();
-            var path = window.location.pathname.toLowerCase();
-            var query = window.location.search || '';
-            var hash = window.location.hash || '';
-            var canonicalHost = 'www.unifiedfarmblm.com';
-            var isQrUrl = path.indexOf('qr') !== -1 || path.indexOf('qrcode') !== -1 || path.indexOf('qr-code') !== -1;
-            var legacyToolTerms = ['tool', 'calculator', 'livestock', 'feed', 'generator'];
-            var isLegacyToolUrl = legacyToolTerms.some(function (term) { return path.indexOf(term) !== -1; });
-
-            if (isQrUrl) {
-                window.location.replace('https://' + canonicalHost + '/tools/qr-code-generator.html');
-                return;
-            }
-
-            if (isLegacyToolUrl) {
-                window.location.replace('https://' + canonicalHost + '/tools/');
-                return;
-            }
-
-            if (host === 'unifiedfarmblm.com') {
-                var targetPath = path === '/' ? '/' : window.location.pathname;
-                window.location.replace('https://' + canonicalHost + targetPath + query + hash);
-            }
-        })();
-    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
