@@ -104,23 +104,10 @@
       "openingHoursSpecification": [{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"08:00","closes":"18:00"}]
     }
     </script>
+    <link rel="stylesheet" href="/assets/site-navigation.css?v=20261107">
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">🐔 Unified Farm BLM</div>
-            <ul class="nav-links" id="primary-nav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="products/">Products</a></li>
-                <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="tools/">Free Tools</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="privacy-policy.html">Privacy</a></li>
-            </ul>
-            <button class="mobile-menu" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">☰</button>
-        </nav>
-    </header>
+    <header class="site-header"><nav class="site-nav" aria-label="Main navigation"><a class="site-brand" href="/">Unified Farm BLM</a><ul class="site-primary-links"><li><a href="/" aria-current="page">Home</a></li><li><a href="/blog/">Guides</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/products/">Farm products</a></li><li><a href="/about-us.html">About</a></li><li><a href="/contact.html">Contact</a></li></ul><details class="site-menu"><summary>Menu</summary><ul class="site-menu-links"><li><a href="/" aria-current="page">Home</a></li><li><a href="/blog/">Guides</a></li><li><a href="/tools/">Free tools</a></li><li><a href="/products/">Farm products</a></li><li><a href="/about-us.html">About</a></li><li><a href="/contact.html">Contact</a></li></ul></details></nav></header>
 
     <section class="hero">
         <div class="container">
@@ -196,17 +183,17 @@
                 <div class="product-card">
                     <h3>🥚 <a href="products/fresh-eggs-mpigi.html" style="color:#2c5f2d;">Local Chicken Eggs</a></h3>
                     <p>Eggs from our local chickens, offered according to current farm availability.</p>
-                    <p class="price">UGX 15,000 / tray</p>
+                    <p class="price">Confirm price and collection</p>
                 </div>
                 <div class="product-card">
                     <h3>🐣 <a href="products/day-old-chicks-uganda.html" style="color:#2c5f2d;">Day-Old Chicks</a></h3>
                     <p>Local chicks offered according to current hatch and flock availability.</p>
-                    <p class="price">UGX 3,500 each</p>
+                    <p class="price">Confirm age, price and availability</p>
                 </div>
                 <div class="product-card">
                     <h3>🐤 Older Local Chicks</h3>
                     <p>Local chicks around one month old may be available. Confirm their exact age, health information, feeding routine and current condition before buying.</p>
-                    <p class="price">UGX 8,000 each</p>
+                    <p class="price">Ask for the current price</p>
                 </div>
                 <div class="product-card">
                     <h3>🐔 Local Chickens</h3>
@@ -214,9 +201,9 @@
                     <p class="price">Confirm availability</p>
                 </div>
                 <div class="product-card">
-                    <h3>🌿 Organic Chicken Manure</h3>
+                    <h3>🌿 Chicken Manure</h3>
                     <p>Natural fertilizer for your crops. Rich in nitrogen, phosphorus, and potassium.</p>
-                    <p class="price">UGX 50,000 / ton</p>
+                    <p class="price">Confirm quantity, handling and price</p>
                 </div>
                 <div class="product-card">
                     <h3>📚 <a href="services/poultry-consultation-uganda.html" style="color:#2c5f2d;">Farm Consultation</a></h3>
@@ -233,7 +220,7 @@
             <p style="text-align: center; margin-bottom: 2rem;">Practical guides, farming tips, and stories from the field.</p>
             <div class="blog-grid">
                 <article class="blog-card">
-                    <img src="images/eggs-basket.jpg" alt="Fresh organic eggs from Unified Farm BLM" class="blog-card-img" loading="lazy">
+                    <img src="images/eggs-basket.jpg" alt="Eggs photographed at Unified Farm BLM" class="blog-card-img" loading="lazy">
                     <div class="blog-card-content">
                         <span style="background: #2c5f2d; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Practical Tips</span>
                         <h3>Egg Grading, Storage &amp; Quality Control</h3>
@@ -321,9 +308,10 @@
         </div>
     </section>
 
+    <section class="container record-downloads"><h2>Keep records you can check</h2><p>Download five free CSV sheets for eggs, feed, flock changes, cash and health observations. Our guide explains the units, opening balances and weekly checks. No signup is required.</p><p><a href="/blog/poultry-record-keeping-simple-system.html#record-sheets">Get the farm record sheets and instructions</a></p></section>
     <section class="section" style="background: #2c5f2d; color: white; text-align: center;">
         <div class="container">
-            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Stock Your Farm?</h2>
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Have a Farm Question?</h2>
             <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">Ask about the local chickens, eggs or chicks currently available, or send a question about information published in our guides.</p>
             <a href="contact.html" class="btn" style="background: white; color: #2c5f2d;">Contact Us Now</a>
         </div>
@@ -346,19 +334,5 @@
             <p>© 2026 Unified Farm BLM. All rights reserved. | Mpigi, Uganda</p>
         </div>
     </footer>
-    <script>
-        const menuButton = document.querySelector('.mobile-menu');
-        const primaryNav = document.getElementById('primary-nav');
-        menuButton.addEventListener('click', () => {
-            const isOpen = primaryNav.classList.toggle('open');
-            menuButton.setAttribute('aria-expanded', String(isOpen));
-            menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-        });
-        primaryNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-            primaryNav.classList.remove('open');
-            menuButton.setAttribute('aria-expanded', 'false');
-            menuButton.setAttribute('aria-label', 'Open navigation menu');
-        }));
-    </script>
 </body>
 </html>
